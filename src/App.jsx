@@ -24,8 +24,12 @@ function App() {
 
     useEffect(() => {
         async function getPosts() {
-            const {data} = await axios.get("http://127.0.0.1:8000/api/posts/");
-            setPosts(data);
+            try {
+                const { data } = await axios.get('http://127.0.0.1:8000/api/posts/');
+                setPosts(data);
+            } catch (error) {
+                console.error(error);
+            }
         }
         getPosts();
     }, []);
@@ -37,17 +41,34 @@ function App() {
           const response = await axios.post('http://127.0.0.1:8000/api/posts/create/', formData);
           console.log(response.data); // Handle the response as needed
           setFormData({
-              user_id: '',
-              username: '',
+              user_id: '321321',
+              username: 'Alex',
               text: '',
-              count_likes: '',
-              count_comments: '',
+              count_likes: '24',
+              count_comments: '12',
           });
+          const { data } = await axios.get('http://127.0.0.1:8000/api/posts/');
+          setPosts(data);
           alert('Success!');
       } catch (error) {
           console.error(error);
           alert('Error!');
       }
+  }
+
+  const deletePost = async (id) => {
+        try {
+            const response = await axios.delete(`http://127.0.0.1:8000/api/posts/delete/${id}`);
+            console.log(response.data); // Handle the response as needed
+            const { data } = await axios.get('http://127.0.0.1:8000/api/posts/');
+            setPosts(data);
+
+            alert('Success!');
+
+        } catch (error) {
+            console.error(error);
+            alert('Error!');
+        }
   }
 
 
@@ -62,7 +83,12 @@ function App() {
         <div className="section-feed__posts">
             {posts.map((post, index) => (
 
-               <Post className={"section-feed__post"} data={post} key={index} />
+               <Post
+                   className={"section-feed__post"}
+                   data={post}
+                   key={index}
+                   deletePost={() => deletePost(post.post_id)}
+               />
 
             ))}
         </div>
