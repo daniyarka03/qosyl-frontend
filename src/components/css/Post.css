@@ -1,0 +1,14 @@
+.post {
+    width: 700px;
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 30px;
+}
+
+.post h2 {
+    margin-bottom: 10px;
+}
+
+.post .row {
+    margin-top: 30px;
+}
