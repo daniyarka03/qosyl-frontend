@@ -12,3 +12,7 @@
 .post .row {
     margin-top: 30px;
 }
+
+.post .actions {
+    display: flex;
+}

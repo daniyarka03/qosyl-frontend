@@ -49,7 +49,8 @@ function App() {
           });
           const { data } = await axios.get('http://127.0.0.1:8000/api/posts/');
           setPosts(data);
-          alert('Success!');
+          const textarea = document.querySelector("#root > div > form > textarea")
+          textarea.value = "";
       } catch (error) {
           console.error(error);
           alert('Error!');
@@ -63,12 +64,29 @@ function App() {
             const { data } = await axios.get('http://127.0.0.1:8000/api/posts/');
             setPosts(data);
 
-            alert('Success!');
 
         } catch (error) {
             console.error(error);
             alert('Error!');
         }
+  }
+
+  const likePost = async (id, likes, post) => {
+      console.log(post)
+        const newLikes = +likes + 1;
+        const newPost = {...post, count_likes: newLikes}
+        console.log(newPost)
+        try {
+            const response = await axios.put(`http://127.0.0.1:8000/api/posts/update/${id}`, newPost);
+            console.log(response.data); // Handle the response as needed
+
+            const {data} = await axios.get('http://127.0.0.1:8000/api/posts/');
+            setPosts(data);
+        } catch (error) {
+            console.error(error);
+            alert('Error!')
+        }
+
   }
 
 
@@ -88,6 +106,7 @@ function App() {
                    data={post}
                    key={index}
                    deletePost={() => deletePost(post.post_id)}
+                   likePost={() => likePost(post.post_id, post.count_likes, post)}
                />
 
             ))}
