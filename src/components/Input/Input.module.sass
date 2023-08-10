@@ -1,0 +1,12 @@
+@import "../../mixins"
+@import "../../colors"
+
+.input
+    padding: 2.5rem 1.8rem
+    @include form-input
+    &__wrapper
+        display: flex
+        flex-direction: column
+        margin-top: 3rem        
+    &::placeholder
+        color: $placeholder-color
