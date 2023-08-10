@@ -8,12 +8,12 @@ const SignIn = () => {
   return (
     <div className={styles.wrapper}>
       <div className={styles.header}>
-        <img className={styles.header__logo} src={projectLogo} />
+        <img className={styles.header__logo} src={projectLogo} alt="qosyl.me" />
         <h2 className={styles.header__title}>Авторизация</h2>
       </div>
       <form action="" className={styles.form}>
-        <Input placeholder="Имя" type="text"/>
-        <Input placeholder="Пароль" type="password"/>
+        <Input placeholder="Email" type="email" name="email" id="signInFormEmail"/>
+        <Input placeholder="Пароль" type="password" name="password" id="signInFormPassword"/>
         <button className={styles.form__button} type="submit">
           Войти
         </button>
