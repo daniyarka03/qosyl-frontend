@@ -6,7 +6,12 @@ html
 
 body
     background-color: $primary-color
-
+    &::-webkit-scrollbar
+        width: 0.25rem
+    &::-webkit-scrollbar-track
+        background: $primary-color
+    &::-webkit-scrollbar-thumb
+        background: $white
 a
     text-decoration: none
 

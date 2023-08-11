@@ -7,6 +7,14 @@
     &__wrapper
         display: flex
         flex-direction: column
-        margin-top: 3rem        
+        margin-top: 3rem     
+        position: relative   
+    &__img
+        position: absolute
+        top: 2rem
+        left: 2rem
+    &__right
+        @include form-input
+        padding: 2.5rem 4.8rem
     &::placeholder
         color: $placeholder-color
