@@ -1,0 +1,31 @@
+@import "../../colors"
+@import "../../mixins"
+.card
+    background: $white
+    margin-top: 2.2rem
+    border-radius: 1.8rem
+    &__wrapper
+        padding: 1.5rem
+    &__header
+        display: flex
+        align-items: flex-start
+    &__logo
+        width: 3.7rem
+        height: 3.7rem
+    &__title
+        @include heading-font($primary-color)
+        font-size: 2.4rem
+        margin-left: 1.5rem
+        margin-top: .3rem
+    &__subheader
+        @include heading-font(#7A7EF4)
+        font-size: 1.2rem
+        font-family: "Montserrat"
+        margin-top: -1rem
+    &__additional
+        display: flex
+        align-items: center
+    &__members
+        @include heading-font($black)
+        font-size: 1.2rem
+        margin-left: 1rem

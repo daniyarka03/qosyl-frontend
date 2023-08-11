@@ -1,7 +1,8 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import SignIn from "../src/pages/SignIn"
-import SignUp from "../src/pages/SignUp"
+import SignIn from "../src/pages/Auth/SignIn"
+import SignUp from "../src/pages/Auth/SignUp"
 import styles from './App.module.sass'
+import Projects from "../src/pages/Projects/Projects"
 
 const App = () => {
   return (
@@ -10,6 +11,7 @@ const App = () => {
         <Routes>
           <Route path='/' element={<SignIn/>}/>
           <Route path='/registration' element={<SignUp/>}/>
+          <Route path='/projects' element={<Projects/>}/>
         </Routes>
       </BrowserRouter>
     </div>

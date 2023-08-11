@@ -1,0 +1,21 @@
+@import "../../colors"
+@import "../../mixins"
+
+.wrapper
+    padding: 9rem 2rem
+    @media screen and (min-width: 600px)
+        margin-left: 20%
+        max-width: 70rem
+
+.header
+    &__title
+        @include heading-font($white)
+    &__input
+        @include form-input
+
+.projects
+    margin-top: 4rem
+
+
+
+        

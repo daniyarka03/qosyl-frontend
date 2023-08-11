@@ -1,8 +1,8 @@
 import React from "react";
 import styles from "./SignInUp.module.sass";
 import { Link } from "react-router-dom";
-import projectLogo from "../assets/project-logo.svg";
-import Input from "../components/Input/Input";
+import projectLogo from "../../assets/project-logo.svg";
+import Input from "../../components/Input/Input";
 
 const SignIn = () => {
   return (

@@ -1,0 +1,22 @@
+@import "../../colors"
+@import "../../mixins"
+    
+.trend
+    margin-top: 3rem
+    &__title
+        @include heading-font($color: white)
+        font-size: 1.6rem
+    &__projects
+        display: flex
+        align-items: center
+        justify-content: flex-start
+    &__project
+        display: flex
+        flex-direction: column
+        align-items: center
+        margin-left: 1.5rem
+        &:nth-child(1)
+            margin-left: 0  
+        &__name
+            @include heading-font($white)
+            font-size: 1.4rem
