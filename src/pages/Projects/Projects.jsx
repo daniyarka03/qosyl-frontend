@@ -26,7 +26,7 @@ const Projects = () => {
         <Input
           className={styles.header__input}
           type="text"
-          placeholder="Izdeu..."
+          placeholder="Поиск..."
           withIcon={true}
           imageSrc={searchIcon}
         />
