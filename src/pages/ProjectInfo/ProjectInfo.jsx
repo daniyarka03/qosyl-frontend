@@ -1,8 +1,8 @@
 import React from "react";
-import Navbar from "../components/Navbar/Navbar";
+import Navbar from "../../components/Navbar/Navbar";
 import styles from "./ProjectInfo.module.sass";
-import cleekLogo from "../assets/cleek-logo.png";
-import projectMembers from "../assets/project-card-members.png";
+import cleekLogo from "../../assets/cleek-logo.png";
+import projectMembers from "../../assets/project-card-members.png";
 
 const ProjectInfo = () => {
   return (
