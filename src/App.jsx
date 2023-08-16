@@ -10,7 +10,8 @@ import ResetPasswordConfirm from "./pages/Auth/ResetPasswordConfirm.jsx";
 import {connect, Provider} from "react-redux";
 import store from "./store.js";
 import Layout from "./hocs/Layout.jsx";
-
+import Profile from './pages/Profile/Profile'
+import Users from './pages/Users/Users'
 const App = ({isAuthenticated}) => {
   return (
     <div className={styles.App}>
@@ -25,6 +26,8 @@ const App = ({isAuthenticated}) => {
               <Route path='/password/reset/confirm/:uid/:token' element={<ResetPasswordConfirm/>}/>
               <Route path='/project-info' element={isAuthenticated ? <ProjectInfo/> : <SignIn />}/>
               <Route path='/create-project' element={isAuthenticated ? <CreateProject/> : <SignIn />}/>
+              <Route path='/profile' element= {<Profile/>} />
+              <Route path='/users' element= {<Users/>} />
             </Routes>
           </Layout>
       </BrowserRouter>
