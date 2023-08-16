@@ -1,0 +1,35 @@
+@import "../../colors"
+@import "../../mixins"
+
+.wrapper
+    padding: 3rem 1rem
+    display: flex
+    align-items: center
+
+.notification
+    background-color: $white
+    border-radius: 1.2rem
+    position: relative
+    max-width: 36rem
+    margin: 0 auto
+    cursor: pointer
+    margin-top: 3rem
+    &__new
+        position: absolute
+        @include heading-font($white)
+        font-size: 1rem
+        border-radius: 1rem
+        background: #FF3C67
+        padding: .5rem
+        top: -1rem
+        left: -1rem
+    &__text
+        margin-left: 1rem
+    &__title
+        @include heading-font($primary-color)
+        font-size: 2rem
+    &__subtitle
+        @include heading-font($secondary-color)
+        font-size: 1.1rem
+        margin-top: 1rem
+        

@@ -12,6 +12,7 @@ import store from "./store.js";
 import Layout from "./hocs/Layout.jsx";
 import Profile from './pages/Profile/Profile'
 import Users from './pages/Users/Users'
+import Notifications from './pages/Notifications/Notifications'
 const App = ({isAuthenticated}) => {
   return (
     <div className={styles.App}>
@@ -28,6 +29,7 @@ const App = ({isAuthenticated}) => {
               <Route path='/create-project' element={isAuthenticated ? <CreateProject/> : <SignIn />}/>
               <Route path='/profile' element= {<Profile/>} />
               <Route path='/users' element= {<Users/>} />
+              <Route path='/notifications' element= {<Notifications/>} />
             </Routes>
           </Layout>
       </BrowserRouter>
