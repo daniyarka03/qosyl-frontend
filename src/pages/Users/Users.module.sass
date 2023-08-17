@@ -1,0 +1,22 @@
+@import "../../colors"
+@import "../../mixins"
+
+.container
+    max-width: 50rem
+    margin: 0 auto
+    @media screen and (min-width: 600px)
+        margin-left: 10rem
+    @media screen and (min-width: 700px)
+        margin-left: 15rem
+    @media screen and (min-width: 800px)
+        margin-left: 20rem
+    @media screen and (min-width: 900px)
+        margin-left: 25rem
+        max-width: 80rem
+
+.wrapper
+    padding: 8rem 2rem
+.header
+    &__title
+        @include heading-font($white)
+

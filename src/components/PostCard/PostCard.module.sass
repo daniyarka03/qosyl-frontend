@@ -1,0 +1,29 @@
+@import "../../colors"
+@import "../../mixins"
+
+.wrapper
+    padding: 2rem
+
+.post
+    margin-top: 2.5rem
+    background-color: $white
+    border-radius: 1.2rem
+    max-width: 40rem
+    &__creator
+        display: flex
+        align-items: center
+        &__avatar
+            border-radius: 1.2rem
+        &__name
+            @include heading-font($black)
+            font-size: 1rem
+            margin-left: 1.2rem
+            @media screen and (min-width: 600px)
+            font-size: 1.6rem
+    &__description
+        @include heading-font($black)
+        font-size: 1rem
+        margin-top: 2rem
+        font-weight: normal
+        @media screen and (min-width: 600px)
+            font-size: 1.4rem
