@@ -14,7 +14,9 @@ import Profile from './pages/Profile/Profile'
 import Users from './pages/Users/Users'
 import Notifications from './pages/Notifications/Notifications'
 import EditProject from './pages/EditProject/EditProject'
+
 import Search from "./pages/Search/Search"
+
 const App = () => {
   return (
     <div className={styles.App}>
@@ -24,12 +26,15 @@ const App = () => {
             <Routes>
               <Route path='/' element={<SignIn/>}/>
               <Route path='/registration' element={<SignUp/>}/>
+
               <Route path="/search/projects" element={<Projects />} />
               <Route path='/reset-password' element={<ResetPassword/>}/>
               <Route path='/password/reset/confirm/:uid/:token' element={<ResetPasswordConfirm/>}/>
               <Route path='/project-info' element={<ProjectInfo/>}/>
+
               <Route path='/create-project' element={<CreateProject/> }/>
               <Route path='/edit-project' element={<EditProject/> }/>
+
               <Route path='/profile' element= {<Profile/>} />
               <Route path='/search/users' element= {<Users/>} />
               <Route path='/notifications' element= {<Notifications/>} />
