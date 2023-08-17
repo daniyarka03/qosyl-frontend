@@ -12,7 +12,9 @@ import store from "./store.js";
 import Layout from "./hocs/Layout.jsx";
 import Profile from './pages/Profile/Profile'
 import Users from './pages/Users/Users'
+
 import Notifications from './pages/Notifications/Notifications'
+
 const App = () => {
   return (
     <div className={styles.App}>
