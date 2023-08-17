@@ -16,6 +16,7 @@ import Notifications from './pages/Notifications/Notifications'
 import EditProject from './pages/EditProject/EditProject'
 import Search from "./pages/Search/Search"
 import Posts from './pages/Posts/Posts'
+import CreatePost from './pages/CreatePost/CreatePost'
 
 const App = () => {
   return (
@@ -34,6 +35,8 @@ const App = () => {
 
               <Route path='/create-project' element={<CreateProject/> }/>
               <Route path='/edit-project' element={<EditProject/> }/>
+
+              <Route path='/create-post' element={<CreatePost/>}/>
 
               <Route path='/search' element={<Search/>}/>
               <Route path="/search/projects" element={<Projects />} />
