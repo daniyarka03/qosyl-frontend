@@ -24,7 +24,7 @@ const Projects = ({isAuthenticated}) => {
       <Navbar />
       <div className={styles.wrapper}>
         <header className={styles.header}>
-          <h2 className={styles.header__title}>Projects</h2>
+          <h2 className={styles.header__title}>Проекты</h2>
           <Input
             className={styles.header__input}
             type="text"

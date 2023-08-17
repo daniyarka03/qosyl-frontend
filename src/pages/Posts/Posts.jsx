@@ -12,7 +12,7 @@ const Posts = () => {
     <div>
         <Navbar/>
         <div className={styles.container}>
-            <p className={styles.header}>ПОСТЫ</p>
+            <p className={styles.header}>Посты</p>
             <button className={styles.post__add} onClick={() => navigate("/create-post")}>Новый пост</button>
             <PostCard/>
             <PostCard/>

@@ -7,7 +7,7 @@ import styles from "./Carousel.module.sass";
 const Carousel = () => {
   return (
     <section className={styles.trend}>
-      <p className={styles.trend__title}>🔥 Hot Projects</p>
+      <p className={styles.trend__title}>🔥 Проекты в тренде</p>
       <div className={styles.trend__projects}>
         <div className={styles.trend__project}>
           <img className={styles.trend__project__img} src={cleekLogo} alt="" />
