@@ -12,8 +12,8 @@ import store from "./store.js";
 import Layout from "./hocs/Layout.jsx";
 import Profile from './pages/Profile/Profile'
 import Users from './pages/Users/Users'
-
 import Notifications from './pages/Notifications/Notifications'
+import EditProject from './pages/EditProject/EditProject'
 
 const App = () => {
   return (
@@ -28,7 +28,10 @@ const App = () => {
               <Route path='/reset-password' element={<ResetPassword/>}/>
               <Route path='/password/reset/confirm/:uid/:token' element={<ResetPasswordConfirm/>}/>
               <Route path='/project-info' element={<ProjectInfo/>}/>
-              <Route path='/create-project' element={<CreateProject/>}/>
+
+              <Route path='/create-project' element={<CreateProject/> }/>
+              <Route path='/edit-project' element={<EditProject/> }/>
+
               <Route path='/profile' element= {<Profile/>} />
               <Route path='/users' element= {<Users/>} />
               <Route path='/notifications' element= {<Notifications/>} />
