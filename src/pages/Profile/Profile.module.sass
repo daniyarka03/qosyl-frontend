@@ -30,20 +30,21 @@
         @media screen and (min-width: 600px)
             font-size: 2rem
 .settings
+    margin: 0 auto
     margin-top: 3rem
     display: flex
-    align-self: center
+    flex-direction: column
+    width: clamp(26rem, 100%, 40rem)
     &__action
-        justify-self: center
         @include heading-font($primary-color)
         border-radius: 0.5625rem
         font-size: 1rem
         padding: 1rem 2.8rem
+        margin-top: 2rem
         @media screen and (min-width: 600px)
             font-size: 1.5rem
-    &__action:nth-child(1)
-        margin-right: 5rem
-    &__action:nth-child(2)
+        
+    &__action:nth-child(3)
         background-color: #FF6161
         color: $white
 
@@ -54,11 +55,9 @@
         flex-direction: column
     &__block
         margin-top: 6rem
-        align-self: flex-start
     &__block:nth-child(2)
         margin-left: 5rem
         @media screen and (max-width: 660px)
-            width: 100%
             margin-left: 0rem
 
     &__header

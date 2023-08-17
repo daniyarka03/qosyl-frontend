@@ -3,10 +3,12 @@ import styles from "./Profile.module.sass";
 import PostCard from "../../components/PostCard/PostCard";
 import ProjectCard from "../../components/ProjectCard/ProjectCard"
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 const src =
   "https://raw.githubusercontent.com/daniyarorazov/sampleDataJson/main/projectsSampleData.json";
 import Navbar from "../../components/Navbar/Navbar";
 const Profile = () => {
+  const navigate = useNavigate()
   const [projects, setProjects] = useState([]);
   useEffect(() => {
     axios.get(src).then((data) => {
@@ -21,6 +23,7 @@ const Profile = () => {
         <div className={styles.profile__name}>Данияр</div>
       </div>
       <div className={styles.settings}>
+        <button className={styles.settings__action} onClick={() => navigate("/create-project")}>Добавить проект</button>
         <button className={styles.settings__action}>Изменить</button>
         <button className={styles.settings__action}>Выйти</button>
       </div>
