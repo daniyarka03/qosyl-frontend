@@ -1,11 +1,27 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../../components/Navbar/Navbar.jsx";
 import styles from "./Users.module.sass";
 import Input from "../../components/Input/Input.jsx";
 import searchIcon from "../../assets/search-icon.svg";
 import UserCard from "../../components/UserCard/UserCard.jsx";
+import axios from "axios";
+
+const src = "https://raw.githubusercontent.com/daniyarorazov/sampleDataJson/main/sampleUsers.json"
+
 
 const Users = () => {
+  const [users, setUsers] = useState([]);
+  useEffect(() => {
+    const getUsers = async () => {
+      try {
+        const response = await axios.get(src)
+        setUsers(response.data)
+      } catch {
+        console.error("Error fetching users:", users)
+      }
+    }
+    getUsers()
+  }, [])
   return (
     <div className={styles.container}>
       <Navbar />
@@ -20,9 +36,7 @@ const Users = () => {
             imageSrc={searchIcon}
           />
         </div>
-        <UserCard />
-        <UserCard />
-        <UserCard />
+        {users.map(user => <UserCard key={user.Id} userId={user.Id} name={user.Name} role={user.Role}/>)}
       </div>
     </div>
   );
