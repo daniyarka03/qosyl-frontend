@@ -19,6 +19,7 @@ import Posts from './pages/Posts/Posts'
 import CreatePost from './pages/CreatePost/CreatePost'
 import EditPost from './pages/EditPost/EditPost'
 import {  } from 'react-router-dom'
+import UserPage from './pages/UserPage/UserPage'
 
 const App = () => {
   return (
@@ -47,7 +48,7 @@ const App = () => {
               <Route path='/posts' element={<Posts/>} />
               <Route path='/notifications' element= {<Notifications/>} />
               <Route path='/profile' element= {<Profile/>} />
-
+              <Route path='/user/:id' element= {<UserPage/>} />
             </Routes>
           </Layout>
       </BrowserRouter>

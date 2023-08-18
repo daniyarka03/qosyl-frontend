@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from "react";
-import styles from "./Profile.module.sass";
-import Navbar from "../../components/Navbar/Navbar";
+import React, { useEffect, useState } from "react";
+import styles from "./UserPage.module.sass";
 import PostCard from "../../components/PostCard/PostCard";
-import ProjectCard from "../../components/ProjectCard/ProjectCard"
+import ProjectCard from "../../components/ProjectCard/ProjectCard";
+import Navbar from "../../components/Navbar/Navbar";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
-
+import { useLocation } from "react-router-dom";
 const src =
   "https://raw.githubusercontent.com/daniyarorazov/sampleDataJson/main/projectsSampleData.json";
-const Profile = () => {
-  const navigate = useNavigate()
+
+const UserPage = () => {
   const [projects, setProjects] = useState([]);
+  const location = useLocation()
   useEffect(() => {
     axios.get(src).then((data) => {
       setProjects(data.data);
@@ -21,12 +21,7 @@ const Profile = () => {
       <Navbar />
       <div className={styles.profile}>
         <div className={styles.profile__avatar}></div>
-        <div className={styles.profile__name}>Данияр</div>
-      </div>
-      <div className={styles.settings}>
-        <button className={styles.settings__action} onClick={() => navigate("/create-project")}>Добавить проект</button>
-        <button className={styles.settings__action}>Изменить</button>
-        <button className={styles.settings__action}>Выйти</button>
+        <div className={styles.profile__name}>{location.state.username}</div>
       </div>
       <div className={styles.info}>
         <div className={styles.info__block}>
@@ -46,4 +41,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default UserPage;
