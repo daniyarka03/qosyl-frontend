@@ -13,6 +13,9 @@
     &__wrapper
         padding: 4rem 8rem 4rem
 
+        @media (max-width: 592px)
+            padding: 4rem 4rem 4rem
+
 .project
     &__header
         display: flex
@@ -28,7 +31,7 @@
         margin-left: 1rem
     &__type
         @include heading-font($secondary-color)
-        font-size: 1.2rem
+        font-size: 1.5rem
         margin-top: 1rem
     &__members
         margin-top: 2rem
@@ -36,7 +39,7 @@
         align-items: center
         &__text
             @include heading-font($primary-color)
-            font-size: 1rem
+            font-size: 1.4rem
             margin-left: 1rem
 
 .button
@@ -45,7 +48,7 @@
         padding: 1rem
     &__join
         font-size: 1.2rem
-        padding: 1rem 6rem
+        padding: 1.4rem 6rem
         margin-top: 4.5rem
 
 .description
@@ -60,9 +63,13 @@
 
     &__wrapper
         padding: 3rem 8rem
+        @media (max-width: 592px)
+            padding: 3rem 4rem
     &__title
         @include heading-font($primary-color)
+        font-size: 2.8rem
     &__text
         @include heading-font($secondary-color)
-        font-size: 1rem
+        font-size: 1.5rem
         margin-top: 2rem
+        font-weight: 500
