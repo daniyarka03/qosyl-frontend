@@ -6,7 +6,7 @@ import axios from "axios";
 import ProjectCard from "../../components/ProjectCard/ProjectCard";
 import Carousel from "../../components/Carousel/Carousel";
 import Navbar from "../../components/Navbar/Navbar";
-import {useNavigate} from "react-router-dom";
+
 const src =
   "https://raw.githubusercontent.com/daniyarorazov/sampleDataJson/main/projectsSampleData.json";
 

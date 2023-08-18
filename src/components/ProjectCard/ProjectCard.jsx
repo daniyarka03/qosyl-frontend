@@ -1,11 +1,16 @@
 import React from "react";
-import styles from "./ProjectCard.module.sass"
+import styles from "./ProjectCard.module.sass";
 import projectMembers from "../../assets/project-card-members.png";
 import cleekLogo from "../../assets/cleek-logo.png";
+import { useNavigate } from "react-router-dom";
 
-const ProjectCard = ({project}) => {
+const ProjectCard = ({ project }) => {
+  const navigate = useNavigate();
+  const handleClick = () => {
+    navigate(`/project/${project.Id}`, { state: { project } });
+  };
   return (
-    <div className={styles.card}>
+    <div className={styles.card} onClick={handleClick}>
       <div className={styles.card__wrapper}>
         <div className={styles.card__header}>
           <img className={styles.card__logo} src={cleekLogo} alt="" />
@@ -19,7 +24,7 @@ const ProjectCard = ({project}) => {
             alt=""
           />
           <p className={styles.card__members}>
-            {project.Members.length} members
+            {project.Members.length} участника
           </p>
         </div>
       </div>

@@ -3,8 +3,12 @@ import Navbar from "../../components/Navbar/Navbar";
 import styles from "./ProjectInfo.module.sass";
 import cleekLogo from "../../assets/cleek-logo.png";
 import projectMembers from "../../assets/project-card-members.png";
+import { useLocation } from "react-router-dom";
 
 const ProjectInfo = () => {
+  const location = useLocation();
+  const project = location.state.project;
+
   return (
     <>
       <Navbar />
@@ -14,7 +18,7 @@ const ProjectInfo = () => {
             <div className={styles.project__header}>
               <div className={styles.project__info}>
                 <img className={styles.project__logo} src={cleekLogo} alt="" />
-                <p className={styles.project__title}>Cleek</p>
+                <p className={styles.project__title}>{project.Name}</p>
               </div>
               <button className={`${styles.button} ${styles.button__mark}`}>
                 <svg
@@ -31,29 +35,26 @@ const ProjectInfo = () => {
                 </svg>
               </button>
             </div>
-            <p className={styles.project__type}>Социальное приложение</p>
+            <p className={styles.project__type}>{project.Type}</p>
             <div className={styles.project__members}>
               <img
                 className={styles.project__members__img}
                 src={projectMembers}
               />
-              <p className={styles.project__members__text}>4 участника</p>
+              <p className={styles.project__members__text}>
+                {project.Members.length} участника
+              </p>
             </div>
 
             <button className={`${styles.button} ${styles.button__join}`}>
-              Вступить
+              Подписаться
             </button>
           </div>
         </header>
         <section className={styles.description}>
           <div className={styles.description__wrapper}>
             <h3 className={styles.description__title}>Описание</h3>
-            <p className={styles.description__text}>
-            это инновационная платформа, объединяющая  талантливых профессионалов и компании, предоставляющие разнообразные вакансии. Наша цель - облегчить процесс поиска работы и подбора квалифицированных кадров, создавая пространство, где специалисты и работодатели могут находить друг друга эффективно и удобно.
-            это инновационная платформа, объединяющая  талантливых профессионалов и компании, предоставляющие разнообразные вакансии. Наша цель - облегчить процесс поиска работы и подбора квалифицированных кадров, создавая пространство, где специалисты и работодатели могут находить друг друга эффективно и удобно.
-            это инновационная платформа, объединяющая  талантливых профессионалов и компании, предоставляющие разнообразные вакансии. Наша цель - облегчить процесс поиска работы и подбора квалифицированных кадров, создавая пространство, где специалисты и работодатели могут находить друг друга эффективно и удобно.
-            это инновационная платформа, объединяющая  талантливых профессионалов и компании, предоставляющие разнообразные вакансии. Наша цель - облегчить процесс поиска работы и подбора квалифицированных кадров, создавая пространство, где специалисты и работодатели могут находить друг друга эффективно и удобно.
-            </p>
+            <p className={styles.description__text}>{project.Description}</p>
           </div>
         </section>
       </div>
