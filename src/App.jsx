@@ -18,6 +18,7 @@ import Search from "./pages/Search/Search"
 import Posts from './pages/Posts/Posts'
 import CreatePost from './pages/CreatePost/CreatePost'
 import EditPost from './pages/EditPost/EditPost'
+import {  } from 'react-router-dom'
 
 const App = () => {
   return (
@@ -32,7 +33,7 @@ const App = () => {
               
               <Route path='/reset-password' element={<ResetPassword/>}/>
               <Route path='/password/reset/confirm/:uid/:token' element={<ResetPasswordConfirm/>}/>
-              <Route path='/project-info' element={<ProjectInfo/>}/>
+              <Route path='/project/:id' element={<ProjectInfo/>}/>
 
               <Route path='/create-project' element={<CreateProject/> }/>
               <Route path='/edit-project' element={<EditProject/> }/>
