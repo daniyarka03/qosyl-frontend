@@ -22,6 +22,8 @@ const Profile = () => {
     const userLogin = useSelector(state => state.userLogin);
     const { userInfo, isAuthenticated } = userLogin;
 
+    console.log(userLogin)
+    console.log(userInfo)
     console.log(isAuthenticated)
 
     const dispatch = useDispatch();

@@ -20,7 +20,7 @@ const userInfoFromStorage = localStorage.getItem('userInfo')
 const initialState = {
     userLogin: {
         userInfo: userInfoFromStorage,
-        isAuthenticated: !!userInfoFromStorage,
+        isAuthenticated: userInfoFromStorage ? true : false,
     }
 };
 
