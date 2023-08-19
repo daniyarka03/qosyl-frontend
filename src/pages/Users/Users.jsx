@@ -6,8 +6,8 @@ import searchIcon from "../../assets/search-icon.svg";
 import UserCard from "../../components/UserCard/UserCard.jsx";
 import axios from "axios";
 
-const src = "https://raw.githubusercontent.com/daniyarorazov/sampleDataJson/main/sampleUsers.json"
-
+// const src = "https://raw.githubusercontent.com/daniyarorazov/sampleDataJson/main/sampleUsers.json"
+const src = "http://127.0.0.1:8000/api/users/"
 
 const Users = () => {
   const [users, setUsers] = useState([]);
@@ -36,7 +36,7 @@ const Users = () => {
             imageSrc={searchIcon}
           />
         </div>
-        {users.map(user => <UserCard key={user.Id} userId={user.Id} name={user.Name} role={user.Role}/>)}
+        {users.map(user => <UserCard key={user.id} userId={user.id} name={user.name} />)}
       </div>
     </div>
   );
