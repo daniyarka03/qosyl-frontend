@@ -8,12 +8,8 @@
 
 
     const SignIn = () => {
-
-
-
         const [email, setEmail] = useState('');
         const [password, setPassword] = useState('');
-        const URL = "127.0.0.1:8000";
         const navigate = useNavigate();
 
         const dispatch = useDispatch();
@@ -21,9 +17,12 @@
         const userLogin = useSelector(state => state.userLogin);
         const { error, loading, userInfo } = userLogin;
 
+        console.log(userInfo);
+
+
         useEffect(() => {
            if (userInfo) {
-               navigate("/projects");
+               navigate("/profile");
            }
         }, [navigate, userInfo]);
 
@@ -44,6 +43,8 @@
             <img className={styles.header__logo} src={projectLogo} alt="qosyl.me" />
             <h2 className={styles.header__title}>Авторизация</h2>
           </div>
+            {error && <div className="alert alert-danger">{error}</div>}
+            {loading && <div className="alert alert-info">Загрузка...</div>}
           <form action="" className={styles.form} onSubmit={e => onSubmit(e)}>
             <Input
                 placeholder="Email"

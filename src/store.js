@@ -16,12 +16,17 @@ const reducer = combineReducers({
 const userInfoFromStorage = localStorage.getItem('userInfo')
     ? JSON.parse(localStorage.getItem('userInfo')) : null;
 
+
 const initialState = {
     userLogin: {
-        userInfo: userInfoFromStorage
+        userInfo: userInfoFromStorage,
+        isAuthenticated: !!userInfoFromStorage,
     }
 };
 
+
+
+//const isAuthenticated = localStorage.getItem("access") ? true : false;
 
 const store = configureStore({
     reducer: reducer,
@@ -29,6 +34,6 @@ const store = configureStore({
     devTools: composeWithDevTools(applyMiddleware(...middleware)),
 });
 
-
+console.log(store.getState())
 
 export default store;
