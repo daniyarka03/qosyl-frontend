@@ -8,7 +8,6 @@ import {
     LOGOUT
 } from "../actions/types";
 
-let i = 0;
 
 const initialState = {
     access: localStorage.getItem("access"),

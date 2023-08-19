@@ -1,14 +1,13 @@
-
     import React, {useEffect, useState} from "react";
     import styles from "./SignInUp.module.sass";
     import {Link, useNavigate} from "react-router-dom";
     import projectLogo from "../../assets/project-logo.svg";
     import Input from "../../components/Input/Input";
-    import {connect} from "react-redux";
-    import {login} from "../../actions/auth";
+    import {connect, useDispatch, useSelector} from "react-redux";
+    import {login} from "../../actions/UserActions";
 
 
-    const SignIn = ({login, isAuthenticated}) => {
+    const SignIn = () => {
 
 
 
@@ -17,18 +16,26 @@
         const URL = "127.0.0.1:8000";
         const navigate = useNavigate();
 
+        const dispatch = useDispatch();
+
+        const userLogin = useSelector(state => state.userLogin);
+        const { error, loading, userInfo } = userLogin;
+
+        useEffect(() => {
+           if (userInfo) {
+               navigate("/projects");
+           }
+        }, [navigate, userInfo]);
+
         const onSubmit = e => {
             e.preventDefault();
+            dispatch(login(email, password))
+            console.log(email + '/' + password)
 
-            login(email, password)
         };
 
 
-        useEffect(() => {
-            if (isAuthenticated) {
-                return navigate("/projects");
-            }
-        }, [isAuthenticated, navigate]);
+
 
 
       return (
@@ -71,8 +78,6 @@
       );
     };
 
-    const mapStateToProps = state => ({
-        isAuthenticated: state.auth.isAuthenticated
-    });
 
-    export default connect(mapStateToProps, {login})(SignIn);
+
+    export default SignIn;
