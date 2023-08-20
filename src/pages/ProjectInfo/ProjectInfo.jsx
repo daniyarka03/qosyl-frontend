@@ -3,8 +3,8 @@ import Navbar from "../../components/Navbar/Navbar";
 import styles from "./ProjectInfo.module.sass";
 import cleekLogo from "../../assets/cleek-logo.png";
 import { useLocation } from "react-router-dom";
-import descriptionIcon from "../../assets/description-icon.svg";
-import contactIcon from "../../assets/contact-icon.svg";
+import descriptionIcon from "../../assets/description-icon.svg"
+import contactIcon from "../../assets/contact-icon.svg"
 
 const ProjectInfo = () => {
   const location = useLocation();
@@ -31,28 +31,20 @@ const ProjectInfo = () => {
         <section className={styles.description}>
           <div className={styles.description__wrapper}>
             <div className={styles.description__header}>
-              <img
-                className={styles.description__img}
-                src={descriptionIcon}
-                alt=""
-              />
-              <h3 className={styles.description__title}>Описание</h3>
+<img className={styles.description__img} src={descriptionIcon} alt="" />
+            <h3 className={styles.description__title}>Описание</h3>
             </div>
-
+            
             <p className={styles.description__text}>{project.Description}</p>
           </div>
         </section>
         <section className={styles.description}>
           <div className={styles.description__wrapper}>
             <div className={styles.description__header}>
-              <img
-                className={styles.description__img}
-                src={contactIcon}
-                alt=""
-              />
-              <h3 className={styles.description__title}>Контакты</h3>
+<img className={styles.description__img} src={contactIcon} alt="" />
+            <h3 className={styles.description__title}>Контакты</h3>
             </div>
-
+            
             <p className={styles.description__text}>{project.Description}</p>
           </div>
         </section>
