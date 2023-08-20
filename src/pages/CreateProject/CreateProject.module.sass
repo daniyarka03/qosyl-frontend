@@ -57,6 +57,21 @@
     @media screen and (max-width: 390px)
         min-width: 30.2rem
 
+.select
+    outline: none
+    padding: 3rem 2rem
+    border-radius: 1.2rem
+    @include heading-font($black)
+    font-size: 1.25rem
+    background-image: url("data:image/svg+xml,<svg height='15px' width='15px' viewBox='0 0 16 16' fill='black' xmlns='http://www.w3.org/2000/svg'><path d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/></svg>")
+    background-repeat: no-repeat
+    background-color: #fff
+    background-position: calc(100% - 15px) center
+    cursor: pointer
+
+select.decorated option:hover
+    box-shadow: 0 0 10px 100px #1882A8 inset
+
 .form
     display: flex
     flex-direction: column

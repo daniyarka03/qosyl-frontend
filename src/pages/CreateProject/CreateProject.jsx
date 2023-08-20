@@ -84,14 +84,22 @@ const CreateProject = () => {
               </div>
 
               <div className={styles.input__wrapper}>
-                <Input
-                  placeholder="Тип проекта"
-                  type="text"
-                  name="text"
-                  id="projectType"
+                <select
+                  className={`${styles.input__wrapper} ${styles.select}`}
                   value={type}
                   onChange={(event) => setType(event.target.value)}
-                />
+                >
+                  <option value="" disabled hidden>
+                    Тип проекта
+                  </option>
+                  <option value="Социальное приложение">
+                    Социальное приложение
+                  </option>
+                  <option value="Образовательное приложение">
+                    Образовательное приложение
+                  </option>
+                  <option value="Другое">Другое</option>
+                </select>
               </div>
             </div>
           </div>
