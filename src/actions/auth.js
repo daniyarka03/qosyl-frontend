@@ -14,7 +14,7 @@ export const checkAuthenticated = () => async (dispatch) => {
         const config = {
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `JWT ${localStorage.getItem('access')}`,
+                'Authorization': `Bearer ${localStorage.getItem('userInfo')['access']}`,
                 'Accept': 'application/json'
             }
         };
@@ -22,7 +22,7 @@ export const checkAuthenticated = () => async (dispatch) => {
         const body = JSON.stringify({token: localStorage.getItem('access')});
 
         try {
-            const res = await axios.post(`http://127.0.0.1:8000/auth/jwt/verify`, body, config);
+            const res = await axios.post(`http://127.0.0.1:8000/api/users/login`, body, config);
 
             if (res.data.code !== 'token_not_valid') {
                 dispatch({
@@ -51,17 +51,17 @@ export const load_user = () => async (dispatch) => {
         const config = {
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `JWT ${localStorage.getItem('access')}`,
+                'Authorization': `Bearer ${localStorage.getItem('userInfo')['access']}`,
                 'Accept': 'application/json'
             }
         }
 
         try {
-            const res = await axios.get(`http://127.0.0.1:8000/auth/users/me`, config);
+            const res = await axios.get(`http://127.0.0.1:8000/api/users/login`, config);
 
             dispatch({
                 type: USER_LOADED_SUCCESS,
-                payload: res.data
+                userLogin: res.data
             });
 
             console.log('USER_LOADED_SUCCESS')
@@ -92,11 +92,11 @@ export const login = (email, password) => async (dispatch) => {
     const body = JSON.stringify({email, password});
 
     try {
-        const res = await axios.post(`http://127.0.0.1:8000/auth/jwt/create`, body, config);
+        const res = await axios.post(`http://127.0.0.1:8000/api/users/login`, body, config);
 
         dispatch({
             type: LOGIN_SUCCESS,
-            payload: res.data
+            userLogin: res.data
         });
 
         dispatch(load_user());

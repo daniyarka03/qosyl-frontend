@@ -1,34 +1,40 @@
-
     import React, {useEffect, useState} from "react";
     import styles from "./SignInUp.module.sass";
     import {Link, useNavigate} from "react-router-dom";
     import projectLogo from "../../assets/project-logo.svg";
     import Input from "../../components/Input/Input";
-    import {connect} from "react-redux";
-    import {login} from "../../actions/auth";
+    import {connect, useDispatch, useSelector} from "react-redux";
+    import {login} from "../../actions/UserActions";
 
 
-    const SignIn = ({login, isAuthenticated}) => {
-
-
-
+    const SignIn = () => {
         const [email, setEmail] = useState('');
         const [password, setPassword] = useState('');
-        const URL = "127.0.0.1:8000";
         const navigate = useNavigate();
 
-        const onSubmit = e => {
-            e.preventDefault();
+        const dispatch = useDispatch();
 
-            login(email, password)
-        };
+        const userLogin = useSelector(state => state.userLogin);
+        const { error, loading, userInfo } = userLogin;
+
+        console.log(userInfo);
 
 
         useEffect(() => {
-            if (isAuthenticated) {
-                return navigate("/projects");
-            }
-        }, [isAuthenticated, navigate]);
+           if (userInfo) {
+               navigate("/profile");
+           }
+        }, [navigate, userInfo]);
+
+        const onSubmit = e => {
+            e.preventDefault();
+            dispatch(login(email, password))
+            console.log(email + '/' + password)
+
+        };
+
+
+
 
 
       return (
@@ -37,6 +43,8 @@
             <img className={styles.header__logo} src={projectLogo} alt="qosyl.me" />
             <h2 className={styles.header__title}>Авторизация</h2>
           </div>
+            {error && <div className="alert alert-danger">{error}</div>}
+            {loading && <div className="alert alert-info">Загрузка...</div>}
           <form action="" className={styles.form} onSubmit={e => onSubmit(e)}>
             <Input
                 placeholder="Email"
@@ -71,8 +79,6 @@
       );
     };
 
-    const mapStateToProps = state => ({
-        isAuthenticated: state.auth.isAuthenticated
-    });
 
-    export default connect(mapStateToProps, {login})(SignIn);
+
+    export default SignIn;

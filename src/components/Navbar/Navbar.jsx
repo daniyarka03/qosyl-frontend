@@ -1,19 +1,17 @@
 import React, { Fragment } from "react";
 import "./Navbar.sass";
-import { connect } from "react-redux";
-import { logout } from "../../actions/auth.js";
 import { Link } from "react-router-dom";
 
-const Navbar = ({ logout, isAuthenticated }) => {
+const Navbar = () => {
   // const guestLinks = () => {
   //   <Fragment
   // };
 
-  const authLinks = () => {};
-
-  const logoutHandler = () => {
-    logout();
-  };
+  // const authLinks = () => {};
+  //
+  // const logoutHandler = () => {
+  //   logout();
+  // };
 
   return (
     <nav className="navbar">
@@ -132,7 +130,7 @@ const Navbar = ({ logout, isAuthenticated }) => {
           </Link>
         </li>
 
-        <li className="nav-item" onClick={logout}>
+        <li className="nav-item">
           <Link to={"/profile"} className="nav-link">
             <svg
               width="26"
@@ -157,8 +155,9 @@ const Navbar = ({ logout, isAuthenticated }) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  isAuthenticated: state.auth.isAuthenticated,
-});
+// const mapStateToProps = (state) => ({
+//   isAuthenticated: state.auth.isAuthenticated,
+// });
 
-export default connect(mapStateToProps, { logout })(Navbar);
+// export default connect(mapStateToProps, { logout })(Navbar);
+export default Navbar;

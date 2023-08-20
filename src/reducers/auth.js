@@ -8,19 +8,18 @@ import {
     LOGOUT
 } from "../actions/types";
 
-let i = 0;
+const userInfoFromStorage = localStorage.getItem('userInfo')
+    ? JSON.parse(localStorage.getItem('userInfo')) : null;
+
 
 const initialState = {
-    access: localStorage.getItem("access"),
-    refresh: localStorage.getItem("refresh"),
-    isAuthenticated: null,
-    user: null
+    userLogin: userInfoFromStorage,
+    isAuthenticated: !!userInfoFromStorage,
 };
 
 export default function (state = initialState, action) {
     const {type, payload} = action;
     switch (type) {
-
         case AUTHENTICATED_SUCCESS:
             return {
                 ...state,
@@ -31,15 +30,6 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 isAuthenticated: false
-            }
-
-        case LOGIN_SUCCESS:
-            localStorage.setItem("access", payload.access);
-            return {
-                ...state,
-                isAuthenticated: true,
-                access: payload.access,
-                refresh: payload.refresh
             }
 
         case USER_LOADED_SUCCESS:
