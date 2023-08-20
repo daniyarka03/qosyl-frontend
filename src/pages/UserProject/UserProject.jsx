@@ -1,15 +1,24 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Navbar from "../../components/Navbar/Navbar";
 import styles from "./UserProject.module.sass";
 import cleekLogo from "../../assets/cleek-logo.png";
 import { useLocation, useNavigate } from "react-router-dom";
 import descriptionIcon from "../../assets/description-icon.svg";
 import contactIcon from "../../assets/contact-icon.svg";
+import axios from "axios";
+
 
 const UserProject = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const project = location.state.project;
+  const src = `http://127.0.0.1:8000/api/projects/${project.project_id}/delete`;
+
+  const deleteProject = () => {
+    axios.delete(src).then(() => {})
+    navigate("/profile")
+  }
+
   return (
     <>
       <Navbar />
@@ -23,7 +32,7 @@ const UserProject = () => {
                 <p className={styles.project__type}>{project.type}</p>
               </div>
               <button
-                className={`${styles.button} ${styles.button__join}`}
+                className={`${styles.button} ${styles.button__edit}`}
                 onClick={() =>
                   navigate(`/edit-project/${project.project_id}`, {
                     state: { project },
@@ -31,6 +40,12 @@ const UserProject = () => {
                 }
               >
                 Изменить
+              </button>
+              <button
+                className={`${styles.button} ${styles.button__delete}`}
+                onClick={deleteProject}
+              >
+                Удалить
               </button>
             </div>
           </div>
