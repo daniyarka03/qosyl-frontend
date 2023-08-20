@@ -10,7 +10,6 @@ const Input = ({
   value,
   onChange,
   minLength,
-  handleChange,
 }) => {
   return withIcon ? (
     <div className={styles.input__wrapper}>
@@ -19,7 +18,7 @@ const Input = ({
         placeholder={placeholder}
         type={type}
         value={value}
-        onChange={handleChange}
+        onChange={onChange}
         required={required}
         minLength={minLength}
       />
@@ -32,7 +31,7 @@ const Input = ({
         placeholder={placeholder}
         type={type}
         value={value}
-        onChange={handleChange}
+        onChange={onChange}
         required={required}
       />
     </div>
