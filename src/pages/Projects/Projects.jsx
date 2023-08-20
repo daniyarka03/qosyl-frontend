@@ -6,18 +6,18 @@ import axios from "axios";
 import ProjectCard from "../../components/ProjectCard/ProjectCard";
 import Carousel from "../../components/Carousel/Carousel";
 import Navbar from "../../components/Navbar/Navbar";
+import { useNavigate } from "react-router-dom";
 
-const src =
-  "https://raw.githubusercontent.com/daniyarorazov/sampleDataJson/main/projectsSampleData.json";
+const projectsAPI = "http://127.0.0.1:8000/api/projects/";
 
-const Projects = ({isAuthenticated}) => {
+const Projects = ({ isAuthenticated }) => {
+  const navigate = useNavigate();
   const [projects, setProjects] = useState([]);
   useEffect(() => {
-    axios.get(src).then((data) => {
+    axios.get(projectsAPI).then((data) => {
       setProjects(data.data);
     });
   }, []);
-
 
   return (
     <>
@@ -36,7 +36,17 @@ const Projects = ({isAuthenticated}) => {
         <Carousel />
         <section className={styles.projects}>
           {projects.map((project) => {
-            return <ProjectCard key={project.Id} project={project} />;
+            return (
+              <ProjectCard
+                key={project.project_id}
+                project={project}
+                onClick={() => {
+                  navigate(`/project/${project.project_id}}`, {
+                    state: { project },
+                  });
+                }}
+              />
+            );
           })}
         </section>
       </div>
