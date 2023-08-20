@@ -1,0 +1,108 @@
+@import "../../colors"
+@import "../../mixins"
+
+.wrapper
+    @media screen and (min-width: 600px)
+        margin-left: 10%
+        margin-right: 5%
+        max-width: 120rem
+    margin-bottom: 2.5rem
+    @media screen and (max-width: 920px)
+        max-width: 60rem
+        margin-left: 15%
+    @media screen and (max-width: 600px)
+        margin: 0 auto
+        max-width: 50rem 
+    @media screen and (max-width: 550px)
+        max-width: 40rem 
+    @media screen and (max-width: 440px)
+        max-width: 30rem 
+.header
+    background-color: $white
+    border-bottom-left-radius: 4rem
+    border-bottom-right-radius: 4rem
+    &__wrapper
+        padding: 4rem 8rem 4rem
+        @media (max-width: 592px)
+            padding: 4rem 4rem 4rem
+
+.project
+    &__header
+        display: flex
+        align-items: center
+        position: relative
+        @media screen and (max-width: 920px)
+            // flex-direction: column
+            display: grid
+            grid-template-columns: 1fr 1fr
+        @media screen and (max-width: 440px)
+            display: flex
+            flex-direction: column
+    &__info
+        display: flex
+        flex-direction: column
+        margin-left: 5.6rem
+        @media screen and (max-width: 920px)
+            margin-left: 0
+            text-align: center
+    &__logo
+        width: 10rem
+        height: 10rem
+    &__title
+        @include heading-font($primary-color)
+        font-size: 4rem
+        @media screen and (max-width: 440px)
+            margin-top: 1rem
+    &__type
+        @include heading-font($secondary-color)
+        font-size: 1.5rem
+        margin-top: 1rem
+    &__members
+        margin-top: 2rem
+        display: flex
+        align-items: center
+        &__text
+            @include heading-font($primary-color)
+            font-size: 1.4rem
+            margin-left: 1rem
+
+.button
+    @include default-button
+    right: 0
+    &__mark
+        padding: 1rem
+    &__join
+        position: absolute
+        font-size: 1.2rem
+        padding: 1.4rem 6rem
+        @media screen and (max-width: 920px)
+            position: static
+            margin-top: 3rem
+        @media screen and (max-width: 440px)
+            margin-top: 2rem
+        
+
+.description
+    margin-top: 4.5rem
+    background-color: $white
+    border-radius: 4rem
+    padding-bottom: 5rem
+    @media screen and (min-width: 600px)
+        padding-bottom: 1rem
+
+    &__wrapper
+        padding: 3rem 8rem
+        @media (max-width: 592px)
+            padding: 3rem 4rem
+    &__header
+        display: flex
+        align-items: center
+    &__title
+        @include heading-font($primary-color)
+        font-size: 2.8rem
+        margin-left: 2rem
+    &__text
+        @include heading-font($secondary-color)
+        font-size: 1.5rem
+        margin-top: 2rem
+        font-weight: 500

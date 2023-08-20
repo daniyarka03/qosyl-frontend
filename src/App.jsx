@@ -18,8 +18,8 @@ import Search from "./pages/Search/Search"
 import Posts from './pages/Posts/Posts'
 import CreatePost from './pages/CreatePost/CreatePost'
 import EditPost from './pages/EditPost/EditPost'
-import {  } from 'react-router-dom'
 import UserPage from './pages/UserPage/UserPage'
+import UserProject from './pages/UserProject/UserProject'
 
 const App = () => {
   return (
@@ -37,7 +37,7 @@ const App = () => {
               <Route path='/project/:id' element={<ProjectInfo/>}/>
 
               <Route path='/create-project' element={<CreateProject/> }/>
-              <Route path='/edit-project' element={<EditProject/> }/>
+              <Route path='/edit-project/:id' element={<EditProject/> }/>
 
               <Route path='/create-post' element={<CreatePost/>}/>
               <Route path='/edit-post' element={<EditPost/>}/>
@@ -49,6 +49,7 @@ const App = () => {
               <Route path='/notifications' element= {<Notifications/>} />
               <Route path='/profile' element= {<Profile/>} />
               <Route path='/user/:id' element= {<UserPage/>} />
+              <Route path='/my_project/:id' element={<UserProject />}></Route>
             </Routes>
           </Layout>
       </BrowserRouter>
