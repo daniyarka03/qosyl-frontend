@@ -50,15 +50,17 @@
         color: $white
 
 .info
-    display: flex
-    justify-content: space-between
-    @media screen and (max-width: 660px)
+    display: grid
+    grid-template-columns: 1fr 1fr
+    @media screen and (max-width: 860px)
+        display: flex
         flex-direction: column
+        width: clamp(26rem, 100%, 40rem)
     &__block
         margin-top: 6rem
     &__block:nth-child(2)
-        margin-left: 5rem
-        @media screen and (max-width: 660px)
+        margin-left: 8rem
+        @media screen and (max-width: 860px)
             margin-left: 0rem
 
     &__header
@@ -69,4 +71,6 @@
 
 
 .post__wrapper
+    width: clamp(28rem, 100%, 40rem)
+.project__wrapper
     width: clamp(28rem, 100%, 40rem)
