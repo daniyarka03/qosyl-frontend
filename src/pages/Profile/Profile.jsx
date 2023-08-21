@@ -60,8 +60,6 @@ const Profile = () => {
     return project.author_id === user.user_id
   });
 
-  // const [usersProjects, setUsersProjects] = useState([]);
-
   return (
     <div className={styles.wrapper}>
       <Navbar />

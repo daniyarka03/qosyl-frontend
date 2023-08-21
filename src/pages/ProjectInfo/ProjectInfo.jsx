@@ -7,27 +7,45 @@ import descriptionIcon from "../../assets/description-icon.svg";
 import contactIcon from "../../assets/contact-icon.svg";
 import axios from "axios";
 
+const userAPI = "http://127.0.0.1:8000/api/users/profile/";
 const projectsAPI = "http://127.0.0.1:8000/api/projects/";
 
 const ProjectInfo = () => {
-  const [project, setProject] = useState({})
+  const [project, setProject] = useState({});
   const navigate = useNavigate();
   const location = useLocation();
-  const projectID = location.pathname.split('/').pop();
+
+  const projectID = location.pathname.split("/").pop();
+  const [userID, setUserID] = useState({});
+
+  const userInformation = JSON.parse(localStorage.getItem("userInfo"));
+  const config = {
+    headers: { Authorization: `Bearer ${userInformation.token}` },
+  };
+
   useEffect(() => {
-    axios.get(projectsAPI + projectID).then((data) => {
-      setProject(data.data)
-    }).catch((error) => {
-      console.log(error)
-    }) 
-  }, [])
+    axios.get(userAPI, config).then((data) => {
+      setUserID(data.data.user_id);
+    });
+  }, []);
+
+  useEffect(() => {
+    axios
+      .get(projectsAPI + projectID)
+      .then((data) => {
+        setProject(data.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
 
   const src = `http://127.0.0.1:8000/api/projects/${projectID}/delete`;
 
   const deleteProject = () => {
-    axios.delete(src).then(() => {})
-    navigate("/profile")
-  }
+    axios.delete(src).then(() => {});
+    navigate("/profile");
+  };
 
   return (
     <>
@@ -41,20 +59,28 @@ const ProjectInfo = () => {
                 <p className={styles.project__title}>{project.title}</p>
                 <p className={styles.project__type}>{project.type}</p>
               </div>
-              <button
-                className={`${styles.button} ${styles.button__edit}`}
-                onClick={() =>
-                  navigate(`/edit-project/${projectID}`)
-                }
-              >
-                Изменить
-              </button>
-              <button
-                className={`${styles.button} ${styles.button__delete}`}
-                onClick={deleteProject}
-              >
-                Удалить
-              </button>
+              {userID === project.author_id ? (
+                <>
+                  <button
+                    className={`${styles.button} ${styles.button__edit}`}
+                    onClick={() => navigate(`/edit-project/${projectID}`)}
+                  >
+                    Изменить
+                  </button>
+                  <button
+                    className={`${styles.button} ${styles.button__delete}`}
+                    onClick={deleteProject}
+                  >
+                    Удалить
+                  </button>
+                </>
+              ) : (
+                <button
+                  className={`${styles.button} ${styles.button__subscribe}`}
+                >
+                  Подписаться
+                </button>
+              )}
             </div>
           </div>
         </header>
