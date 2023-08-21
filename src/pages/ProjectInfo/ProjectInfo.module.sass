@@ -31,8 +31,7 @@
         display: flex
         align-items: center
         position: relative
-        @media screen and (max-width: 920px)
-            // flex-direction: column
+        @media screen and (max-width: 1120px)
             display: grid
             grid-template-columns: 1fr 1fr
         @media screen and (max-width: 440px)
@@ -73,6 +72,12 @@
     right: 0
     &__edit
         margin-left: 30rem
+        @media screen and (max-width: 1300px) 
+            margin-left: 20rem
+        @media screen and (max-width: 1200px) 
+            margin-left: 10rem
+        @media screen and (max-width: 1120px)
+            margin-left: 0
     &__delete
         margin-left: 5rem
         background-color: #FF3CC8

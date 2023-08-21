@@ -17,8 +17,10 @@ const ProjectInfo = () => {
   useEffect(() => {
     axios.get(projectsAPI + projectID).then((data) => {
       setProject(data.data)
-    })
-  })
+    }).catch((error) => {
+      console.log(error)
+    }) 
+  }, [])
 
   const src = `http://127.0.0.1:8000/api/projects/${projectID}/delete`;
 
