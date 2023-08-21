@@ -10,9 +10,11 @@ import { logout } from "../../actions/userActions.js";
 
 const userAPI = "http://127.0.0.1:8000/api/users/profile/";
 const projectsAPI = "http://127.0.0.1:8000/api/projects/";
+const postsAPI = "http://127.0.0.1:8000/api/posts/";
 
 const Profile = () => {
   const [user, setUser] = useState({});
+  const [posts, setPosts] = useState([]);
   const [projects, setProjects] = useState([]);
 
   const userInformation = JSON.parse(localStorage.getItem("userInfo"));
@@ -21,7 +23,6 @@ const Profile = () => {
   };
   useEffect(() => {
     axios.get(userAPI, config).then((data) => {
-      console.log(data.data);
       setUser(data.data);
     });
   }, []);
@@ -32,14 +33,16 @@ const Profile = () => {
     });
   }, []);
 
+  useEffect(() => {
+    axios.get(postsAPI).then((data) => {
+      setPosts(data.data)
+    })
+  })
+
   const navigate = useNavigate();
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo, isAuthenticated } = userLogin;
-
-  console.log(userLogin);
-  console.log(userInfo);
-  console.log(isAuthenticated);
 
   const dispatch = useDispatch();
 
@@ -48,6 +51,16 @@ const Profile = () => {
     navigate("/");
     dispatch(logout());
   };
+
+  const usersPosts = posts.filter(post => {
+    return post.author_id === user.user_id
+  });
+
+  const usersProjects = projects.filter(project => {
+    return project.author_id === user.user_id
+  });
+
+  // const [usersProjects, setUsersProjects] = useState([]);
 
   return (
     <div className={styles.wrapper}>
@@ -75,24 +88,31 @@ const Profile = () => {
         <div className={styles.info__block}>
           <p className={styles.info__header}>Посты</p>
           <div className={styles.post__wrapper}>
-            <PostCard />
+            {usersPosts.map(post => {
+              return (
+                <PostCard key={post.post_id} content={post.content} />
+              )
+            })}
           </div>
         </div>
         <div className={styles.info__block}>
           <p className={styles.info__header}>Проекты</p>
-          {projects.map((project) => {
+          <div className={styles.project__wrapper}>
+          {usersProjects.map((project) => {
             return (
+              
               <ProjectCard
                 key={project.project_id}
                 project={project}
                 onClick={() => {
-                  navigate(`/my_project/${project.project_id}`, {
+                  navigate(`/project/${project.project_id}`, {
                     state: { project },
                   });
                 }}
               />
             );
           })}
+          </div>
         </div>
       </div>
     </div>

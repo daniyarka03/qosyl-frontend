@@ -19,7 +19,6 @@ import Posts from './pages/Posts/Posts'
 import CreatePost from './pages/CreatePost/CreatePost'
 import EditPost from './pages/EditPost/EditPost'
 import UserPage from './pages/UserPage/UserPage'
-import UserProject from './pages/UserProject/UserProject'
 
 const App = () => {
   return (
@@ -49,7 +48,6 @@ const App = () => {
               <Route path='/notifications' element= {<Notifications/>} />
               <Route path='/profile' element= {<Profile/>} />
               <Route path='/user/:id' element= {<UserPage/>} />
-              <Route path='/my_project/:id' element={<UserProject />}></Route>
             </Routes>
           </Layout>
       </BrowserRouter>

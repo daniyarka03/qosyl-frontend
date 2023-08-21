@@ -41,9 +41,7 @@ const Projects = ({ isAuthenticated }) => {
                 key={project.project_id}
                 project={project}
                 onClick={() => {
-                  navigate(`/project/${project.project_id}}`, {
-                    state: { project },
-                  });
+                  navigate(`/project/${project.project_id}}`);
                 }}
               />
             );

@@ -9,22 +9,38 @@ import animalsImage from "../../assets/animals.png";
 import Avatar from "react-avatar-edit";
 import { useLocation, useNavigate } from "react-router-dom";
 
+const projectsAPI = "http://127.0.0.1:8000/api/projects/";
+
 const EditProject = () => {
   const navigate = useNavigate();
-  const location = useLocation();
-  const initialProject = location.state?.project;
+  const location = useLocation(); 
+  const projectID = location.pathname.split('/').pop();
 
-  const [project, setProject] = useState(initialProject);
+  useEffect(() => {
+    const getProject = async () => {
+      try { 
+        const response = await axios.get(projectsAPI + projectID)
+        setTitle(response.data.title)
+        setType(response.data.type)
+        setDescription(response.data.description)
+        setContact(response.data.contact)
+        setAuthorID(response.data.author_id)
+        
+      } catch (error) {
+        console.log("Failed fetching", error)
+      }
+    }
+    getProject()
+    
+  }, [])
 
-  const src = project
-    ? `http://127.0.0.1:8000/api/projects/${project.project_id}/update/`
-    : "";
+  const src = `http://127.0.0.1:8000/api/projects/${projectID}/update/`
 
-  const [title, setTitle] = useState(project?.title || "");
-  const [type, setType] = useState(project?.type || "");
-  const [description, setDescription] = useState(project?.description || "");
-  const [contact, setContact] = useState(project?.contact || "");
-
+  const [title, setTitle] = useState("");
+  const [type, setType] = useState("");
+  const [description, setDescription] = useState("");
+  const [contact, setContact] = useState("");
+  const [authordID, setAuthorID] = useState("");
   const [imageSrc, setImageSrc] = useState(null);
   const [preview, setPreview] = useState(null);
 
@@ -36,8 +52,9 @@ const EditProject = () => {
     setPreview(view);
   };
 
-  const handleSubmit = () => {
-    if (project) {
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    navigate(`/project/${projectID}`)
       axios
         .put(src, {
           title: title,
@@ -45,16 +62,17 @@ const EditProject = () => {
           type: type,
           image_src: imageSrc,
           contact: contact,
+          author_id: authordID
         })
         .then(function (response) {
           console.log(response);
         })
         .catch(function (error) {
-          console.log(error);
+          console.log("An error occurred:", error);
         });
     }
-    navigate("/profile");
-  };
+    
+  
 
   return (
     <>
