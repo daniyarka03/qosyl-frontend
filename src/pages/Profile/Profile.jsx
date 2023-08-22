@@ -39,6 +39,10 @@ const Profile = () => {
     });
   }, []);
 
+  const handleDeletePost = (deletedPostID) => {
+    setPosts((prevPosts) => prevPosts.filter((post) => post.post_id !== deletedPostID));
+  };
+
   const navigate = useNavigate();
 
   const userLogin = useSelector((state) => state.userLogin);
@@ -94,6 +98,7 @@ const Profile = () => {
                   content={post.content}
                   postID={post.post_id}
                   isUserPost={user.user_id === post.author_id}
+                  onDelete={handleDeletePost} 
                 />
               );
             })}
@@ -108,9 +113,7 @@ const Profile = () => {
                   key={project.project_id}
                   project={project}
                   onClick={() => {
-                    navigate(`/project/${project.project_id}`, {
-                      state: { project },
-                    });
+                    navigate(`/project/${project.project_id}`);
                   }}
                 />
               );
