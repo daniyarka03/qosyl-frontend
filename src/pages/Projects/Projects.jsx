@@ -13,11 +13,22 @@ const projectsAPI = "http://127.0.0.1:8000/api/projects/";
 const Projects = ({ isAuthenticated }) => {
   const navigate = useNavigate();
   const [projects, setProjects] = useState([]);
+
   useEffect(() => {
     axios.get(projectsAPI).then((data) => {
       setProjects(data.data);
     });
   }, []);
+
+  const [filteredProjects, setFilteredProjects] = useState(projects);
+  const [inputText, setInputText] = useState("");
+
+  useEffect(() => {
+    const filtered = projects.filter((project) => {
+      return project.title.toLowerCase().includes(inputText.toLowerCase());
+    });
+    setFilteredProjects(filtered);
+  }, [inputText, projects]);
 
   return (
     <>
@@ -26,6 +37,8 @@ const Projects = ({ isAuthenticated }) => {
         <header className={styles.header}>
           <h2 className={styles.header__title}>Проекты</h2>
           <Input
+            inputText={inputText}
+            setInputText={setInputText}
             className={styles.header__input}
             type="text"
             placeholder="Поиск..."
@@ -35,7 +48,7 @@ const Projects = ({ isAuthenticated }) => {
         </header>
         <Carousel />
         <section className={styles.projects}>
-          {projects.map((project) => {
+          {filteredProjects.map((project) => {
             return (
               <ProjectCard
                 key={project.project_id}
