@@ -7,7 +7,7 @@ import likeIconUnfilled from "../../assets/like-outline-icon.svg";
 import likeIconFilled from "../../assets/like-icon.svg";
 import commentIcon from "../../assets/comment-icon.svg";
 
-const PostCard = ({ isUserPost, authorName, postID, content }) => {
+const PostCard = ({ isUserPost, authorName, postID, content, onDelete}) => {
   const [isLiked, setIsLiked] = useState(false);
   const navigate = useNavigate();
   const deletePostURL = `http://127.0.0.1:8000/api/posts/${postID}/delete/`;
@@ -16,6 +16,7 @@ const PostCard = ({ isUserPost, authorName, postID, content }) => {
       .delete(deletePostURL)
       .then((response) => {
         console.log(response);
+        onDelete(postID)
       })
       .catch((error) => {
         console.log(error);
