@@ -27,11 +27,33 @@
         font-weight: normal
         @media screen and (min-width: 600px)
             font-size: 1.4rem
+    &__actions
+        display: flex
+        margin-top: 1rem
+    &__action
+        display: flex
+        margin-left: 2rem
+        &:nth-child(1)
+            margin-left: 0
+        &__img
+            cursor: pointer
+        &__count
+            color: #000
+            font-family: "Montserrat", sans-serif
+            font-size: 0.75rem
+            font-style: normal
+            font-weight: 700
+            line-height: 127.7%
+            margin-left: 1rem
+            font-size: 1.5rem
+
+    &__buttons
+        display: grid
+        grid-template-columns: 1fr 1fr
+        column-gap: 2rem
+        margin-top: 1rem
     &__button
         @include default-button
-        margin-top: 2rem
         padding: 1rem 2rem
-    &__edit
     &__delete
-        margin-left: 3rem
         background-color: #FF3CC8
