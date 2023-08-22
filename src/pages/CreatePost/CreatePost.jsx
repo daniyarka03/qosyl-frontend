@@ -3,11 +3,13 @@ import styles from "./CreatePost.module.sass";
 import projectLogo from "../../assets/project-logo.svg";
 import Navbar from "../../components/Navbar/Navbar";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const whereToUpdate = "http://127.0.0.1:8000/api/posts/create/";
 const src = "http://127.0.0.1:8000/api/users/profile/";
 
 const CreatePost = () => {
+  const navigate = useNavigate()
   const [author, setAuthor] = useState("");
   const [description, setDescription] = useState("");
   const [userID, setUserID] = useState(0)
@@ -27,7 +29,9 @@ const CreatePost = () => {
     }
     getUser()
   }, [])
-  const handleSubmit = () => {
+  const handleSubmit = (event) => {
+    event.preventDefault()
+    navigate("/profile")
     axios
       .post(whereToUpdate, {
         content: description,

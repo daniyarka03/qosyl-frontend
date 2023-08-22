@@ -35,9 +35,9 @@ const Profile = () => {
 
   useEffect(() => {
     axios.get(postsAPI).then((data) => {
-      setPosts(data.data)
-    })
-  })
+      setPosts(data.data);
+    });
+  });
 
   const navigate = useNavigate();
 
@@ -52,12 +52,12 @@ const Profile = () => {
     dispatch(logout());
   };
 
-  const usersPosts = posts.filter(post => {
-    return post.author_id === user.user_id
+  const usersPosts = posts.filter((post) => {
+    return post.author_id === user.user_id;
   });
 
-  const usersProjects = projects.filter(project => {
-    return project.author_id === user.user_id
+  const usersProjects = projects.filter((project) => {
+    return project.author_id === user.user_id;
   });
 
   return (
@@ -86,30 +86,35 @@ const Profile = () => {
         <div className={styles.info__block}>
           <p className={styles.info__header}>Посты</p>
           <div className={styles.post__wrapper}>
-            {usersPosts.map(post => {
+            {usersPosts.map((post) => {
               return (
-                <PostCard key={post.post_id} content={post.content} postID={post.post_id}/>
-              )
+                <PostCard
+                  key={post.post_id}
+                  authorName={post.author_name}
+                  content={post.content}
+                  postID={post.post_id}
+                  isUserPost={user.user_id === post.author_id}
+                />
+              );
             })}
           </div>
         </div>
         <div className={styles.info__block}>
           <p className={styles.info__header}>Проекты</p>
           <div className={styles.project__wrapper}>
-          {usersProjects.map((project) => {
-            return (
-              
-              <ProjectCard
-                key={project.project_id}
-                project={project}
-                onClick={() => {
-                  navigate(`/project/${project.project_id}`, {
-                    state: { project },
-                  });
-                }}
-              />
-            );
-          })}
+            {usersProjects.map((project) => {
+              return (
+                <ProjectCard
+                  key={project.project_id}
+                  project={project}
+                  onClick={() => {
+                    navigate(`/project/${project.project_id}`, {
+                      state: { project },
+                    });
+                  }}
+                />
+              );
+            })}
           </div>
         </div>
       </div>
