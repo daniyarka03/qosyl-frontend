@@ -6,15 +6,27 @@ import searchIcon from "../../assets/search-icon.svg";
 import UserCard from "../../components/UserCard/UserCard.jsx";
 import axios from "axios";
 
-const src = "http://127.0.0.1:8000/api/users/";
+const usersAPI = "http://127.0.0.1:8000/api/users/";
+const currentUserAPI = "http://127.0.0.1:8000/api/users/profile/";
 
 const Users = () => {
+  const [currentUser, setCurrentUser] = useState({});
   const [users, setUsers] = useState([]);
+
+  const userInformation = JSON.parse(localStorage.getItem("userInfo"));
+  const config = {
+    headers: { Authorization: `Bearer ${userInformation.token}` },
+  };
+  useEffect(() => {
+    axios.get(currentUserAPI, config).then((data) => {
+      setCurrentUser(data.data);
+    });
+  }, []);
 
   useEffect(() => {
     const getUsers = async () => {
       try {
-        const response = await axios.get(src);
+        const response = await axios.get(usersAPI);
         setUsers(response.data);
       } catch {
         console.error("Error fetching users:", users);
@@ -50,7 +62,7 @@ const Users = () => {
           />
         </div>
         {filteredUsers.map((user) => (
-          <UserCard key={user.id} userId={user.id} name={user.name} />
+          <UserCard key={user.id} userId={user.user_id} name={user.name} currentUser={currentUser}/>
         ))}
       </div>
     </div>
