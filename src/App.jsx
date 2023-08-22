@@ -39,7 +39,7 @@ const App = () => {
               <Route path='/edit-project/:id' element={<EditProject/> }/>
 
               <Route path='/create-post' element={<CreatePost/>}/>
-              <Route path='/edit-post' element={<EditPost/>}/>
+              <Route path='/edit-post/:id' element={<EditPost/>}/>
 
               <Route path='/search' element={<Search/>}/>
               <Route path="/search/projects" element={<Projects />} />

@@ -13,28 +13,26 @@ const projectsAPI = "http://127.0.0.1:8000/api/projects/";
 
 const EditProject = () => {
   const navigate = useNavigate();
-  const location = useLocation(); 
-  const projectID = location.pathname.split('/').pop();
+  const location = useLocation();
+  const projectID = location.pathname.split("/").pop();
 
   useEffect(() => {
     const getProject = async () => {
-      try { 
-        const response = await axios.get(projectsAPI + projectID)
-        setTitle(response.data.title)
-        setType(response.data.type)
-        setDescription(response.data.description)
-        setContact(response.data.contact)
-        setAuthorID(response.data.author_id)
-        
+      try {
+        const response = await axios.get(projectsAPI + projectID);
+        setTitle(response.data.title);
+        setType(response.data.type);
+        setDescription(response.data.description);
+        setContact(response.data.contact);
+        setAuthorID(response.data.author_id);
       } catch (error) {
-        console.log("Failed fetching", error)
+        console.log("Failed fetching", error);
       }
-    }
-    getProject()
-    
-  }, [])
+    };
+    getProject();
+  }, []);
 
-  const src = `http://127.0.0.1:8000/api/projects/${projectID}/update/`
+  const src = `http://127.0.0.1:8000/api/projects/${projectID}/update/`;
 
   const [title, setTitle] = useState("");
   const [type, setType] = useState("");
@@ -54,25 +52,23 @@ const EditProject = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    navigate(`/project/${projectID}`)
-      axios
-        .put(src, {
-          title: title,
-          description: description,
-          type: type,
-          image_src: imageSrc,
-          contact: contact,
-          author_id: authordID
-        })
-        .then(function (response) {
-          console.log(response);
-        })
-        .catch(function (error) {
-          console.log("An error occurred:", error);
-        });
-    }
-    
-  
+    navigate(`/project/${projectID}`);
+    axios
+      .put(src, {
+        title: title,
+        description: description,
+        type: type,
+        image_src: imageSrc,
+        contact: contact,
+        author_id: authordID,
+      })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log("An error occurred:", error);
+      });
+  };
 
   return (
     <>

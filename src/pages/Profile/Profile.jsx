@@ -88,7 +88,7 @@ const Profile = () => {
           <div className={styles.post__wrapper}>
             {usersPosts.map(post => {
               return (
-                <PostCard key={post.post_id} content={post.content} />
+                <PostCard key={post.post_id} content={post.content} postID={post.post_id}/>
               )
             })}
           </div>
