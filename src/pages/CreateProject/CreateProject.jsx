@@ -60,7 +60,7 @@ const CreateProject = () => {
         author_id: userID
       })
       .then(function (response) {
-        // navigate(`/project/${response.data.project_id}`, response.data)
+        navigate(`/project/${response.data.project_id}`, response.data)
         console.log(response.data);
         console.log({
           title: title,
