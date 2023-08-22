@@ -37,7 +37,7 @@ const Profile = () => {
     axios.get(postsAPI).then((data) => {
       setPosts(data.data);
     });
-  });
+  }, []);
 
   const navigate = useNavigate();
 
