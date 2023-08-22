@@ -3,7 +3,8 @@ import styles from "./PostCard.module.sass";
 import postCardAvatar from "../../assets/post-card-avatar.png";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-
+import likeIcon from "../../assets/like-icon.svg";
+import commentIcon from "../../assets/comment-icon.svg";
 const PostCard = ({ isUserPost, authorName, postID, content }) => {
   const navigate = useNavigate();
   const deletePostURL = `http://127.0.0.1:8000/api/posts/${postID}/delete/`
@@ -26,7 +27,17 @@ const PostCard = ({ isUserPost, authorName, postID, content }) => {
           <p className={styles.post__creator__name}>{authorName}</p>
         </div>
         <p className={styles.post__description}>{content}</p>
-        {isUserPost && (<>
+        <div className={styles.post__actions}>
+          <div className={styles.post__action}>
+            <img className={styles.post__action__img} src={likeIcon} alt="like-icon" />
+            <p className={styles.post__action__count}>94</p>
+          </div>
+          <div className={styles.post__action}>
+            <img className={styles.post__action__img} src={commentIcon} alt="comment-icon" />
+            <p className={styles.post__action__count}>2</p>
+          </div>
+        </div>
+        {isUserPost && (<div className={styles.post__buttons}>
           <button
           className={`${styles.post__button} ${styles.post__edit}`}
           onClick={() => navigate(`/edit-post/${postID}`)}
@@ -35,9 +46,7 @@ const PostCard = ({ isUserPost, authorName, postID, content }) => {
         </button>
         <button className={`${styles.post__button} ${styles.post__delete}`} onClick={deletePost}>
           Удалить
-        </button></>)}
-        
-        <div className={styles.post__actions}></div>
+        </button></div>)}
       </div>
     </div>
   );
