@@ -19,6 +19,7 @@ import Posts from './pages/Posts/Posts'
 import CreatePost from './pages/CreatePost/CreatePost'
 import EditPost from './pages/EditPost/EditPost'
 import UserPage from './pages/UserPage/UserPage'
+import Home from './pages/Home/Home'
 
 const App = () => {
   return (
@@ -29,7 +30,7 @@ const App = () => {
             <Routes>
               <Route path='/' element={<SignIn/>}/>
               <Route path='/registration' element={<SignUp/>}/>
-
+              <Route path='/home' element={<Home/>} />
               
               <Route path='/reset-password' element={<ResetPassword/>}/>
               <Route path='/password/reset/confirm/:uid/:token' element={<ResetPasswordConfirm/>}/>
