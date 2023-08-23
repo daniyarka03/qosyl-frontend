@@ -114,6 +114,7 @@ const CreateProject = () => {
                   id="projectName"
                   value={title}
                   onChange={(event) => setTitle(event.target.value)}
+                  maxlength="100"
                 />
               </div>
 
@@ -142,6 +143,7 @@ const CreateProject = () => {
             placeholder="Описание"
             value={description}
             onChange={(event) => setDescription(event.target.value)}
+            maxLength="800"
           />
           <div className={styles.form__contacts}>
             <p className={styles.contacts__header}>Контакты</p>
@@ -156,6 +158,7 @@ const CreateProject = () => {
                     id="projectContact"
                     value={contact}
                     onChange={(event) => setContact(event.target.value)}
+                    maxlength="100"
                   />
                 </div>
                 <button className={styles.form__button} type="submit">

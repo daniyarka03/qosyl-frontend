@@ -12,6 +12,8 @@ const Input = ({
   minLength,
   inputText,
   setInputText,
+                   maxlength,
+
 }) => {
   return withIcon ? (
     <div className={styles.input__wrapper}>
@@ -23,8 +25,9 @@ const Input = ({
         onChange={(event) => setInputText(event.target.value)}
         required={required}
         minLength={minLength}
+        maxLength={maxlength}
       />
-      <img className={styles.input__img} src={imageSrc} />
+      <img className={styles.input__img} src={imageSrc} alt="img" />
     </div>
   ) : (
     <div className={styles.input__wrapper}>
@@ -35,6 +38,7 @@ const Input = ({
         value={value}
         onChange={onChange}
         required={required}
+        maxLength={maxlength}
       />
     </div>
   );
