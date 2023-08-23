@@ -46,7 +46,6 @@ const Projects = ({ isAuthenticated }) => {
             imageSrc={searchIcon}
           />
         </header>
-        <Carousel />
         <section className={styles.projects}>
           {filteredProjects.map((project) => {
             return (

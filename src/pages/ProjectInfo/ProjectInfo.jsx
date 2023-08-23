@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../../components/Navbar/Navbar";
 import styles from "./ProjectInfo.module.sass";
-import cleekLogo from "../../assets/cleek-logo.png";
 import { useLocation, useNavigate } from "react-router-dom";
 import descriptionIcon from "../../assets/description-icon.svg";
 import contactIcon from "../../assets/contact-icon.svg";
@@ -34,6 +33,7 @@ const ProjectInfo = () => {
       .get(projectsAPI + projectID)
       .then((data) => {
         setProject(data.data);
+        console.log(data.data)
       })
       .catch((error) => {
         console.log(error);
@@ -54,7 +54,9 @@ const ProjectInfo = () => {
         <header className={styles.header}>
           <div className={styles.header__wrapper}>
             <div className={styles.project__header}>
-              <img className={styles.project__logo} src={cleekLogo} alt="" />
+            {project.image_src && (
+    <img className={styles.project__logo} src={project.image_src} alt="Project Logo" />
+  )}
               <div className={styles.project__info}>
                 <p className={styles.project__title}>{project.title}</p>
                 <p className={styles.project__type}>{project.type}</p>

@@ -6,7 +6,7 @@ import Navbar from "../../components/Navbar/Navbar";
 import axios from "axios";
 import initialAvatar from "../../assets/load-avatar.svg";
 import animalsImage from "../../assets/animals.png";
-import Avatar from "react-avatar-edit";
+import Avatar from "../../components/Avatar/Avatar";
 import { useNavigate } from "react-router-dom";
 
 const whereToUpdate = "http://127.0.0.1:8000/api/projects/create/";
@@ -20,7 +20,7 @@ const CreateProject = () => {
   const [description, setDescription] = useState("");
   const [contact, setContact] = useState("");
   const [userID, setUserID] = useState(0)
-
+  const [imageSrc, setImageSrc] = useState(null);
   const userToken = JSON.parse(localStorage.getItem("userInfo")).token
   const config = {headers: {'Authorization': `Bearer ${userToken}`},}
 
@@ -37,16 +37,7 @@ const CreateProject = () => {
     getUser()
   }, [])
 
-  const [imageSrc, setImageSrc] = useState(null);
-  const [preview, setPreview] = useState(null);
 
-  const onClose = () => {
-    setPreview(null);
-  };
-
-  const onCrop = (view) => {
-    setPreview(view);
-  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -81,15 +72,6 @@ const CreateProject = () => {
   return (
     <>
       <Navbar />
-      {/* <Avatar
-        width={400}
-        height={300}
-        onCrop={onCrop}
-        onClose={onClose}
-        src={imageSrc}
-      />
-      {preview && <img src={preview} />}
-       */}
       <div className={styles.container}>
         <div className={styles.header}>
           <img
@@ -104,7 +86,7 @@ const CreateProject = () => {
         </p>
         <form className={styles.form} onSubmit={handleSubmit}>
           <div className={styles.form__header}>
-            <img className={styles.form__avatar} src={initialAvatar} />
+          <Avatar setImageSrc={setImageSrc}/>
             <div className={styles.form__header__inputs}>
               <div className={styles.input__wrapper}>
                 <Input

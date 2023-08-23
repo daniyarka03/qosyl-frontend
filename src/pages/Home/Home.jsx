@@ -10,7 +10,7 @@ const postsAPI = "http://127.0.0.1:8000/api/posts/";
 const projectsAPI = "http://127.0.0.1:8000/api/projects/";
 
 const Home = () => {
-  const [userID, setUserID] = useState(0);
+  const [user, setUser] = useState({});
   const [posts, setPosts] = useState([]);
   const [projects, setProjects] = useState([]);
 
@@ -22,7 +22,8 @@ const Home = () => {
     axios
       .get(userAPI, config)
       .then((data) => {
-        setUserID(data.data.user_id);
+        setUser(data.data);
+        console.log(data.data)
       })
       .catch((error) => {
         console.log(error);
@@ -47,24 +48,15 @@ const Home = () => {
       .catch((error) => console.log(error));
   }, []);
 
-  const filteredPosts = posts.filter((post) => {
-    return post.author_id === userID;
-  });
-
-  const lastPosts = filteredPosts.slice(1);
-
-  const filteredProjects = projects.filter((project) => {
-    return project.author_id === userID;
-  });
-
-  const lastProjects = filteredProjects.slice(1);
+  const lastPosts = posts.slice(posts.length - 2);
+  const lastProjects = projects.slice(projects.length - 2);
 
   return (
     <div>
       <Navbar />
       <div className={styles.container}>
         <div className={styles.header}>
-          <p className={styles.header__title}>Привет, Rustam</p>
+          <p className={styles.header__title}>Привет, {user.name}</p>
         </div>
         <section className={styles.section}>
           <p className={styles.section__title}>Последние посты</p>
