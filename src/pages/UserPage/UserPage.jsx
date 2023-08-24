@@ -66,7 +66,7 @@ const UserPage = () => {
         <div className={styles.info__block}>
           <p className={styles.info__header}>Проекты</p>
           {currentUserProjects.map((project) => {
-            return <ProjectCard key={project.project_id} project={project} />;
+            return <ProjectCard key={project.project_id} project={project} id = {post.post_id} />;
           })}
         </div>
       </div>

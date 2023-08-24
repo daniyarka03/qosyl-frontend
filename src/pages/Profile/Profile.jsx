@@ -108,6 +108,7 @@ const Profile = () => {
                   authorName={post.author_name}
                   content={post.content}
                   postID={post.post_id}
+                  id = {post.post_id}
                   avatar={user.avatar}
                   isUserPost={user.user_id === post.author_id}
                   onDelete={handleDeletePost}

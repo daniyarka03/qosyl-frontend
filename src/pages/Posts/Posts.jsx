@@ -31,7 +31,6 @@ const Posts = () => {
 
     fetchPosts();
   }, []);
-
   return (
     <div>
       <Navbar />

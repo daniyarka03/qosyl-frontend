@@ -29,26 +29,28 @@ const Home = () => {
       });
   }, []);
 
-  useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        const postsResponse = await axios.get("http://127.0.0.1:8000/api/posts");
-        setPosts(postsResponse.data);
 
-        const avatarsData = {};
-        for (const post of postsResponse.data) {
-          const userAPI = `http://127.0.0.1:8000/api/users/${post.author_id}`;
-          const userResponse = await axios.get(userAPI);
-          avatarsData[post.author_id] = userResponse.data.avatar;
+    useEffect(() => {
+      const fetchPosts = async () => {
+        try {
+          const postsResponse = await axios.get("http://127.0.0.1:8000/api/posts");
+          setPosts(postsResponse.data);
+
+          const avatarsData = {};
+          for (const post of postsResponse.data) {
+            const userAPI = `http://127.0.0.1:8000/api/users/${post.author_id}`;
+            const userResponse = await axios.get(userAPI);
+            avatarsData[post.author_id] = userResponse.data.avatar;
+          }
+          setAvatars(avatarsData);
+        } catch (error) {
+          console.log(error);
         }
-        setAvatars(avatarsData);
-      } catch (error) {
-        console.log(error);
-      }
-    };
+      };
 
-    fetchPosts();
-  }, []);
+      fetchPosts();
+
+    }, []);
 
   useEffect(() => {
     axios
@@ -79,6 +81,7 @@ const Home = () => {
                   authorName={post.author_name}
                   content={post.content}
                   avatar={avatars[post.author_id]}
+                  id = {post.post_id}
                 />
               );
             })}
@@ -88,7 +91,7 @@ const Home = () => {
           <p className={styles.section__title}>Последние проекты</p>
           <div className={styles.section__cards}>
             {lastProjects.map((project) => {
-              return <ProjectCard key={project.project_id} project={project} />;
+              return <ProjectCard key={project.project_id} project={project}  />;
             })}
           </div>
         </section>
