@@ -23,7 +23,6 @@ const Home = () => {
       .get(userAPI, config)
       .then((data) => {
         setUser(data.data);
-        console.log(data.data)
       })
       .catch((error) => {
         console.log(error);

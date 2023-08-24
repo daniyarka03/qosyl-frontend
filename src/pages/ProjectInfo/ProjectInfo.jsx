@@ -33,7 +33,7 @@ const ProjectInfo = () => {
       .get(projectsAPI + projectID)
       .then((data) => {
         setProject(data.data);
-        console.log(data.data)
+        console.log(data.data);
       })
       .catch((error) => {
         console.log(error);
@@ -54,9 +54,13 @@ const ProjectInfo = () => {
         <header className={styles.header}>
           <div className={styles.header__wrapper}>
             <div className={styles.project__header}>
-            {project.image_src && (
-    <img className={styles.project__logo} src={project.image_src} alt="Project Logo" />
-  )}
+              {project.image_src && (
+                <img
+                  className={styles.project__logo}
+                  src={`http://127.0.0.1:8000${project.image_src}`}
+                  alt="Project Logo"
+                />
+              )}
               <div className={styles.project__info}>
                 <p className={styles.project__title}>{project.title}</p>
                 <p className={styles.project__type}>{project.type}</p>

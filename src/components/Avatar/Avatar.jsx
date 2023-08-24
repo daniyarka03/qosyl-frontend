@@ -9,12 +9,11 @@ const Avatar = ({setImageSrc}) => {
   
   const handleImageChange = (event) => {
     const selectedFile = event.target.files[0];
-    
     if (selectedFile) {
       const reader = new FileReader();
       reader.onload = (e) => {
         setAvatarUrl(e.target.result);
-        setImageSrc(selectedFile.name)
+        setImageSrc(selectedFile)
       };
       reader.readAsDataURL(selectedFile);
     }

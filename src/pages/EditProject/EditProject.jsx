@@ -43,16 +43,16 @@ const EditProject = () => {
 
    const handleSubmit = (event) => {
     event.preventDefault();
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("description", description);
+    formData.append("type", type);
+    formData.append("contact", contact);
+    formData.append("author_id", authorID);
+    formData.append("image_src", imageSrc);
     navigate(`/project/${projectID}`);
     axios
-      .put(src, {
-        title: title,
-        description: description,
-        type: type,
-        image_src: `../../assets/images/projects/${imageSrc}`,
-        contact: contact,
-        author_id: authorID,
-      })
+      .put(src, formData)
       .then(function (response) {
         console.log(response);
       })

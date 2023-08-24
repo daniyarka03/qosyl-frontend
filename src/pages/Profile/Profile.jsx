@@ -8,7 +8,6 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../actions/userActions.js";
 import Avatar from "../../components/Avatar/Avatar";
-// import Avatar from "react-avatar-edit";
 
 const userAPI = "http://127.0.0.1:8000/api/users/profile/";
 const projectsAPI = "http://127.0.0.1:8000/api/projects/";
@@ -71,9 +70,8 @@ const Profile = () => {
   return (
     <div className={styles.wrapper}>
       <Navbar />
-
       <div className={styles.profile}>
-        <Avatar />
+        <img className={styles.profile__avatar} src={`http://127.0.0.1:8000${user.avatar}`}/>
         <div className={styles.profile__name}>{user.name}</div>
       </div>
       <div className={styles.settings}>

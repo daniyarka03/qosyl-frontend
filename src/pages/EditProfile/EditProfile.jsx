@@ -7,9 +7,43 @@ import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
 import Avatar from "../../components/Avatar/Avatar";
 
+const userAPI = "http://127.0.0.1:8000/api/users/profile/";
+const userUpdate = "http://127.0.0.1:8000/api/users/profile/edit/";
+
 const EditProfile = () => {
   const navigate = useNavigate();
   const [name, setName] = useState("");
+  const [user, setUser] = useState({});
+  const [imageSrc, setImageSrc] = useState("")
+
+  const userInformation = JSON.parse(localStorage.getItem("userInfo"));
+  const config = {
+    headers: { Authorization: `Bearer ${userInformation.token}` },
+  };
+
+  useEffect(() => {
+    axios.get(userAPI, config).then((data) => {
+      setUser(data.data);
+      setImageSrc(data.data.avatar)
+    });
+  }, []);
+  console.log(user)
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const formData = new FormData();
+    formData.append("avatar", imageSrc);
+    console.log(imageSrc)
+    navigate('/profile');
+    axios
+      .put(userUpdate, config, formData)
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log("An error occurred:", error);
+      });
+  };
   return (
     <>
       <Navbar />
@@ -22,9 +56,9 @@ const EditProfile = () => {
           />
           <h2 className={styles.header__title}>Изменение профиля</h2>
         </div>
-        <form className={styles.form}>
+        <form className={styles.form} onSubmit={handleSubmit}>
           <div className={styles.form__header}>
-            <Avatar />
+            <Avatar setImageSrc={setImageSrc}/>
             <div className={styles.form__header__inputs}>
               <div className={styles.input__wrapper}>
                 <Input

@@ -41,23 +41,24 @@ const CreateProject = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("description", description);
+    formData.append("type", type);
+    formData.append("contact", contact);
+    formData.append("author_id", userID);
+    formData.append("image_src", imageSrc);
+
     axios
-      .post(whereToUpdate, {
-        title: title,
-        description: description,
-        type: type,
-        image_src: imageSrc,
-        contact: contact,
-        author_id: userID
-      })
+      .post(whereToUpdate, formData)
       .then(function (response) {
         navigate(`/project/${response.data.project_id}`, response.data)
-        console.log(response.data);
+        console.log(selectedFile)
         console.log({
           title: title,
           description: description,
           type: type,
-          image_src: imageSrc,
+          image_src: `${imageSrc}`,
           contact: contact,
           author_id: userID
         })
