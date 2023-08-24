@@ -44,14 +44,18 @@ const Posts = () => {
           Новый пост
         </button>
         <div className={styles.post__wrapper}>
+
+
         {posts.map((post) => (
         <PostCard
           key={post.post_id}
+          id = {post.post_id}
           authorName={post.author_name}
           content={post.content}
           avatar={avatars[post.author_id]}
         />
       ))}
+
         </div>
       </div>
     </div>
