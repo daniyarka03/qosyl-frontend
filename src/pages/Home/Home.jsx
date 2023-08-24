@@ -6,13 +6,13 @@ import styles from "./Home.module.sass";
 import axios from "axios";
 
 const userAPI = "http://127.0.0.1:8000/api/users/profile/";
-const postsAPI = "http://127.0.0.1:8000/api/posts/";
 const projectsAPI = "http://127.0.0.1:8000/api/projects/";
 
 const Home = () => {
   const [user, setUser] = useState({});
   const [posts, setPosts] = useState([]);
   const [projects, setProjects] = useState([]);
+  const [avatars, setAvatars] = useState({});
 
   const userInformation = JSON.parse(localStorage.getItem("userInfo"));
   const config = {
@@ -30,12 +30,24 @@ const Home = () => {
   }, []);
 
   useEffect(() => {
-    axios
-      .get(postsAPI)
-      .then((data) => {
-        setPosts(data.data);
-      })
-      .catch((error) => console.log(error));
+    const fetchPosts = async () => {
+      try {
+        const postsResponse = await axios.get("http://127.0.0.1:8000/api/posts");
+        setPosts(postsResponse.data);
+
+        const avatarsData = {};
+        for (const post of postsResponse.data) {
+          const userAPI = `http://127.0.0.1:8000/api/users/${post.author_id}`;
+          const userResponse = await axios.get(userAPI);
+          avatarsData[post.author_id] = userResponse.data.avatar;
+        }
+        setAvatars(avatarsData);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchPosts();
   }, []);
 
   useEffect(() => {
@@ -66,7 +78,7 @@ const Home = () => {
                   key={post.post_id}
                   authorName={post.author_name}
                   content={post.content}
-                  avatar={user.avatar}
+                  avatar={avatars[post.author_id]}
                 />
               );
             })}

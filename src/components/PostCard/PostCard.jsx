@@ -19,6 +19,7 @@ const PostCard = ({ isUserPost, authorName, postID, content, onDelete, avatar, i
   const deletePostURL = `http://127.0.0.1:8000/api/posts/${postID}/delete/`;
   const postURL = `http://127.0.0.1:8000/api/posts/${id}`;
   const { userID } = useCurrentUserData();
+
   const deletePost = () => {
     axios
       .delete(deletePostURL)
