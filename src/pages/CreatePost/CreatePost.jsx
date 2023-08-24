@@ -37,6 +37,8 @@ const CreatePost = () => {
         content: description,
         author_name: author,
         author_id: userID,
+
+        likes: []
       })
       .then(function (response) {
         console.log(response);

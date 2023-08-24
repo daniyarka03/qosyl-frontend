@@ -7,6 +7,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../actions/userActions.js";
+import Avatar from "../../components/Avatar/Avatar";
 
 const userAPI = "http://127.0.0.1:8000/api/users/profile/";
 const projectsAPI = "http://127.0.0.1:8000/api/projects/";
@@ -40,7 +41,9 @@ const Profile = () => {
   }, []);
 
   const handleDeletePost = (deletedPostID) => {
-    setPosts((prevPosts) => prevPosts.filter((post) => post.post_id !== deletedPostID));
+    setPosts((prevPosts) =>
+      prevPosts.filter((post) => post.post_id !== deletedPostID)
+    );
   };
 
   const navigate = useNavigate();
@@ -68,7 +71,10 @@ const Profile = () => {
     <div className={styles.wrapper}>
       <Navbar />
       <div className={styles.profile}>
-        <div className={styles.profile__avatar}></div>
+        <img
+          className={styles.profile__avatar}
+          src={`http://127.0.0.1:8000${user.avatar}`}
+        />
         <div className={styles.profile__name}>{user.name}</div>
       </div>
       <div className={styles.settings}>
@@ -78,7 +84,12 @@ const Profile = () => {
         >
           Добавить проект
         </button>
-        <button className={styles.settings__action}>Изменить</button>
+        <button
+          className={styles.settings__action}
+          onClick={() => navigate("/edit-profile")}
+        >
+          Изменить
+        </button>
         <button
           className={styles.settings__action}
           onClick={(e) => logoutHandler()}
@@ -97,8 +108,9 @@ const Profile = () => {
                   authorName={post.author_name}
                   content={post.content}
                   postID={post.post_id}
+                  avatar={user.avatar}
                   isUserPost={user.user_id === post.author_id}
-                  onDelete={handleDeletePost} 
+                  onDelete={handleDeletePost}
                 />
               );
             })}

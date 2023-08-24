@@ -4,10 +4,10 @@ import projectLogo from "../../assets/project-logo.svg";
 import Input from "../../components/Input/Input";
 import Navbar from "../../components/Navbar/Navbar";
 import axios from "axios";
-import initialAvatar from "../../assets/load-avatar.svg";
 import animalsImage from "../../assets/animals.png";
-import Avatar from "react-avatar-edit";
 import { useLocation, useNavigate } from "react-router-dom";
+import Avatar from "../../components/Avatar/Avatar";
+
 
 const projectsAPI = "http://127.0.0.1:8000/api/projects/";
 
@@ -15,6 +15,14 @@ const EditProject = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const projectID = location.pathname.split("/").pop();
+  const src = `http://127.0.0.1:8000/api/projects/${projectID}/update/`;
+
+  const [title, setTitle] = useState("");
+  const [type, setType] = useState("");
+  const [description, setDescription] = useState("");
+  const [contact, setContact] = useState("");
+  const [authorID, setAuthorID] = useState("");
+  const [imageSrc, setImageSrc] = useState("");
 
   useEffect(() => {
     const getProject = async () => {
@@ -25,6 +33,7 @@ const EditProject = () => {
         setDescription(response.data.description);
         setContact(response.data.contact);
         setAuthorID(response.data.author_id);
+        setImageSrc(response.data.image_src);
       } catch (error) {
         console.log("Failed fetching", error);
       }
@@ -32,36 +41,18 @@ const EditProject = () => {
     getProject();
   }, []);
 
-  const src = `http://127.0.0.1:8000/api/projects/${projectID}/update/`;
-
-  const [title, setTitle] = useState("");
-  const [type, setType] = useState("");
-  const [description, setDescription] = useState("");
-  const [contact, setContact] = useState("");
-  const [authordID, setAuthorID] = useState("");
-  const [imageSrc, setImageSrc] = useState(null);
-  const [preview, setPreview] = useState(null);
-
-  const onClose = () => {
-    setPreview(null);
-  };
-
-  const onCrop = (view) => {
-    setPreview(view);
-  };
-
-  const handleSubmit = (event) => {
+   const handleSubmit = (event) => {
     event.preventDefault();
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("description", description);
+    formData.append("type", type);
+    formData.append("contact", contact);
+    formData.append("author_id", authorID);
+    formData.append("image_src", imageSrc);
     navigate(`/project/${projectID}`);
     axios
-      .put(src, {
-        title: title,
-        description: description,
-        type: type,
-        image_src: imageSrc,
-        contact: contact,
-        author_id: authordID,
-      })
+      .put(src, formData)
       .then(function (response) {
         console.log(response);
       })
@@ -69,19 +60,11 @@ const EditProject = () => {
         console.log("An error occurred:", error);
       });
   };
+  
 
   return (
     <>
       <Navbar />
-      {/* <Avatar
-        width={400}
-        height={300}
-        onCrop={onCrop}
-        onClose={onClose}
-        src={imageSrc}
-      />
-      {preview && <img src={preview} />}
-       */}
       <div className={styles.container}>
         <div className={styles.header}>
           <img
@@ -93,7 +76,7 @@ const EditProject = () => {
         </div>
         <form className={styles.form} onSubmit={handleSubmit}>
           <div className={styles.form__header}>
-            <img className={styles.form__avatar} src={initialAvatar} />
+            <Avatar setImageSrc={setImageSrc}/>
             <div className={styles.form__header__inputs}>
               <div className={styles.input__wrapper}>
                 <Input

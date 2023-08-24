@@ -10,7 +10,7 @@ const ProjectCard = ({ project, onClick }) => {
     <div className={styles.card} onClick={onClick}>
       <div className={styles.card__wrapper}>
         <div className={styles.card__header}>
-          <img className={styles.card__logo} src={cleekLogo} alt="" />
+          <img className={styles.card__logo} src={`http://127.0.0.1:8000${project.image_src}`} alt="" />
           <p className={styles.card__title}>{project.title}</p>
         </div>
         <p className={styles.card__subheader}>{project.type}</p>

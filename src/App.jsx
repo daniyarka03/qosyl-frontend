@@ -19,6 +19,8 @@ import Posts from './pages/Posts/Posts'
 import CreatePost from './pages/CreatePost/CreatePost'
 import EditPost from './pages/EditPost/EditPost'
 import UserPage from './pages/UserPage/UserPage'
+import Home from './pages/Home/Home'
+import EditProfile from './pages/EditProfile/EditProfile'
 
 const App = () => {
   return (
@@ -29,7 +31,7 @@ const App = () => {
             <Routes>
               <Route path='/' element={<SignIn/>}/>
               <Route path='/registration' element={<SignUp/>}/>
-
+              <Route path='/home' element={<Home/>} />
               
               <Route path='/reset-password' element={<ResetPassword/>}/>
               <Route path='/password/reset/confirm/:uid/:token' element={<ResetPasswordConfirm/>}/>
@@ -47,6 +49,7 @@ const App = () => {
               <Route path='/posts' element={<Posts/>} />
               <Route path='/notifications' element= {<Notifications/>} />
               <Route path='/profile' element= {<Profile/>} />
+              <Route path='/edit-profile' element={<EditProfile />} />
               <Route path='/user/:id' element= {<UserPage/>} />
             </Routes>
           </Layout>
