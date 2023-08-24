@@ -4,15 +4,17 @@ import PostCard from "../../components/PostCard/PostCard";
 import ProjectCard from "../../components/ProjectCard/ProjectCard";
 import styles from "./Home.module.sass";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
-const userAPI = "http://127.0.0.1:8000/api/users/profile/";
-const projectsAPI = "http://127.0.0.1:8000/api/projects/";
+const userAPI = `${import.meta.env.VITE_SERVER_URL}/api/users/profile/`;
+const projectsAPI = `${import.meta.env.VITE_SERVER_URL}/api/projects/`;
 
 const Home = () => {
   const [user, setUser] = useState({});
   const [posts, setPosts] = useState([]);
   const [projects, setProjects] = useState([]);
   const [avatars, setAvatars] = useState({});
+  const navigate = useNavigate();
 
   const userInformation = JSON.parse(localStorage.getItem("userInfo"));
   const config = {
@@ -29,28 +31,30 @@ const Home = () => {
       });
   }, []);
 
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const postsResponse = await axios.get(
+          `${import.meta.env.VITE_SERVER_URL}/api/posts`
+        );
+        setPosts(postsResponse.data);
 
-    useEffect(() => {
-      const fetchPosts = async () => {
-        try {
-          const postsResponse = await axios.get("http://127.0.0.1:8000/api/posts");
-          setPosts(postsResponse.data);
-
-          const avatarsData = {};
-          for (const post of postsResponse.data) {
-            const userAPI = `http://127.0.0.1:8000/api/users/${post.author_id}`;
-            const userResponse = await axios.get(userAPI);
-            avatarsData[post.author_id] = userResponse.data.avatar;
-          }
-          setAvatars(avatarsData);
-        } catch (error) {
-          console.log(error);
+        const avatarsData = {};
+        for (const post of postsResponse.data) {
+          const userAPI = `${import.meta.env.VITE_SERVER_URL}/api/users/${
+            post.author_id
+          }`;
+          const userResponse = await axios.get(userAPI);
+          avatarsData[post.author_id] = userResponse.data.avatar;
         }
-      };
+        setAvatars(avatarsData);
+      } catch (error) {
+        console.log(error);
+      }
+    };
 
-      fetchPosts();
-
-    }, []);
+    fetchPosts();
+  }, []);
 
   useEffect(() => {
     axios
@@ -70,6 +74,7 @@ const Home = () => {
       <div className={styles.container}>
         <div className={styles.header}>
           <p className={styles.header__title}>Привет, {user.name}</p>
+          <img className={styles.header__avatar} src={`${import.meta.env.VITE_SERVER_URL}${user.avatar}`} />
         </div>
         <section className={styles.section}>
           <p className={styles.section__title}>Последние посты</p>
@@ -81,7 +86,7 @@ const Home = () => {
                   authorName={post.author_name}
                   content={post.content}
                   avatar={avatars[post.author_id]}
-                  id = {post.post_id}
+                  id={post.post_id}
                 />
               );
             })}
@@ -91,7 +96,7 @@ const Home = () => {
           <p className={styles.section__title}>Последние проекты</p>
           <div className={styles.section__cards}>
             {lastProjects.map((project) => {
-              return <ProjectCard key={project.project_id} project={project}  />;
+              return <ProjectCard onClick={() => navigate(`/project/${project.project_id}`)} key={project.project_id} project={project} />;
             })}
           </div>
         </section>

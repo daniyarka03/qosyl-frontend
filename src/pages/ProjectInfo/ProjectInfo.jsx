@@ -6,8 +6,8 @@ import descriptionIcon from "../../assets/description-icon.svg";
 import contactIcon from "../../assets/contact-icon.svg";
 import axios from "axios";
 
-const userAPI = "http://127.0.0.1:8000/api/users/profile/";
-const projectsAPI = "http://127.0.0.1:8000/api/projects/";
+const userAPI = `${import.meta.env.VITE_SERVER_URL}/api/users/profile/`;
+const projectsAPI = `${import.meta.env.VITE_SERVER_URL}/api/projects/`;
 
 const ProjectInfo = () => {
   const [project, setProject] = useState({});
@@ -33,14 +33,15 @@ const ProjectInfo = () => {
       .get(projectsAPI + projectID)
       .then((data) => {
         setProject(data.data);
-        console.log(data.data);
       })
       .catch((error) => {
         console.log(error);
       });
   }, []);
 
-  const src = `http://127.0.0.1:8000/api/projects/${projectID}/delete`;
+  const src = `${
+    import.meta.env.VITE_SERVER_URL
+  }/api/projects/${projectID}/delete`;
 
   const deleteProject = () => {
     axios.delete(src).then(() => {});
@@ -57,7 +58,7 @@ const ProjectInfo = () => {
               {project.image_src && (
                 <img
                   className={styles.project__logo}
-                  src={`http://127.0.0.1:8000${project.image_src}`}
+                  src={`${import.meta.env.VITE_SERVER_URL}${project.image_src}`}
                   alt="Project Logo"
                 />
               )}

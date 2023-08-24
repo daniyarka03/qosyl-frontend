@@ -8,14 +8,15 @@ import animalsImage from "../../assets/animals.png";
 import { useLocation, useNavigate } from "react-router-dom";
 import Avatar from "../../components/Avatar/Avatar";
 
-
-const projectsAPI = "http://127.0.0.1:8000/api/projects/";
+const projectsAPI = `${import.meta.env.VITE_SERVER_URL}/api/projects/`;
 
 const EditProject = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const projectID = location.pathname.split("/").pop();
-  const src = `http://127.0.0.1:8000/api/projects/${projectID}/update/`;
+  const src = `${
+    import.meta.env.VITE_SERVER_URL
+  }/api/projects/${projectID}/update/`;
 
   const [title, setTitle] = useState("");
   const [type, setType] = useState("");
@@ -41,7 +42,7 @@ const EditProject = () => {
     getProject();
   }, []);
 
-   const handleSubmit = (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
     const formData = new FormData();
     formData.append("title", title);
@@ -60,7 +61,6 @@ const EditProject = () => {
         console.log("An error occurred:", error);
       });
   };
-  
 
   return (
     <>
@@ -76,7 +76,7 @@ const EditProject = () => {
         </div>
         <form className={styles.form} onSubmit={handleSubmit}>
           <div className={styles.form__header}>
-            <Avatar setImageSrc={setImageSrc}/>
+            <Avatar setImageSrc={setImageSrc} />
             <div className={styles.form__header__inputs}>
               <div className={styles.input__wrapper}>
                 <Input

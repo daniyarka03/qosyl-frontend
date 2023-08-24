@@ -6,8 +6,8 @@ import searchIcon from "../../assets/search-icon.svg";
 import UserCard from "../../components/UserCard/UserCard.jsx";
 import axios from "axios";
 
-const usersAPI = "http://127.0.0.1:8000/api/users/";
-const currentUserAPI = "http://127.0.0.1:8000/api/users/profile/";
+const usersAPI = `${import.meta.env.VITE_SERVER_URL}/api/users/`;
+const currentUserAPI = `${import.meta.env.VITE_SERVER_URL}/api/users/profile/`;
 
 const Users = () => {
   const [currentUser, setCurrentUser] = useState({});
@@ -62,7 +62,13 @@ const Users = () => {
           />
         </div>
         {filteredUsers.map((user) => (
-          <UserCard key={user.id} userId={user.user_id} name={user.name} currentUser={currentUser}/>
+          <UserCard
+            key={user.id}
+            userId={user.user_id}
+            name={user.name}
+            currentUser={currentUser}
+            avatar={user.avatar}
+          />
         ))}
       </div>
     </div>

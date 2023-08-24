@@ -8,8 +8,15 @@
     @media screen and (min-width:600px)
         margin-left: 10rem
 .header
+    display: flex
+    flex-direction: column-reverse
     &__title
         @include heading-font($white)
+        margin-top: 2rem
+    &__avatar
+        width: 10rem
+        height: 10rem
+        border-radius: 0.8rem
         
 .section
     margin-top: 5rem

@@ -9,8 +9,8 @@ import animalsImage from "../../assets/animals.png";
 import Avatar from "../../components/Avatar/Avatar";
 import { useNavigate } from "react-router-dom";
 
-const whereToUpdate = "http://127.0.0.1:8000/api/projects/create/";
-const src = "http://127.0.0.1:8000/api/users/profile/";
+const projectUpdate = `${import.meta.env.VITE_SERVER_URL}/api/projects/create/`;
+const userAPI = `${import.meta.env.VITE_SERVER_URL}/api/users/profile/`;
 
 const CreateProject = () => {
   const navigate = useNavigate();
@@ -19,25 +19,22 @@ const CreateProject = () => {
   const [type, setType] = useState("");
   const [description, setDescription] = useState("");
   const [contact, setContact] = useState("");
-  const [userID, setUserID] = useState(0)
+  const [userID, setUserID] = useState(0);
   const [imageSrc, setImageSrc] = useState(null);
-  const userToken = JSON.parse(localStorage.getItem("userInfo")).token
-  const config = {headers: {'Authorization': `Bearer ${userToken}`},}
-
+  const userToken = JSON.parse(localStorage.getItem("userInfo")).token;
+  const config = { headers: { Authorization: `Bearer ${userToken}` } };
 
   useEffect(() => {
     const getUser = async () => {
-      try { 
-        const response = await axios.get(src, config)
-        setUserID(response.data.user_id)
+      try {
+        const response = await axios.get(userAPI, config);
+        setUserID(response.data.user_id);
       } catch (error) {
-        console.log("Failed fetching", error)
+        console.log("Failed fetching", error);
       }
-    }
-    getUser()
-  }, [])
-
-
+    };
+    getUser();
+  }, []);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -50,25 +47,22 @@ const CreateProject = () => {
     formData.append("image_src", imageSrc);
 
     axios
-      .post(whereToUpdate, formData)
+      .post(projectUpdate, formData)
       .then(function (response) {
-        navigate(`/project/${response.data.project_id}`, response.data)
-        console.log(selectedFile)
+        navigate(`/project/${response.data.project_id}`, response.data);
         console.log({
           title: title,
           description: description,
           type: type,
           image_src: `${imageSrc}`,
           contact: contact,
-          author_id: userID
-        })
+          author_id: userID,
+        });
       })
       .catch(function (error) {
         console.log(error);
-      })
-      
+      });
   };
-
 
   return (
     <>
@@ -87,7 +81,7 @@ const CreateProject = () => {
         </p>
         <form className={styles.form} onSubmit={handleSubmit}>
           <div className={styles.form__header}>
-          <Avatar setImageSrc={setImageSrc}/>
+            <Avatar setImageSrc={setImageSrc} />
             <div className={styles.form__header__inputs}>
               <div className={styles.input__wrapper}>
                 <Input

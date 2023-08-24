@@ -1,16 +1,17 @@
 import React from "react";
 import styles from "./ProjectCard.module.sass";
 import projectMembers from "../../assets/project-card-members.png";
-import cleekLogo from "../../assets/cleek-logo.png";
-import { useNavigate } from "react-router-dom";
 
 const ProjectCard = ({ project, onClick }) => {
-  
   return (
     <div className={styles.card} onClick={onClick}>
       <div className={styles.card__wrapper}>
         <div className={styles.card__header}>
-          <img className={styles.card__logo} src={`http://127.0.0.1:8000${project.image_src}`} alt="" />
+          <img
+            className={styles.card__logo}
+            src={`${import.meta.env.VITE_SERVER_URL}${project.image_src}`}
+            alt=""
+          />
           <p className={styles.card__title}>{project.title}</p>
         </div>
         <p className={styles.card__subheader}>{project.type}</p>

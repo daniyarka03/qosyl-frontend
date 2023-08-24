@@ -8,9 +8,9 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../actions/userActions.js";
 
-const userAPI = `${import.meta.env.VITE_SERVER_URL}/api/users/profile/`;
-const projectsAPI = `${import.meta.env.VITE_SERVER_URL}/api/projects/`;
-const postsAPI = `${import.meta.env.VITE_SERVER_URL}/api/posts/`;
+const userAPI = `http://127.0.0.1:8000/api/users/profile/`;
+const projectsAPI = `http://127.0.0.1:8000/api/projects/`;
+const postsAPI = `http://127.0.0.1:8000/api/posts/`;
 
 const Profile = () => {
   const [user, setUser] = useState({});
