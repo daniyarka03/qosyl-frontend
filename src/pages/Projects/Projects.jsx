@@ -6,6 +6,7 @@ import axios from "axios";
 import ProjectCard from "../../components/ProjectCard/ProjectCard";
 import Carousel from "../../components/Carousel/Carousel";
 import Navbar from "../../components/Navbar/Navbar";
+import CardSkeleton from "../../components/CardSkeleton/CardSkeleton";
 import { useNavigate } from "react-router-dom";
 
 const projectsAPI = `${import.meta.env.VITE_SERVER_URL}/api/projects/`;
@@ -13,10 +14,11 @@ const projectsAPI = `${import.meta.env.VITE_SERVER_URL}/api/projects/`;
 const Projects = ({ isAuthenticated }) => {
   const navigate = useNavigate();
   const [projects, setProjects] = useState([]);
-
+  const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     axios.get(projectsAPI).then((data) => {
       setProjects(data.data);
+      setIsLoading(false);
     });
   }, []);
 
@@ -47,17 +49,23 @@ const Projects = ({ isAuthenticated }) => {
           />
         </header>
         <section className={styles.projects}>
-          {filteredProjects.map((project) => {
-            return (
-              <ProjectCard
-                key={project.project_id}
-                project={project}
-                onClick={() => {
-                  navigate(`/project/${project.project_id}`);
-                }}
-              />
-            );
-          })}
+          {isLoading ? (
+            <CardSkeleton cards={8} />
+          ) : (
+            <>
+              {filteredProjects.map((project) => {
+                return (
+                  <ProjectCard
+                    key={project.project_id}
+                    project={project}
+                    onClick={() => {
+                      navigate(`/project/${project.project_id}`);
+                    }}
+                  />
+                );
+              })}
+            </>
+          )}
         </section>
       </div>
     </>

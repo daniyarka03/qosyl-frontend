@@ -5,6 +5,7 @@ import ProjectCard from "../../components/ProjectCard/ProjectCard";
 import styles from "./Home.module.sass";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import CardSkeleton from "../../components/CardSkeleton/CardSkeleton";
 
 const userAPI = `${import.meta.env.VITE_SERVER_URL}/api/users/profile/`;
 const projectsAPI = `${import.meta.env.VITE_SERVER_URL}/api/projects/`;
@@ -14,6 +15,9 @@ const Home = () => {
   const [posts, setPosts] = useState([]);
   const [projects, setProjects] = useState([]);
   const [avatars, setAvatars] = useState({});
+  const [isUserLoading, setIsUserLoading] = useState(true);
+  const [isPostLoading, setIsPostLoading] = useState(true);
+  const [isProjectLoading, setIsProjectLoading] = useState(true);
   const navigate = useNavigate();
 
   const userInformation = JSON.parse(localStorage.getItem("userInfo"));
@@ -25,6 +29,7 @@ const Home = () => {
       .get(userAPI, config)
       .then((data) => {
         setUser(data.data);
+        setIsUserLoading(false);
       })
       .catch((error) => {
         console.log(error);
@@ -48,6 +53,7 @@ const Home = () => {
           avatarsData[post.author_id] = userResponse.data.avatar;
         }
         setAvatars(avatarsData);
+        setIsPostLoading(false);
       } catch (error) {
         console.log(error);
       }
@@ -61,6 +67,7 @@ const Home = () => {
       .get(projectsAPI)
       .then((data) => {
         setProjects(data.data);
+        setIsProjectLoading(false)
       })
       .catch((error) => console.log(error));
   }, []);
@@ -73,31 +80,58 @@ const Home = () => {
       <Navbar />
       <div className={styles.container}>
         <div className={styles.header}>
-          <p className={styles.header__title}>Привет, {user.name}</p>
-          <img className={styles.header__avatar} src={`${import.meta.env.VITE_SERVER_URL}${user.avatar}`} />
+          {isUserLoading ? (
+            <CardSkeleton cards={1} width={200} />
+          ) : (
+            <>
+              <p className={styles.header__title}>Привет, {user.name}</p>
+              <img
+                className={styles.header__avatar}
+                src={`${import.meta.env.VITE_SERVER_URL}${user.avatar}`}
+              />
+            </>
+          )}
         </div>
         <section className={styles.section}>
           <p className={styles.section__title}>Последние посты</p>
           <div className={styles.section__cards}>
-            {lastPosts.map((post) => {
-              return (
-                <PostCard
-                  key={post.post_id}
-                  authorName={post.author_name}
-                  content={post.content}
-                  avatar={avatars[post.author_id]}
-                  id={post.post_id}
-                />
-              );
-            })}
+            {isPostLoading ? (
+              <CardSkeleton cards={2} />
+            ) : (
+              <>
+                {lastPosts.map((post) => {
+                  return (
+                    <PostCard
+                      key={post.post_id}
+                      authorName={post.author_name}
+                      content={post.content}
+                      avatar={avatars[post.author_id]}
+                      id={post.post_id}
+                    />
+                  );
+                })}
+              </>
+            )}
           </div>
         </section>
         <section className={styles.section}>
           <p className={styles.section__title}>Последние проекты</p>
           <div className={styles.section__cards}>
-            {lastProjects.map((project) => {
-              return <ProjectCard onClick={() => navigate(`/project/${project.project_id}`)} key={project.project_id} project={project} />;
-            })}
+            {isProjectLoading ? (
+              <CardSkeleton cards={2} />
+            ) : (
+              <>
+                {lastProjects.map((project) => {
+                  return (
+                    <ProjectCard
+                      onClick={() => navigate(`/project/${project.project_id}`)}
+                      key={project.project_id}
+                      project={project}
+                    />
+                  );
+                })}
+              </>
+            )}
           </div>
         </section>
       </div>

@@ -7,15 +7,17 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../actions/userActions.js";
+import CardSkeleton from "../../components/CardSkeleton/CardSkeleton";
 
-const userAPI = `http://127.0.0.1:8000/api/users/profile/`;
-const projectsAPI = `http://127.0.0.1:8000/api/projects/`;
-const postsAPI = `http://127.0.0.1:8000/api/posts/`;
+const userAPI = `${import.meta.env.VITE_SERVER_URL}/api/users/profile/`;
+const projectsAPI = `${import.meta.env.VITE_SERVER_URL}/api/projects/`;
+const postsAPI = `${import.meta.env.VITE_SERVER_URL}/api/posts/`;
 
 const Profile = () => {
   const [user, setUser] = useState({});
   const [posts, setPosts] = useState([]);
   const [projects, setProjects] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const userInformation = JSON.parse(localStorage.getItem("userInfo"));
   const config = {
@@ -24,18 +26,21 @@ const Profile = () => {
   useEffect(() => {
     axios.get(userAPI, config).then((data) => {
       setUser(data.data);
+      setIsLoading(false)
     });
   }, []);
 
   useEffect(() => {
     axios.get(projectsAPI).then((data) => {
       setProjects(data.data);
+      setIsLoading(false)
     });
   }, []);
 
   useEffect(() => {
     axios.get(postsAPI).then((data) => {
       setPosts(data.data);
+      setIsLoading(false)
     });
   }, []);
 
@@ -70,11 +75,12 @@ const Profile = () => {
     <div className={styles.wrapper}>
       <Navbar />
       <div className={styles.profile}>
-        <img
+      {isLoading ? <CardSkeleton cards={1}/> : <>
+      <img
           className={styles.profile__avatar}
-          src={`http://127.0.0.1:8000${user.avatar}`}
+          src={`${import.meta.env.VITE_SERVER_URL}${user.avatar}`}
         />
-        <div className={styles.profile__name}>{user.name}</div>
+        <div className={styles.profile__name}>{user.name}</div></>}
       </div>
       <div className={styles.settings}>
         <button
@@ -100,6 +106,7 @@ const Profile = () => {
         <div className={styles.info__block}>
           <p className={styles.info__header}>Посты</p>
           <div className={styles.post__wrapper}>
+          {isLoading && <CardSkeleton cards={8}/>}
             {usersPosts.map((post) => {
               return (
                 <PostCard
@@ -119,6 +126,7 @@ const Profile = () => {
         <div className={styles.info__block}>
           <p className={styles.info__header}>Проекты</p>
           <div className={styles.project__wrapper}>
+            {isLoading &&<CardSkeleton cards={8}/>}
             {usersProjects.map((project) => {
               return (
                 <ProjectCard

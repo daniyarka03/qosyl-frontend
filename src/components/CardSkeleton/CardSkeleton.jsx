@@ -2,11 +2,11 @@ import React from "react";
 import styles from "./CardSkeleton.module.sass";
 import Skeleton from "react-loading-skeleton";
 
-const CardSkeleton = ({cards}) => {
+const CardSkeleton = ({cards, width}) => {
   return (
     Array(cards).fill(0).map((_, index) => {
       return (<div className={styles.card__skeleton} key={index}>
-      <div className={styles.column}>
+      <div className={styles.column} style={{"width" : width}}>
         <Skeleton
           baseColor="#c4c4c4"
           circle
