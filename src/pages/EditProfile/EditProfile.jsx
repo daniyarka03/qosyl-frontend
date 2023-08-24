@@ -7,14 +7,14 @@ import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
 import Avatar from "../../components/Avatar/Avatar";
 
-const userAPI = "http://127.0.0.1:8000/api/users/profile/";
-const userUpdate = "http://127.0.0.1:8000/api/users/profile/edit/";
+const userAPI = `${import.meta.env.VITE_SERVER_URL}/api/users/profile/`;
+const userUpdate = `${import.meta.env.VITE_SERVER_URL}/api/users/profile/edit/`;
 
 const EditProfile = () => {
   const navigate = useNavigate();
   const [name, setName] = useState("");
   const [user, setUser] = useState({});
-  const [imageSrc, setImageSrc] = useState("")
+  const [imageSrc, setImageSrc] = useState("");
 
   const userInformation = JSON.parse(localStorage.getItem("userInfo"));
   const config = {
@@ -24,10 +24,10 @@ const EditProfile = () => {
   useEffect(() => {
     axios.get(userAPI, config).then((data) => {
       setUser(data.data);
-      setImageSrc(data.data.avatar)
+      setImageSrc(data.data.avatar);
     });
   }, []);
-  console.log(user)
+  console.log(user);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -36,16 +36,20 @@ const EditProfile = () => {
     formData.append("name", user.name);
     formData.append("email", user.email);
     formData.append("password", 123123);
-    console.log(imageSrc)
-    
+    console.log(imageSrc);
+
     axios({
       method: "put",
       url: userUpdate,
       data: formData,
-      headers: { "Content-Type": "multipart/form-data", "Authorization": `Bearer ${userInformation.token}` }, 
-    }).then(function (response) {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${userInformation.token}`,
+      },
+    })
+      .then(function (response) {
         console.log(response);
-        navigate('/profile');
+        navigate("/profile");
       })
       .catch(function (error) {
         console.log("An error occurred:", error);
@@ -65,7 +69,7 @@ const EditProfile = () => {
         </div>
         <form className={styles.form} onSubmit={handleSubmit}>
           <div className={styles.form__header}>
-            <Avatar setImageSrc={setImageSrc}/>
+            <Avatar setImageSrc={setImageSrc} />
             <div className={styles.form__header__inputs}>
               <div className={styles.input__wrapper}>
                 <Input

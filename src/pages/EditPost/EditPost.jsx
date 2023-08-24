@@ -5,15 +5,18 @@ import Navbar from "../../components/Navbar/Navbar";
 import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
 
-const postsAPI = "http://127.0.0.1:8000/api/posts/";
+const postsAPI = `${import.meta.env.VITE_SERVER_URL}/api/posts/`;
 
 const EditPost = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const postID = location.pathname.split("/").pop();
-  const src = `http://127.0.0.1:8000/api/posts/${postID}/update/`;
+  const postUpdate = `${
+    import.meta.env.VITE_SERVER_URL
+  }/api/posts/${postID}/update/`;
   const [authorName, setAuthorName] = useState();
   const [authorID, setAuthorID] = useState();
+  const [likes, setLikes] = useState();
 
   const [content, setContent] = useState("");
 
@@ -24,6 +27,7 @@ const EditPost = () => {
         setContent(data.data.content);
         setAuthorName(data.data.author_name);
         setAuthorID(data.data.author_id);
+        setLikes(data.data.likes);
       })
       .catch((error) => {
         console.log("Failed fetching", error);
@@ -34,10 +38,11 @@ const EditPost = () => {
     event.preventDefault();
     navigate("/profile");
     axios
-      .put(src, {
+      .put(postUpdate, {
         content: content,
         author_name: authorName,
         author_id: authorID,
+        likes: likes,
       })
       .then((response) => {
         console.log(response);

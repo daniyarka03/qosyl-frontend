@@ -8,7 +8,7 @@ import Carousel from "../../components/Carousel/Carousel";
 import Navbar from "../../components/Navbar/Navbar";
 import { useNavigate } from "react-router-dom";
 
-const projectsAPI = "http://127.0.0.1:8000/api/projects/";
+const projectsAPI = `${import.meta.env.VITE_SERVER_URL}/api/projects/`;
 
 const Projects = ({ isAuthenticated }) => {
   const navigate = useNavigate();

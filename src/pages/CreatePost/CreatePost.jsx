@@ -5,40 +5,39 @@ import Navbar from "../../components/Navbar/Navbar";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const whereToUpdate = "http://127.0.0.1:8000/api/posts/create/";
-const src = "http://127.0.0.1:8000/api/users/profile/";
+const postCreate = `${import.meta.env.VITE_SERVER_URL}/api/posts/create/`;
+const userAPI = `${import.meta.env.VITE_SERVER_URL}/api/users/profile/`;
 
 const CreatePost = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [author, setAuthor] = useState("");
   const [description, setDescription] = useState("");
-  const [userID, setUserID] = useState(0)
+  const [userID, setUserID] = useState(0);
 
-  const userToken = JSON.parse(localStorage.getItem("userInfo")).token
-  const config = {headers: {'Authorization': `Bearer ${userToken}`},}
+  const userToken = JSON.parse(localStorage.getItem("userInfo")).token;
+  const config = { headers: { Authorization: `Bearer ${userToken}` } };
 
   useEffect(() => {
     const getUser = async () => {
-      try { 
-        const response = await axios.get(src, config)
-        setUserID(response.data.user_id)
-        setAuthor(response.data.name)
+      try {
+        const response = await axios.get(userAPI, config);
+        setUserID(response.data.user_id);
+        setAuthor(response.data.name);
       } catch (error) {
-        console.log("Failed fetching", error)
+        console.log("Failed fetching", error);
       }
-    }
-    getUser()
-  }, [])
+    };
+    getUser();
+  }, []);
   const handleSubmit = (event) => {
-    event.preventDefault()
-    navigate("/profile")
+    event.preventDefault();
+    navigate("/profile");
     axios
-      .post(whereToUpdate, {
+      .post(postCreate, {
         content: description,
         author_name: author,
         author_id: userID,
-
-        likes: []
+        likes: [],
       })
       .then(function (response) {
         console.log(response);

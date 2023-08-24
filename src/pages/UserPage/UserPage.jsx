@@ -4,11 +4,11 @@ import PostCard from "../../components/PostCard/PostCard";
 import ProjectCard from "../../components/ProjectCard/ProjectCard";
 import Navbar from "../../components/Navbar/Navbar";
 import axios from "axios";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
-const usersAPI = "http://127.0.0.1:8000/api/users/";
-const projectsAPI = "http://127.0.0.1:8000/api/projects/";
-const postsAPI = "http://127.0.0.1:8000/api/posts/";
+const usersAPI = `${import.meta.env.VITE_SERVER_URL}/api/users/`;
+const projectsAPI = `${import.meta.env.VITE_SERVER_URL}/api/projects/`;
+const postsAPI = `${import.meta.env.VITE_SERVER_URL}/api/posts/`;
 
 const UserPage = () => {
   const [user, setUser] = useState({});
@@ -16,6 +16,7 @@ const UserPage = () => {
   const [posts, setPosts] = useState([]);
   const location = useLocation();
   const userID = location.pathname.split("/").pop();
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios
@@ -53,20 +54,37 @@ const UserPage = () => {
     <div className={styles.wrapper}>
       <Navbar />
       <div className={styles.profile}>
-        <div className={styles.profile__avatar}></div>
+        <img
+          className={styles.profile__avatar}
+          src={`${import.meta.env.VITE_SERVER_URL}${user.avatar}`}
+        />
         <div className={styles.profile__name}>{user.name}</div>
       </div>
       <div className={styles.info}>
         <div className={styles.info__block}>
           <p className={styles.info__header}>Посты</p>
           {currentUserPosts.map((post) => {
-            return <PostCard key={post.post_id} content={post.content} authorName={post.author_name}/>;
+            return (
+              <PostCard
+                key={post.post_id}
+                content={post.content}
+                authorName={post.author_name}
+                avatar={user.avatar}
+                id={post.post_id}
+              />
+            );
           })}
         </div>
         <div className={styles.info__block}>
           <p className={styles.info__header}>Проекты</p>
           {currentUserProjects.map((project) => {
-            return <ProjectCard key={project.project_id} project={project} id = {post.post_id} />;
+            return (
+              <ProjectCard
+                key={project.project_id}
+                project={project}
+                onClick={() => navigate(`/project/${project.project_id}`)}
+              />
+            );
           })}
         </div>
       </div>
