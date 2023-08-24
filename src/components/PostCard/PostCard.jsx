@@ -6,6 +6,8 @@ import likeIconUnfilled from "../../assets/like-outline-icon.svg";
 import likeIconFilled from "../../assets/like-icon.svg";
 import commentIcon from "../../assets/comment-icon.svg";
 import { useCurrentUserData } from "../../actions/getCurrentUserData";
+import Skeleton from "react-loading-skeleton";
+import 'react-loading-skeleton/dist/skeleton.css'
 
 const PostCard = ({
   isUserPost,
@@ -20,6 +22,7 @@ const PostCard = ({
   const [likeCount, setLikeCount] = useState(0);
   const [likesArray, setLikesArray] = useState([]); // Массив лайков [строка
   const [postData, setPostData] = useState(null); // Данные поста [объект
+  const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
   const deletePostURL = `${
     import.meta.env.VITE_SERVER_URL
@@ -56,6 +59,7 @@ const PostCard = ({
         }
 
         setPostData(response.data);
+        setIsLoading(false)
       })
       .catch((error) => {
         console.log(error);
