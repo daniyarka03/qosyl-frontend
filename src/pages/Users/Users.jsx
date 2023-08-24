@@ -5,6 +5,7 @@ import Input from "../../components/Input/Input.jsx";
 import searchIcon from "../../assets/search-icon.svg";
 import UserCard from "../../components/UserCard/UserCard.jsx";
 import axios from "axios";
+import CardSkeleton from "../../components/CardSkeleton/CardSkeleton.jsx";
 
 const usersAPI = `${import.meta.env.VITE_SERVER_URL}/api/users/`;
 const currentUserAPI = `${import.meta.env.VITE_SERVER_URL}/api/users/profile/`;
@@ -12,6 +13,7 @@ const currentUserAPI = `${import.meta.env.VITE_SERVER_URL}/api/users/profile/`;
 const Users = () => {
   const [currentUser, setCurrentUser] = useState({});
   const [users, setUsers] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const userInformation = JSON.parse(localStorage.getItem("userInfo"));
   const config = {
@@ -28,6 +30,7 @@ const Users = () => {
       try {
         const response = await axios.get(usersAPI);
         setUsers(response.data);
+        setIsLoading(false);
       } catch {
         console.error("Error fetching users:", users);
       }
@@ -43,6 +46,7 @@ const Users = () => {
       return user.name.toLowerCase().includes(inputText.toLowerCase());
     });
     setFilteredUsers(filtered);
+    
   }, [inputText, users]);
 
   return (
@@ -61,15 +65,21 @@ const Users = () => {
             imageSrc={searchIcon}
           />
         </div>
-        {filteredUsers.map((user) => (
-          <UserCard
-            key={user.id}
-            userId={user.user_id}
-            name={user.name}
-            currentUser={currentUser}
-            avatar={user.avatar}
-          />
-        ))}
+        {isLoading ? (
+          <CardSkeleton cards={8} />
+        ) : (
+          <>
+            {filteredUsers.map((user) => (
+              <UserCard
+                key={user.id}
+                userId={user.user_id}
+                name={user.name}
+                currentUser={currentUser}
+                avatar={user.avatar}
+              />
+            ))}
+          </>
+        )}
       </div>
     </div>
   );

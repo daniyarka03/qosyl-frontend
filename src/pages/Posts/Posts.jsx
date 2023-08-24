@@ -4,11 +4,15 @@ import Navbar from "../../components/Navbar/Navbar";
 import PostCard from "../../components/PostCard/PostCard";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import CardSkeleton from "../../components/CardSkeleton/CardSkeleton";
+
+
 const postsAPI = `${import.meta.env.VITE_SERVER_URL}/api/posts/`;
 const Posts = () => {
   const navigate = useNavigate();
   const [posts, setPosts] = useState([]);
   const [avatars, setAvatars] = useState({});
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -25,6 +29,7 @@ const Posts = () => {
           avatarsData[post.author_id] = userResponse.data.avatar;
         }
         setAvatars(avatarsData);
+        setIsLoading(false)
       } catch (error) {
         console.log(error);
       }
@@ -44,6 +49,7 @@ const Posts = () => {
           Новый пост
         </button>
         <div className={styles.post__wrapper}>
+          {isLoading &&<CardSkeleton cards={8}/>}
           {posts.map((post) => (
             <PostCard
               key={post.post_id}

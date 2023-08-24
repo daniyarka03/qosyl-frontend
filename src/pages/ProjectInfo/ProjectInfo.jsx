@@ -4,6 +4,7 @@ import styles from "./ProjectInfo.module.sass";
 import { useLocation, useNavigate } from "react-router-dom";
 import descriptionIcon from "../../assets/description-icon.svg";
 import contactIcon from "../../assets/contact-icon.svg";
+import CardSkeleton from "../../components/CardSkeleton/CardSkeleton";
 import axios from "axios";
 
 const userAPI = `${import.meta.env.VITE_SERVER_URL}/api/users/profile/`;
@@ -11,6 +12,7 @@ const projectsAPI = `${import.meta.env.VITE_SERVER_URL}/api/projects/`;
 
 const ProjectInfo = () => {
   const [project, setProject] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -33,6 +35,7 @@ const ProjectInfo = () => {
       .get(projectsAPI + projectID)
       .then((data) => {
         setProject(data.data);
+        setIsLoading(false);
       })
       .catch((error) => {
         console.log(error);
@@ -55,17 +58,24 @@ const ProjectInfo = () => {
         <header className={styles.header}>
           <div className={styles.header__wrapper}>
             <div className={styles.project__header}>
-              {project.image_src && (
-                <img
-                  className={styles.project__logo}
-                  src={`${import.meta.env.VITE_SERVER_URL}${project.image_src}`}
-                  alt="Project Logo"
-                />
+              {isLoading ? (
+                <CardSkeleton cards={1} width={200} />
+              ) : (
+                <>
+                  <img
+                    className={styles.project__logo}
+                    src={`${import.meta.env.VITE_SERVER_URL}${
+                      project.image_src
+                    }`}
+                    alt="Project Logo"
+                  />
+                  <div className={styles.project__info}>
+                    <p className={styles.project__title}>{project.title}</p>
+                    <p className={styles.project__type}>{project.type}</p>
+                  </div>
+                </>
               )}
-              <div className={styles.project__info}>
-                <p className={styles.project__title}>{project.title}</p>
-                <p className={styles.project__type}>{project.type}</p>
-              </div>
+
               {userID === project.author_id ? (
                 <>
                   <button
@@ -101,8 +111,11 @@ const ProjectInfo = () => {
               />
               <h3 className={styles.description__title}>Описание</h3>
             </div>
-
-            <p className={styles.description__text}>{project.description}</p>
+            {isLoading ? (
+              <CardSkeleton cards={1} />
+            ) : (
+              <p className={styles.description__text}>{project.description}</p>
+            )}
           </div>
         </section>
         <section className={styles.description}>
@@ -115,8 +128,11 @@ const ProjectInfo = () => {
               />
               <h3 className={styles.description__title}>Контакты</h3>
             </div>
-
-            <p className={styles.description__text}>{project.contact}</p>
+            {isLoading ? (
+              <CardSkeleton cards={1} />
+            ) : (
+              <p className={styles.description__text}>{project.contact}</p>
+            )}
           </div>
         </section>
       </div>
