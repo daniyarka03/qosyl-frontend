@@ -7,7 +7,7 @@ import likeIconUnfilled from "../../assets/like-outline-icon.svg";
 import likeIconFilled from "../../assets/like-icon.svg";
 import commentIcon from "../../assets/comment-icon.svg";
 
-const PostCard = ({ isUserPost, authorName, postID, content, onDelete}) => {
+const PostCard = ({ isUserPost, authorName, postID, content, onDelete, avatar}) => {
   const [isLiked, setIsLiked] = useState(false);
   const navigate = useNavigate();
   const deletePostURL = `http://127.0.0.1:8000/api/posts/${postID}/delete/`;
@@ -27,7 +27,7 @@ const PostCard = ({ isUserPost, authorName, postID, content, onDelete}) => {
     <div className={styles.post}>
       <div className={styles.wrapper}>
         <div className={styles.post__creator}>
-          <img className={styles.post__creator__avatar} src={postCardAvatar} />
+          <img className={styles.post__creator__avatar} src={`http://127.0.0.1:8000${avatar}`} />
           <p className={styles.post__creator__name}>{authorName}</p>
         </div>
         <p className={styles.post__description}>{content}</p>

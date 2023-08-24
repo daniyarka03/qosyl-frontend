@@ -71,7 +71,10 @@ const Profile = () => {
     <div className={styles.wrapper}>
       <Navbar />
       <div className={styles.profile}>
-        <img className={styles.profile__avatar} src={`http://127.0.0.1:8000${user.avatar}`}/>
+        <img
+          className={styles.profile__avatar}
+          src={`http://127.0.0.1:8000${user.avatar}`}
+        />
         <div className={styles.profile__name}>{user.name}</div>
       </div>
       <div className={styles.settings}>
@@ -105,6 +108,7 @@ const Profile = () => {
                   authorName={post.author_name}
                   content={post.content}
                   postID={post.post_id}
+                  avatar={user.avatar}
                   isUserPost={user.user_id === post.author_id}
                   onDelete={handleDeletePost}
                 />

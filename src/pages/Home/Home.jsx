@@ -66,6 +66,7 @@ const Home = () => {
                   key={post.post_id}
                   authorName={post.author_name}
                   content={post.content}
+                  avatar={user.avatar}
                 />
               );
             })}

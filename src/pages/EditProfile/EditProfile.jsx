@@ -33,11 +33,17 @@ const EditProfile = () => {
     event.preventDefault();
     const formData = new FormData();
     formData.append("avatar", imageSrc);
+    formData.append("name", "Rustam");
+    formData.append("email", "shadowyguy5@gmail.com");
+    formData.append("password", 123123);
     console.log(imageSrc)
     navigate('/profile');
-    axios
-      .put(userUpdate, config, formData)
-      .then(function (response) {
+    axios({
+      method: "put",
+      url: userUpdate,
+      data: formData,
+      headers: { "Content-Type": "multipart/form-data", "Authorization": `Bearer ${userInformation.token}` }, 
+    }).then(function (response) {
         console.log(response);
       })
       .catch(function (error) {
