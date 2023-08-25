@@ -17,6 +17,7 @@ const PostCard = ({
   onDelete,
   avatar,
   id,
+  isComment
 }) => {
   const [isLiked, setIsLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(0);
@@ -123,7 +124,7 @@ const PostCard = ({
           <p className={styles.post__creator__name}>{authorName}</p>
         </div>
         <p className={styles.post__description}>{content}</p>
-        <div className={styles.post__actions}>
+        {!isComment && <div className={styles.post__actions}>
           <div className={styles.post__action}>
             <img
               className={styles.post__action__img}
@@ -138,10 +139,12 @@ const PostCard = ({
               className={styles.post__action__img}
               src={commentIcon}
               alt="comment-icon"
+              onClick={() => navigate(`/post/${id}/comments`)}
             />
             <p className={styles.post__action__count}>2</p>
           </div>
-        </div>
+        </div>}
+        
         {isUserPost && (
           <div className={styles.post__buttons}>
             <button

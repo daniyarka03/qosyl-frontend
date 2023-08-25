@@ -1,3 +1,4 @@
+
 import React, {useEffect, useState} from 'react';
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import { Provider } from 'react-redux';
@@ -24,6 +25,9 @@ import EditProfile from './pages/EditProfile/EditProfile';
 import SubscriptionsProjectsInProfile from './pages/SubscriptionsProjectsInProfile/SubscriptionsProjectsInProfile';
 import useIsAuthenticated from './hooks/useIsAuthenticated';
 import styles from './App.module.sass';
+import { SkeletonTheme } from "react-loading-skeleton";
+import PostComments from "./pages/PostComments/PostComments";
+import CreateComment from "./pages/CreateComment/CreateComment";
 
 
 
@@ -41,6 +45,7 @@ const App = () => {
 
 
   return (
+
       <div className={styles.App}>
         <Provider store={store}>
           <BrowserRouter>
@@ -72,7 +77,8 @@ const App = () => {
                       <Route path="/edit-profile" element={<EditProfile />} />
 
                       <Route path="/subscriptions-projects" element={<SubscriptionsProjectsInProfile />} />
-
+                      <Route path="/post/:id/comments" element={<PostComments />} />
+                      <Route path="/post/:id/create-comment" element={<CreateComment />}/>
                       <Route path="/user/:id" element={<UserPage />} />
                       <Route path="/" element={<Home />} />
                       <Route path="/registration" element={<Home />} />
@@ -88,6 +94,7 @@ const App = () => {
           </BrowserRouter>
         </Provider>
       </div>
+
   );
 };
 
