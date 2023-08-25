@@ -24,6 +24,7 @@ const EditProject = () => {
   const [contact, setContact] = useState("");
   const [authorID, setAuthorID] = useState("");
   const [imageSrc, setImageSrc] = useState("");
+  const [subscribers, setSubscribers] = useState("");
 
   useEffect(() => {
     const getProject = async () => {
@@ -35,6 +36,9 @@ const EditProject = () => {
         setContact(response.data.contact);
         setAuthorID(response.data.author_id);
         setImageSrc(response.data.image_src);
+        setSubscribers(response.data.subscribers);
+        console.log(response.data.image_src)
+
       } catch (error) {
         console.log("Failed fetching", error);
       }
@@ -51,6 +55,7 @@ const EditProject = () => {
     formData.append("contact", contact);
     formData.append("author_id", authorID);
     formData.append("image_src", imageSrc);
+    formData.append("subscribers", subscribers);
     navigate(`/project/${projectID}`);
     axios
       .put(src, formData)

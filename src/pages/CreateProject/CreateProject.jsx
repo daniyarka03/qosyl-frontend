@@ -4,7 +4,6 @@ import projectLogo from "../../assets/project-logo.svg";
 import Input from "../../components/Input/Input";
 import Navbar from "../../components/Navbar/Navbar";
 import axios from "axios";
-import initialAvatar from "../../assets/load-avatar.svg";
 import animalsImage from "../../assets/animals.png";
 import Avatar from "../../components/Avatar/Avatar";
 import { useNavigate } from "react-router-dom";
@@ -45,6 +44,7 @@ const CreateProject = () => {
     formData.append("contact", contact);
     formData.append("author_id", userID);
     formData.append("image_src", imageSrc);
+    formData.append("subscribers", "");
 
     axios
       .post(projectUpdate, formData)
