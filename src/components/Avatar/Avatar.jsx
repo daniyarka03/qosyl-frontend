@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 import styles from "./Avatar.module.sass"
 import initialAvatar from "../../assets/load-avatar.svg"
 
-const Avatar = ({setImageSrc}) => {
+const Avatar = ({imageSrc, setImageSrc}) => {
   
   const [avatarUrl, setAvatarUrl] = useState(initialAvatar);
   const inputRef = useRef(null);

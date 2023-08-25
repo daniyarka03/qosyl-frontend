@@ -60,20 +60,16 @@ const EditProfile = () => {
       <Navbar />
       <div className={styles.container}>
         <div className={styles.header}>
-          <img
-            className={styles.header__logo}
-            src={projectLogo}
-            alt="qosyl.me"
-          />
+          <Avatar imageSrc={imageSrc} setImageSrc={setImageSrc} />
           <h2 className={styles.header__title}>Изменение профиля</h2>
         </div>
         <form className={styles.form} onSubmit={handleSubmit}>
           <div className={styles.form__header}>
-            <Avatar setImageSrc={setImageSrc} />
+            
             <div className={styles.form__header__inputs}>
               <div className={styles.input__wrapper}>
                 <Input
-                  placeholder="Имя проекта"
+                  placeholder="Имя пользователя"
                   type="text"
                   name="text"
                   id="projectName"

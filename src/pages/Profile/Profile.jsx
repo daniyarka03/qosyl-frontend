@@ -19,8 +19,6 @@ const Profile = () => {
   const [projects, setProjects] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-
-
   const userInformation = JSON.parse(localStorage.getItem("userInfo"));
   const config = {
     headers: { Authorization: `Bearer ${userInformation.token}` },

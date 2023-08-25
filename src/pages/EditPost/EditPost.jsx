@@ -4,6 +4,8 @@ import projectLogo from "../../assets/project-logo.svg";
 import Navbar from "../../components/Navbar/Navbar";
 import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useCurrentUserData } from "../../actions/getCurrentUserData";
+import CardSkeleton from "../../components/CardSkeleton/CardSkeleton";
 
 const postsAPI = `${import.meta.env.VITE_SERVER_URL}/api/posts/`;
 
@@ -17,8 +19,11 @@ const EditPost = () => {
   const [authorName, setAuthorName] = useState();
   const [authorID, setAuthorID] = useState();
   const [likes, setLikes] = useState();
-
   const [content, setContent] = useState("");
+  const [dataLoaded, setDataLoaded] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const { userID } = useCurrentUserData();
 
   useEffect(() => {
     axios
@@ -28,11 +33,20 @@ const EditPost = () => {
         setAuthorName(data.data.author_name);
         setAuthorID(data.data.author_id);
         setLikes(data.data.likes);
+        setDataLoaded(true);
+        setIsLoading(false);
       })
       .catch((error) => {
         console.log("Failed fetching", error);
+        setDataLoaded(true);
       });
   }, []);
+
+  useEffect(() => {
+    if (dataLoaded && authorID !== userID) {
+      navigate(`/posts`);
+    }
+  }, [dataLoaded, authorID]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -64,17 +78,21 @@ const EditPost = () => {
           />
           <h2 className={styles.header__title}>Изменение поста</h2>
         </div>
-        <form onSubmit={handleSubmit} className={styles.form}>
-          <textarea
-            className={styles.textarea}
-            placeholder="Описание"
-            value={content}
-            onChange={(event) => setContent(event.target.value)}
-          />
-          <button className={styles.form__button} type="submit">
-            Изменить
-          </button>
-        </form>
+        {isLoading ? (
+          <CardSkeleton />
+        ) : (
+          <form onSubmit={handleSubmit} className={styles.form}>
+            <textarea
+              className={styles.textarea}
+              placeholder="Описание"
+              value={content}
+              onChange={(event) => setContent(event.target.value)}
+            />
+            <button className={styles.form__button} type="submit">
+              Изменить
+            </button>
+          </form>
+        )}
       </div>
     </>
   );
