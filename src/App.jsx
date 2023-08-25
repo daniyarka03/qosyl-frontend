@@ -22,6 +22,8 @@ import UserPage from "./pages/UserPage/UserPage";
 import Home from "./pages/Home/Home";
 import EditProfile from "./pages/EditProfile/EditProfile";
 import { SkeletonTheme } from "react-loading-skeleton";
+import PostComments from "./pages/PostComments/PostComments";
+import CreateComment from "./pages/CreateComment/CreateComment";
 
 const App = () => {
   return (
@@ -47,10 +49,13 @@ const App = () => {
               <Route path="/create-post" element={<CreatePost />} />
               <Route path="/edit-post/:id" element={<EditPost />} />
 
+
               <Route path="/search" element={<Search />} />
               <Route path="/search/projects" element={<Projects />} />
               <Route path="/search/users" element={<Users />} />
               <Route path="/posts" element={<Posts />} />
+              <Route path="/post/:id/comments" element={<PostComments />} />
+              <Route path="/post/:id/create-comment" element={<CreateComment />}/>
               <Route path="/notifications" element={<Notifications />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/edit-profile" element={<EditProfile />} />
