@@ -1,18 +1,22 @@
 import React, { useEffect, useState } from "react";
-import styles from "./CreatePost.module.sass";
+import styles from "./CreateComment.module.sass";
 import projectLogo from "../../assets/project-logo.svg";
 import Navbar from "../../components/Navbar/Navbar";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { randomUUID } from "crypto";
 
-const postCreate = `${import.meta.env.VITE_SERVER_URL}/api/posts/create/`;
 const userAPI = `${import.meta.env.VITE_SERVER_URL}/api/users/profile/`;
 
-const CreatePost = () => {
+const CreateComment = () => {
+  const location = useLocation();
+  const postsAPI = `${import.meta.env.VITE_SERVER_URL}/api/posts/`
+  const postID = location.pathname.split("/")[2]
+  const postUpdate = `${import.meta.env.VITE_SERVER_URL}/api/posts/${postID}/update/`;
   const navigate = useNavigate();
-  const [author, setAuthor] = useState("");
-  const [description, setDescription] = useState("");
+  const [message, setMessage] = useState("");
   const [userID, setUserID] = useState(0);
+  const [post, setPost] = useState({});
 
   const userToken = JSON.parse(localStorage.getItem("userInfo")).token;
   const config = { headers: { Authorization: `Bearer ${userToken}` } };
@@ -22,24 +26,35 @@ const CreatePost = () => {
       try {
         const response = await axios.get(userAPI, config);
         setUserID(response.data.user_id);
-        setAuthor(response.data.name);
-      } catch (error) {
+      } catch (error) { 
         console.log("Failed fetching", error);
       }
     };
     getUser();
   }, []);
+
+  useEffect(() => {
+    const getPost= async () => {
+      try {
+        const response = await axios.get(postsAPI + postID);
+        setPost(response.data)
+      } catch (error) { 
+        console.log("Failed fetching", error);
+      }
+    };
+    getPost();
+  }, []);
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    navigate("/profile");
-    axios
-      .post(postCreate, {
-        content: description,
-        author_name: author,
+    navigate(`/post/${postID}/comments`);
+    const updatedPost = {...post, comments: [...post.comments, {
+        comment_id: randomUUID(),
         author_id: userID,
-        likes: [],
-        comments: [],
-      })
+        message: message
+    }]}
+    axios
+      .put(postUpdate,updatedPost)
       .then(function (response) {
         console.log(response);
       })
@@ -58,14 +73,14 @@ const CreatePost = () => {
             src={projectLogo}
             alt="qosyl.me"
           />
-          <h2 className={styles.header__title}>Создание поста</h2>
+          <h2 className={styles.header__title}>Создание комментария</h2>
         </div>
         <form className={styles.form} onSubmit={handleSubmit}>
           <textarea
             className={styles.textarea}
-            placeholder="Описание поста"
-            value={description}
-            onChange={(event) => setDescription(event.target.value)}
+            placeholder="Описание комментария"
+            value={message}
+            onChange={(event) => setMessage(event.target.value)}
           />
           <button className={styles.form__button} type="submit">
             Добавить
@@ -76,4 +91,4 @@ const CreatePost = () => {
   );
 };
 
-export default CreatePost;
+export default CreateComment;
