@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../actions/userActions.js";
 import CardSkeleton from "../../components/CardSkeleton/CardSkeleton";
+import useIsAuthenticated from "../../hooks/useIsAuthenticated.js";
 
 const userAPI = `${import.meta.env.VITE_SERVER_URL}/api/users/profile/`;
 const projectsAPI = `${import.meta.env.VITE_SERVER_URL}/api/projects/`;
@@ -18,6 +19,8 @@ const Profile = () => {
   const [posts, setPosts] = useState([]);
   const [projects, setProjects] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+
+
 
   const userInformation = JSON.parse(localStorage.getItem("userInfo"));
   const config = {
@@ -94,6 +97,13 @@ const Profile = () => {
           onClick={() => navigate("/edit-profile")}
         >
           Изменить
+        </button>
+
+        <button
+            className={styles.settings__action}
+            onClick={() => navigate("/subscriptions-projects")}
+        >
+          Подписки на проекты
         </button>
         <button
           className={styles.settings__action}
