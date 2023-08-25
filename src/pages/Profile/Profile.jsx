@@ -8,7 +8,6 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../actions/userActions.js";
 import CardSkeleton from "../../components/CardSkeleton/CardSkeleton";
-import useIsAuthenticated from "../../hooks/useIsAuthenticated.js";
 
 const userAPI = `${import.meta.env.VITE_SERVER_URL}/api/users/profile/`;
 const projectsAPI = `${import.meta.env.VITE_SERVER_URL}/api/projects/`;
@@ -55,8 +54,6 @@ const Profile = () => {
 
   const navigate = useNavigate();
 
-  const userLogin = useSelector((state) => state.userLogin);
-  const { userInfo, isAuthenticated } = userLogin;
 
   const dispatch = useDispatch();
 
@@ -107,7 +104,7 @@ const Profile = () => {
         </button>
         <button
           className={styles.settings__action}
-          onClick={(e) => logoutHandler()}
+          onClick={() => logoutHandler()}
         >
           Выйти
         </button>
@@ -121,10 +118,7 @@ const Profile = () => {
               return (
                 <PostCard
                   key={post.post_id}
-                  authorName={post.author_name}
-                  content={post.content}
-                  postID={post.post_id}
-                  id = {post.post_id}
+                  post={post}
                   avatar={user.avatar}
                   isUserPost={user.user_id === post.author_id}
                   onDelete={handleDeletePost}

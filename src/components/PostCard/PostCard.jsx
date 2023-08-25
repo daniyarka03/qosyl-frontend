@@ -11,13 +11,10 @@ import 'react-loading-skeleton/dist/skeleton.css'
 
 const PostCard = ({
   isUserPost,
-  authorName,
-  postID,
-  content,
   onDelete,
-  avatar,
-  id,
-  isComment
+  isComment,
+    avatar,
+    post,
 }) => {
   const [isLiked, setIsLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(0);
@@ -25,16 +22,16 @@ const PostCard = ({
   const [postData, setPostData] = useState(null); // Данные поста [объект
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
+  const postID = post.post_id;
   const deletePostURL = `${
     import.meta.env.VITE_SERVER_URL
   }/api/posts/${postID}/delete/`;
-  const postURL = `${import.meta.env.VITE_SERVER_URL}/api/posts/${id}`;
+  const postURL = `${import.meta.env.VITE_SERVER_URL}/api/posts/${postID}`;
   const { userID } = useCurrentUserData();
-
   const deletePost = () => {
     axios
       .delete(deletePostURL)
-      .then((response) => {
+      .then(() => {
         onDelete(postID);
       })
       .catch((error) => {
@@ -68,18 +65,25 @@ const PostCard = ({
   }, [postID, postURL, userID]);
 
   const handleLike = () => {
+    console.log({
+      content: postData.content,
+      author_name: postData.author_name,
+      author_id: postData.author_id,
+      likes: postData.likes, // Используем newArray здесь
+      comments: postData.comments,
+    })
     try {
       if (isLiked) {
         setIsLiked(false);
         const newArray = likesArray.filter((item) => item !== userID);
         setLikesArray(newArray);
-
         axios
           .put(postURL + "/update/", {
             content: postData.content,
             author_name: postData.author_name,
             author_id: postData.author_id,
-            likes: newArray, // Используем newArray здесь
+            likes: postData.likes, // Используем newArray здесь
+            comments: postData.comments,
           })
           .then((response) => {
             setIsLiked(false); // Устанавливаем isLiked после успешного запроса
@@ -88,6 +92,7 @@ const PostCard = ({
           .catch((error) => {
             console.log(error);
           });
+
       } else {
         setIsLiked(true);
         const newArray = [...likesArray, userID];
@@ -121,9 +126,9 @@ const PostCard = ({
             className={styles.post__creator__avatar}
             src={`${import.meta.env.VITE_SERVER_URL}${avatar}`}
           />
-          <p className={styles.post__creator__name}>{authorName}</p>
+          <p className={styles.post__creator__name}>{post.authorName}</p>
         </div>
-        <p className={styles.post__description}>{content}</p>
+        <p className={styles.post__description}>{post.content}</p>
         {!isComment && <div className={styles.post__actions}>
           <div className={styles.post__action}>
             <img
@@ -139,9 +144,9 @@ const PostCard = ({
               className={styles.post__action__img}
               src={commentIcon}
               alt="comment-icon"
-              onClick={() => navigate(`/post/${id}/comments`)}
+              onClick={() => navigate(`/post/${post.post_id}/comments`)}
             />
-            <p className={styles.post__action__count}>2</p>
+            <p className={styles.post__action__count}>{post.comments.length}</p>
           </div>
         </div>}
         

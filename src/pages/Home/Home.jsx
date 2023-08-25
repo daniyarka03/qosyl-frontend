@@ -103,10 +103,8 @@ const Home = () => {
                   return (
                     <PostCard
                       key={post.post_id}
-                      authorName={post.author_name}
-                      content={post.content}
                       avatar={avatars[post.author_id]}
-                      id={post.post_id}
+                      post={post}
                     />
                   );
                 })}

@@ -5,7 +5,7 @@
 .container
     padding: 6rem 2rem
     margin-bottom: 2rem
-    @media screen and (min-width:600px)
+    @media screen and (min-width: 600px)
         margin-left: 10rem
 .header
     display: flex
@@ -17,6 +17,7 @@
         width: 10rem
         height: 10rem
         border-radius: 0.8rem
+        object-fit: cover
         
 .section
     margin-top: 5rem
@@ -24,7 +25,7 @@
         @include heading-font($white)
         font-size: 2rem
     &__cards
-        @media screen and (min-width:600px)
+        @media screen and (min-width: 600px)
             display: grid
             grid-template-columns: repeat( auto-fill, minmax(40rem, 1fr) )
             gap: 2rem

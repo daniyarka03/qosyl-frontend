@@ -5,16 +5,16 @@ import PostCard from "../../components/PostCard/PostCard";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import CardSkeleton from "../../components/CardSkeleton/CardSkeleton";
+import CommentCard from "../../components/CommentCard/CommentCard.jsx";
 
-const userAPI = `${import.meta.env.VITE_SERVER_URL}/api/users/profile/`;
 const postsAPI = `${import.meta.env.VITE_SERVER_URL}/api/posts/`;
+
 
 const PostComments = () => {
   const navigate = useNavigate();
   const [posts, setPosts] = useState([]);
   const [avatars, setAvatars] = useState({});
   const [post, setPost] = useState({});
-  const [user, setUser] = useState({});
   const [comments, setComments] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const location = useLocation();
@@ -24,13 +24,7 @@ const PostComments = () => {
   const config = {
     headers: { Authorization: `Bearer ${userInformation.token}` },
   };
-  useEffect(() => {
-    axios.get(userAPI, config).then((data) => {
-      setUser(data.data);
-      setIsLoading(false)
-      
-    });
-  }, []);
+
 
   useEffect(() => {
     const fetchComments = async () => {
@@ -38,6 +32,7 @@ const PostComments = () => {
           const response = await axios.get(postsAPI + postID)
           setPost(response.data)
           setComments(response.data.comments)
+          setIsLoading(false)
         } catch (error) {
           console.log(error);
         }
@@ -57,15 +52,11 @@ const PostComments = () => {
           Написать
         </button>
         <div className={styles.post__wrapper}>
-          {isLoading &&<CardSkeleton cards={8}/>}
+          {isLoading && <CardSkeleton cards={8}/>}
           {comments.map((comment) => (
-            <PostCard
-              key={post.comments.comment_id}
-              id={post.comments.comment_id}
-              authorName={user.name}
-              content={comment.message}
-              avatar={user.avatar}
-              isComment = {true}
+            <CommentCard
+              key={comment.comment_id}
+              comment={comment}
             />
           ))}
         </div>

@@ -4,7 +4,8 @@ import projectLogo from "../../assets/project-logo.svg";
 import Navbar from "../../components/Navbar/Navbar";
 import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
-import { randomUUID } from "crypto";
+//  import { randomUUID } from "crypto";
+import { v4 as uuidv4 } from 'uuid';
 
 const userAPI = `${import.meta.env.VITE_SERVER_URL}/api/users/profile/`;
 
@@ -47,12 +48,14 @@ const CreateComment = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+
     navigate(`/post/${postID}/comments`);
     const updatedPost = {...post, comments: [...post.comments, {
-        comment_id: randomUUID(),
+        comment_id: uuidv4(),
         author_id: userID,
         message: message
     }]}
+    console.log(updatedPost)
     axios
       .put(postUpdate,updatedPost)
       .then(function (response) {

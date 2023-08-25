@@ -37,6 +37,7 @@ const Posts = () => {
 
     fetchPosts();
   }, []);
+
   return (
     <div>
       <Navbar />
@@ -53,10 +54,8 @@ const Posts = () => {
           {posts.map((post) => (
             <PostCard
               key={post.post_id}
-              id={post.post_id}
-              authorName={post.author_name}
-              content={post.content}
-              avatar={avatars[post.author_id]}
+              post={post}
+                avatar={avatars[post.author_id]}
             />
           ))}
         </div>
