@@ -10,9 +10,9 @@ const Input = ({
   value,
   onChange,
   minLength,
+  maxlength,
   inputText,
   setInputText,
-                   maxlength,
 
 }) => {
   return withIcon ? (

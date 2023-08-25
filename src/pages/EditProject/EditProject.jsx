@@ -7,6 +7,8 @@ import axios from "axios";
 import animalsImage from "../../assets/animals.png";
 import { useLocation, useNavigate } from "react-router-dom";
 import Avatar from "../../components/Avatar/Avatar";
+import { useCurrentUserData } from "../../actions/getCurrentUserData";
+import CardSkeleton from "../../components/CardSkeleton/CardSkeleton";
 
 const projectsAPI = `${import.meta.env.VITE_SERVER_URL}/api/projects/`;
 
@@ -25,26 +27,35 @@ const EditProject = () => {
   const [authorID, setAuthorID] = useState("");
   const [imageSrc, setImageSrc] = useState("");
   const [subscribers, setSubscribers] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
+
+  const { userID } = useCurrentUserData(); 
+  // console.log(authorID, userID)
 
   useEffect(() => {
-    const getProject = async () => {
-      try {
-        const response = await axios.get(projectsAPI + projectID);
-        setTitle(response.data.title);
-        setType(response.data.type);
-        setDescription(response.data.description);
-        setContact(response.data.contact);
-        setAuthorID(response.data.author_id);
-        setImageSrc(response.data.image_src);
-        setSubscribers(response.data.subscribers);
-        console.log(response.data.image_src)
+    axios.get(projectsAPI + projectID).then(response => {
+      setTitle(response.data.title);
+      setType(response.data.type);
+      setDescription(response.data.description);
+      setContact(response.data.contact);
+      setAuthorID(response.data.author_id);
+      setImageSrc(response.data.image_src);
+      setSubscribers(response.data.subscribers);
+      setIsLoading(false)
+    }).catch (error => {
+      console.log("Failed fetching", error);
+    }) 
+  }, [projectID]);
 
-      } catch (error) {
-        console.log("Failed fetching", error);
-      }
-    };
-    getProject();
-  }, []);
+  useEffect(() => {
+    if (authorID !== userID) {
+      navigate("/profile/");
+    }
+  }, [authorID]);
+
+  if (isLoading) {
+    return <CardSkeleton />;
+  }
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -66,7 +77,6 @@ const EditProject = () => {
         console.log("An error occurred:", error);
       });
   };
-
   return (
     <>
       <Navbar />
@@ -133,6 +143,7 @@ const EditProject = () => {
                     id="projectContact"
                     value={contact}
                     onChange={(event) => setContact(event.target.value)}
+                    maxlength={30}
                   />
                 </div>
                 <button className={styles.form__button} type="submit">
