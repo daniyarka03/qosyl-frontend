@@ -53,6 +53,7 @@ const App = () => {
               <Routes>
                 {auth ? (
                     <>
+                      <Route path="*" element={<p>There's nothing here: 404!</p>} />
                       <Route path="/home" element={<Home />} />
 
                       <Route path="/reset-password" element={<ResetPassword />} />

@@ -1,8 +1,9 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import styles from "./SignInUp.module.sass";
-import { Link } from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import projectLogo from "../../assets/project-logo.svg";
 import Input from "../../components/Input/Input";
+import {useCurrentUserData} from "../../actions/getCurrentUserData.js";
 
 const SignUp = () => {
 
@@ -12,12 +13,23 @@ const SignUp = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
+    const [loading2, setLoading2] = useState(true);
+    const navigate = useNavigate();
 
     const [formData, setFormData] = useState({
         username: username,
         email: email,
         password: password,
     });
+
+    const {userID} = useCurrentUserData();
+
+    useEffect(() => {
+        if (userID) {
+            navigate("/profile");
+            setLoading2(false)
+        }
+    }, [navigate, userID]);
 
 const handleSubmit = async (e) => {
     e.preventDefault();
@@ -47,7 +59,7 @@ const handleSubmit = async (e) => {
             password: password,}))
     }
 };
-
+    loading2 && setTimeout(() => {
   return (
     <div className={styles.wrapper}>
       <div className={styles.header}>
@@ -69,6 +81,7 @@ const handleSubmit = async (e) => {
       </form>
     </div>
   );
+}, 1000);
 };
 
 export default SignUp;

@@ -7,6 +7,7 @@ import axios from "axios";
 import animalsImage from "../../assets/animals.png";
 import { useLocation, useNavigate } from "react-router-dom";
 import Avatar from "../../components/Avatar/Avatar";
+import {useCurrentUserData} from "../../actions/getCurrentUserData.js";
 
 const projectsAPI = `${import.meta.env.VITE_SERVER_URL}/api/projects/`;
 
@@ -25,6 +26,11 @@ const EditProject = () => {
   const [authorID, setAuthorID] = useState("");
   const [imageSrc, setImageSrc] = useState("");
   const [subscribers, setSubscribers] = useState("");
+  const {userID} = useCurrentUserData();
+
+  if (authorID === userID) {
+    navigate("/profile");
+  }
 
   useEffect(() => {
     const getProject = async () => {

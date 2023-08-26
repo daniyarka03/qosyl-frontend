@@ -4,6 +4,7 @@ import projectLogo from "../../assets/project-logo.svg";
 import Navbar from "../../components/Navbar/Navbar";
 import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
+import {useCurrentUserData} from "../../actions/getCurrentUserData.js";
 
 const postsAPI = `${import.meta.env.VITE_SERVER_URL}/api/posts/`;
 
@@ -19,6 +20,8 @@ const EditPost = () => {
   const [likes, setLikes] = useState();
 
   const [content, setContent] = useState("");
+
+
 
   useEffect(() => {
     axios

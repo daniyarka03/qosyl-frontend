@@ -11,7 +11,7 @@
         const [email, setEmail] = useState('');
         const [password, setPassword] = useState('');
         const navigate = useNavigate();
-
+        const [loading2, setLoading2] = useState(true);
         const dispatch = useDispatch();
 
         const userLogin = useSelector(state => state.userLogin);
@@ -23,6 +23,7 @@
         useEffect(() => {
            if (userInfo) {
                navigate("/profile");
+               setLoading2(false)
            }
         }, [navigate, userInfo]);
 
@@ -36,7 +37,7 @@
 
 
 
-
+        loading2 && setTimeout(() => {
       return (
         <div className={styles.wrapper}>
           <div className={styles.header}>
@@ -77,7 +78,9 @@
           </form>
         </div>
       );
+    }, 1000);
     };
+
 
 
 
