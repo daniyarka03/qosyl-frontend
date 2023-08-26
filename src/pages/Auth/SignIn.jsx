@@ -4,7 +4,7 @@
     import projectLogo from "../../assets/project-logo.svg";
     import Input from "../../components/Input/Input";
     import {connect, useDispatch, useSelector} from "react-redux";
-    import {login} from "../../actions/UserActions";
+    import {login} from "../../actions/userActions";
 
 
     const SignIn = () => {
