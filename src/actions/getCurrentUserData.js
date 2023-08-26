@@ -6,7 +6,7 @@ export function useCurrentUserData() {
 
   const userToken = JSON.parse(localStorage.getItem("userInfo")).token;
   const config = { headers: { Authorization: `Bearer ${userToken}` } };
-  const src = "http://127.0.0.1:8000/api/users/profile/";
+  const src = `${import.meta.env.VITE_SERVER_URL}/api/users/profile/`;
 
   useEffect(() => {
     const getUser = async () => {

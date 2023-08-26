@@ -51,6 +51,7 @@ const App = () => {
           <BrowserRouter>
             <Layout>
               <Routes>
+                <Route path="*" element="404" />
                 {auth ? (
                     <>
                       <Route path="/home" element={<Home />} />

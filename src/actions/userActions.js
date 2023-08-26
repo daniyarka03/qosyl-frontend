@@ -21,7 +21,7 @@ export const login = (email, password) => async (dispatch) => {
     };
 
     const { data } = await axios.post(
-      "http://127.0.0.1:8000/api/users/login/",
+      `${import.meta.env.VITE_SERVER_URL}/api/users/login/`,
       { email: email, password: password },
       config
     );

@@ -23,7 +23,7 @@ export const checkAuthenticated = () => async (dispatch) => {
 
     try {
       const res = await axios.post(
-        `http://127.0.0.1:8000/api/users/login`,
+        `${import.meta.env.VITE_SERVER_URL}/api/users/login`,
         body,
         config
       );
@@ -62,7 +62,7 @@ export const load_user = () => async (dispatch) => {
 
     try {
       const res = await axios.get(
-        `http://127.0.0.1:8000/api/users/login`,
+        `${import.meta.env.VITE_SERVER_URL}/api/users/login`,
         config
       );
 
@@ -97,7 +97,7 @@ export const login = (email, password) => async (dispatch) => {
 
   try {
     const res = await axios.post(
-      `http://127.0.0.1:8000/api/users/login`,
+      `${import.meta.env.VITE_SERVER_URL}/api/users/login`,
       body,
       config
     );
