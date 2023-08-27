@@ -3,7 +3,7 @@ import styles from "./SignInUp.module.sass";
 import { Link, useNavigate } from "react-router-dom";
 import projectLogo from "../../assets/project-logo.svg";
 import Input from "../../components/Input/Input";
-import { connect, useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../actions/userActions";
 
 const SignIn = () => {
@@ -20,7 +20,7 @@ const SignIn = () => {
 
   useEffect(() => {
     if (userInfo) {
-      navigate("/profile");
+      window.location.replace("/profile");
     }
   }, [navigate, userInfo]);
 

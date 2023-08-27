@@ -6,7 +6,6 @@ import likeIconUnfilled from "../../assets/like-outline-icon.svg";
 import likeIconFilled from "../../assets/like-icon.svg";
 import commentIcon from "../../assets/comment-icon.svg";
 import { useCurrentUserData } from "../../actions/getCurrentUserData";
-import Skeleton from "react-loading-skeleton";
 import 'react-loading-skeleton/dist/skeleton.css'
 
 const PostCard = ({
@@ -124,7 +123,7 @@ const PostCard = ({
         <div className={styles.post__creator}>
           <img
             className={styles.post__creator__avatar}
-            src={`${import.meta.env.VITE_SERVER_URL}${avatar}`}
+            src={`${import.meta.env.VITE_SERVER_URL_MEDIA}${avatar}`}
           />
           <p className={styles.post__creator__name}>{post.authorName}</p>
         </div>

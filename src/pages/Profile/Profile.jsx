@@ -4,10 +4,9 @@ import Navbar from "../../components/Navbar/Navbar";
 import PostCard from "../../components/PostCard/PostCard";
 import ProjectCard from "../../components/ProjectCard/ProjectCard";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import {useNavigate} from "react-router-dom";
+import { useDispatch} from "react-redux";
 import { logout } from "../../actions/userActions.js";
-import initialAvatar from "../../assets/load-avatar.svg"
 import CardSkeleton from "../../components/CardSkeleton/CardSkeleton";
 
 const userAPI = `${import.meta.env.VITE_SERVER_URL}/api/users/profile/`;
@@ -19,6 +18,8 @@ const Profile = () => {
   const [posts, setPosts] = useState([]);
   const [projects, setProjects] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+
+
 
   const userInformation = JSON.parse(localStorage.getItem("userInfo"));
   const config = {
@@ -58,7 +59,7 @@ const Profile = () => {
 
   const logoutHandler = () => {
     //localStorage.removeItem('userInfo');
-    navigate("/");
+    window.location.replace("/");
     dispatch(logout());
   };
 
@@ -77,7 +78,7 @@ const Profile = () => {
       {isLoading ? <CardSkeleton cards={1}/> : <>
       <img
           className={styles.profile__avatar}
-          src={`${import.meta.env.VITE_SERVER_URL}${user.avatar}`}
+          src={`${import.meta.env.VITE_SERVER_URL_MEDIA}${user.avatar}`}
         />
         <div className={styles.profile__name}>{user.name}</div></>}
       </div>

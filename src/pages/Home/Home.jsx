@@ -87,7 +87,7 @@ const Home = () => {
               <p className={styles.header__title}>Привет, {user.name}</p>
               <img
                 className={styles.header__avatar}
-                src={`${import.meta.env.VITE_SERVER_URL}${user.avatar}`}
+                src={`${import.meta.env.VITE_SERVER_URL_MEDIA}${user.avatar}`}
               />
             </>
           )}

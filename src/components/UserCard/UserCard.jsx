@@ -13,7 +13,7 @@ const UserCard = ({ userId, name, role, currentUser, avatar }) => {
       <div className={styles.wrapper}>
         <img
           className={styles.user__avatar}
-          src={`${import.meta.env.VITE_SERVER_URL}${avatar}`}
+          src={`${import.meta.env.VITE_SERVER_URL_MEDIA}${avatar}`}
         />
         <div className={styles.user__text}>
           <p className={styles.user__name}>{name}</p>

@@ -2,10 +2,11 @@ import React from "react";
 import styles from "./PageNotFound.module.sass";
 import Navbar from "../../components/Navbar/Navbar";
 import pageNotFound from "../../assets/pagenotfound.png";
-import { useNavigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
 const PageNotFound = () => {
   const navigate = useNavigate();
+
   return (
     <>
       <Navbar />

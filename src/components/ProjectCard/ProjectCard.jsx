@@ -9,7 +9,7 @@ const ProjectCard = ({ project, onClick }) => {
         <div className={styles.card__header}>
           <img
             className={styles.card__logo}
-            src={`${import.meta.env.VITE_SERVER_URL}${project.image_src}`}
+            src={`${import.meta.env.VITE_SERVER_URL_MEDIA}${project.image_src}`}
             alt=""
           />
           <p className={styles.card__title}>{project.title}</p>
