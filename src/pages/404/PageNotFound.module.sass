@@ -1,0 +1,81 @@
+@import "../../mixins"
+@import "../../colors"
+
+.container
+    padding: 7rem 13rem
+    @media screen and (max-width: 680px)
+        padding: 7rem 10rem
+    @media screen and (max-width: 620px)
+        padding: 7rem 7rem
+    @media screen and (max-width: 565px)
+        padding: 7rem 4rem
+
+.header
+    @include heading-font($white)
+    font-size: 4rem
+    text-align: center
+    @media screen and (max-width: 420px)
+        font-size: 3rem
+
+.info
+    display: flex
+    flex-direction: column
+    justify-content: space-between
+    @media screen and (max-width: 1300px)
+        text-align: center
+
+    &__header
+        @include heading-font($white)
+        font-size: 3.6rem
+        @media screen and (max-width: 1300px)
+            margin-top: 3rem
+        @media screen and (max-width: 750px)
+            font-size: 3.2rem
+        @media screen and (max-width: 504px)
+            font-size: 2.6rem
+
+    &__description
+        @include heading-font($white)
+        font-size: 3.2rem
+        margin-top: 7.3rem
+        max-width: 50rem
+        @media screen and (max-width: 1300px)
+            margin-top: 3rem
+        @media screen and (max-width: 750px)
+            font-size: 2.7rem
+        @media screen and (max-width: 504px)
+            font-size: 2rem
+    &__btn
+        @include heading-font($white)
+        font-size: 2rem
+        border-radius: 0.75rem
+        background: #FFB61D
+        margin-top: 11.8rem
+        padding: 1.4rem 9rem
+        @media screen and (max-width: 1300px)
+            margin-top: 3rem
+            width: 30rem
+            margin-inline: auto
+            padding: 1.5rem
+
+.main
+    display: flex
+    justify-content: space-around
+    margin-top: 10rem
+    @media screen and (max-width: 1300px)
+        flex-direction: column-reverse
+        align-items: center
+        margin-top: 2.5rem
+.img
+    width: 42rem
+    height: 42rem
+    border-radius: 1.2rem
+    @media screen and (max-width: 1300px)
+        width: 35rem
+        height: 35rem
+    @media screen and (max-width: 750px)
+        width: 25rem
+        height: 25rem
+    @media screen and (max-width: 420px)
+        width: 20rem
+        height: 20rem
