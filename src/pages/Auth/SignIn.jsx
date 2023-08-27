@@ -37,7 +37,7 @@ const SignIn = () => {
         <h2 className={styles.header__title}>Авторизация</h2>
       </div>
       {error && <div className="alert alert-danger">{error}</div>}
-      {loading && <div className="alert alert-info">Загрузка...</div>}
+      {loading && <div className={`${styles.alert} ${styles.alert__info}`}>Загрузка...</div>}
       <form action="" className={styles.form} onSubmit={(e) => onSubmit(e)}>
         <div className={styles.input__wrapper}>
           <Input
