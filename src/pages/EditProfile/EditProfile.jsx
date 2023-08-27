@@ -27,7 +27,6 @@ const EditProfile = () => {
       setImageSrc(data.data.avatar);
     });
   }, []);
-  console.log(user);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -36,7 +35,7 @@ const EditProfile = () => {
     formData.append("name", user.name);
     formData.append("email", user.email);
     formData.append("password", 123123);
-    console.log(imageSrc);
+    formData.append("images_src", imageSrc)
 
     axios({
       method: "put",

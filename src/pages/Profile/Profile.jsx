@@ -7,6 +7,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../actions/userActions.js";
+import initialAvatar from "../../assets/load-avatar.svg"
 import CardSkeleton from "../../components/CardSkeleton/CardSkeleton";
 
 const userAPI = `${import.meta.env.VITE_SERVER_URL}/api/users/profile/`;

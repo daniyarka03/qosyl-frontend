@@ -7,10 +7,6 @@ export default defineConfig({
     proxy: {
       '/api': 'https://109.248.170.181:8000'
     },
-    https: {
-      key: fs.readFileSync('/key.pem'),
-      cert: fs.readFileSync('/cert.pem'),
-    },
   },
   plugins: [react()],
 })

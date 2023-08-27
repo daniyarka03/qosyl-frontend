@@ -16,6 +16,8 @@ const Avatar = ({imageSrc, setImageSrc}) => {
         setImageSrc(selectedFile)
       };
       reader.readAsDataURL(selectedFile);
+    } else {
+      setAvatarUrl(initialAvatar);
     }
   };
 
