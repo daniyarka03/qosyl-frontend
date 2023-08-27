@@ -35,8 +35,43 @@ const CreateProject = () => {
     getUser();
   }, []);
 
+  
+  const [inputErrors, setInputErrors] = useState({
+    title: "",
+    type: "",
+    description: "",
+    contact: "",
+  });
+
+  
+  const validateForm = () => {
+    const errors = {};
+  
+    if (!title) {
+      errors.title = "Введите название проекта";
+    }
+  
+    if (!type) {
+      errors.type = "Выберите тип проекта";
+    }
+  
+    if (!description) {
+      errors.description = "Введите описание проекта";
+    }
+  
+    if (!contact) {
+      errors.contact = "Введите контактные данные";
+    }
+  
+    setInputErrors(errors);
+  
+    return Object.keys(errors).length === 0;
+  };
+
   const handleSubmit = (event) => {
+
     event.preventDefault();
+    if (validateForm()) {
     const formData = new FormData();
     formData.append("title", title);
     formData.append("description", description);
@@ -45,7 +80,6 @@ const CreateProject = () => {
     formData.append("author_id", userID);
     formData.append("image_src", imageSrc);
     formData.append("subscribers", "");
-
     axios
       .post(projectUpdate, formData)
       .then(function (response) {
@@ -63,6 +97,7 @@ const CreateProject = () => {
         console.log(error);
       });
   };
+}
 
   return (
     <>
@@ -92,10 +127,12 @@ const CreateProject = () => {
                   value={title}
                   onChange={(event) => setTitle(event.target.value)}
                   maxlength="100"
+                  error={inputErrors.title}
                 />
               </div>
 
               <div className={styles.input__wrapper}>
+              
                 <select
                   className={`${styles.input__wrapper} ${styles.select}`}
                   value={type}
@@ -112,6 +149,7 @@ const CreateProject = () => {
                   </option>
                   <option value="Другое">Другое</option>
                 </select>
+                {inputErrors.type && <p className={styles.input__error}>{inputErrors.type}</p>}
               </div>
             </div>
           </div>
@@ -122,6 +160,7 @@ const CreateProject = () => {
             onChange={(event) => setDescription(event.target.value)}
             maxLength="800"
           />
+          {inputErrors.description && <p className={styles.input__error}>{inputErrors.description}</p>}
           <div className={styles.form__contacts}>
             <p className={styles.contacts__header}>Контакты</p>
             <div className={styles.contacts__info}>
@@ -136,6 +175,7 @@ const CreateProject = () => {
                     value={contact}
                     onChange={(event) => setContact(event.target.value)}
                     maxlength="100"
+                    error={inputErrors.contact}
                   />
                 </div>
                 <button className={styles.form__button} type="submit">

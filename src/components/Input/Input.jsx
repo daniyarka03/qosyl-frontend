@@ -13,7 +13,7 @@ const Input = ({
   maxlength,
   inputText,
   setInputText,
-
+  error,
 }) => {
   return withIcon ? (
     <div className={styles.input__wrapper}>
@@ -31,6 +31,7 @@ const Input = ({
     </div>
   ) : (
     <div className={styles.input__wrapper}>
+      {error && <p className={styles.input__error}>{error}</p>}
       <input
         className={styles.input}
         placeholder={placeholder}

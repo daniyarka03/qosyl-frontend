@@ -32,6 +32,41 @@ const EditProject = () => {
 
   const { userID } = useCurrentUserData();
 
+
+  const [inputErrors, setInputErrors] = useState({
+    title: "",
+    type: "",
+    description: "",
+    contact: "",
+  });
+
+  
+  const validateForm = () => {
+    const errors = {};
+  
+    if (!title) {
+      errors.title = "Введите название проекта";
+    }
+  
+    if (!type) {
+      errors.type = "Выберите тип проекта";
+    }
+  
+    if (!description) {
+      errors.description = "Введите описание проекта";
+    }
+  
+    if (!contact) {
+      errors.contact = "Введите контактные данные";
+    }
+  
+    setInputErrors(errors);
+  
+    return Object.keys(errors).length === 0;
+  };
+  
+
+
   useEffect(() => {
     axios
       .get(projectsAPI + projectID)
@@ -58,9 +93,12 @@ const EditProject = () => {
     }
   }, [dataLoaded, authorID]);
 
+
   const handleSubmit = (event) => {
     event.preventDefault();
+    if (validateForm()) {
     const formData = new FormData();
+    console.log(setImageSrc)
     formData.append("title", title);
     formData.append("description", description);
     formData.append("type", type);
@@ -77,6 +115,8 @@ const EditProject = () => {
       .catch(function (error) {
         console.log("An error occurred:", error);
       });
+    }
+    
   };
   return (
     <>
@@ -95,7 +135,7 @@ const EditProject = () => {
         ) : (
           <form className={styles.form} onSubmit={handleSubmit}>
             <div className={styles.form__header}>
-              <Avatar setImageSrc={setImageSrc} />
+              <Avatar imageSrc={imageSrc} setImageSrc={setImageSrc}   />
               <div className={styles.form__header__inputs}>
                 <div className={styles.input__wrapper}>
                   <Input
@@ -105,6 +145,7 @@ const EditProject = () => {
                     id="projectName"
                     value={title}
                     onChange={(event) => setTitle(event.target.value)}
+                    error={inputErrors.title}
                   />
                 </div>
 
@@ -113,6 +154,7 @@ const EditProject = () => {
                     className={`${styles.input__wrapper} ${styles.select}`}
                     value={type}
                     onChange={(event) => setType(event.target.value)}
+                    error={inputErrors.type}
                   >
                     <option value="" disabled hidden>
                       Тип проекта
@@ -128,12 +170,14 @@ const EditProject = () => {
                 </div>
               </div>
             </div>
+            
             <textarea
               className={styles.textarea}
               placeholder="Описание"
               value={description}
               onChange={(event) => setDescription(event.target.value)}
             />
+            {inputErrors.description && <p className={styles.input__error}>{inputErrors.description}</p>}
             <div className={styles.form__contacts}>
               <p className={styles.contacts__header}>Контакты</p>
               <div className={styles.contacts__info}>
@@ -148,6 +192,7 @@ const EditProject = () => {
                       value={contact}
                       onChange={(event) => setContact(event.target.value)}
                       maxlength={30}
+                      error={inputErrors.contact}
                     />
                   </div>
                   <button className={styles.form__button} type="submit">

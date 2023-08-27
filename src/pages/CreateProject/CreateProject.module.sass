@@ -78,6 +78,7 @@ select.decorated option:hover
     &__header
         display: flex
         align-items: center
+        justify-content: space-between
         margin-top: 4rem
         @media screen and (max-width: 840px)
             flex-direction: column
@@ -152,3 +153,8 @@ select.decorated option:hover
         display: flex
         flex-direction: column
         justify-content: space-between
+
+.input__error
+    @include heading-font(#ef7d7d)
+    font-size: 1.2rem
+    margin-top: 1rem

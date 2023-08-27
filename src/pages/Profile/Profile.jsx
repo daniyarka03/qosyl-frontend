@@ -71,6 +71,9 @@ const Profile = () => {
     return project.author_id === user.user_id;
   });
 
+
+  
+
   return (
     <div className={styles.wrapper}>
       <Navbar />
