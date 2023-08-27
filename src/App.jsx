@@ -28,6 +28,7 @@ import styles from './App.module.sass';
 import { SkeletonTheme } from "react-loading-skeleton";
 import PostComments from "./pages/PostComments/PostComments";
 import CreateComment from "./pages/CreateComment/CreateComment";
+import PageNotFound from './pages/404/PageNotFound';
 
 
 
@@ -51,7 +52,7 @@ const App = () => {
           <BrowserRouter>
             <Layout>
               <Routes>
-                <Route path="*" element="404" />
+                <Route path="*" element={<PageNotFound />} />
                 {auth ? (
                     <>
                       <Route path="/home" element={<Home />} />
