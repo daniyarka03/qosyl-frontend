@@ -120,7 +120,7 @@ const PostCard = ({
             className={styles.post__creator__avatar}
             src={`${import.meta.env.VITE_SERVER_URL_MEDIA}${avatar}`}
           />
-          <p className={styles.post__creator__name}>{post.authorName}</p>
+          <p className={styles.post__creator__name}>{post.author_name}</p>
         </div>
         <p className={styles.post__description}>{post.content}</p>
         {!isComment && <div className={styles.post__actions}>

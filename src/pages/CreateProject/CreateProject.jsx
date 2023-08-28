@@ -158,9 +158,7 @@ const CreateProject = () => {
                   <option value="Культурный проект">
                     Культурный проект
                   </option>
-                  <option value="Культурный проект">
-                    Культурный проект
-                  </option>
+
 
                   <option value="Другое">Другое</option>
                 </select>

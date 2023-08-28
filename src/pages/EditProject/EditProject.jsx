@@ -177,6 +177,24 @@ const EditProject = () => {
                     <option value="Образовательное приложение">
                       Образовательное приложение
                     </option>
+                    <option value="Игра">
+                      Игра
+                    </option>
+                    <option value="Эко проект">
+                      Эко проект
+                    </option>
+                    <option value="Интернет-магазин">
+                      Интернет-магазин
+                    </option>
+                    <option value="Исследовательский проект">
+                      Исследовательский проект
+                    </option>
+                    <option value="Творческий проект">
+                      Творческий проект
+                    </option>
+                    <option value="Культурный проект">
+                      Культурный проект
+                    </option>
                     <option value="Другое">Другое</option>
                   </select>
                 </div>
