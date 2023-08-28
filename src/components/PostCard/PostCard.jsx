@@ -14,6 +14,7 @@ const PostCard = ({
   isComment,
     avatar,
     post,
+    id
 }) => {
   const [isLiked, setIsLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(0);

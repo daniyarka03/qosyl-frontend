@@ -55,6 +55,7 @@ const UserPage = () => {
     return post.author_id === user.user_id;
   });
 
+
   return (
     <div className={styles.wrapper}>
       <Navbar />
@@ -65,7 +66,7 @@ const UserPage = () => {
           <>
             <img
               className={styles.profile__avatar}
-              src={`${import.meta.env.VITE_SERVER_URL}${user.avatar}`}
+              src={`${import.meta.env.VITE_SERVER_URL_MEDIA}${user.avatar}`}
             />
             <div className={styles.profile__name}>{user.name}</div>
           </>
@@ -83,6 +84,7 @@ const UserPage = () => {
                 authorName={post.author_name}
                 avatar={user.avatar}
                 id={post.post_id}
+                post={post}
               />
             );
           })}

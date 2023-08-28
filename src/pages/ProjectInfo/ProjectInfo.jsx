@@ -17,6 +17,7 @@ const ProjectInfo = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isSubscribed, setIsSubscribed] = useState(false);
   const [imageProject, setImageProject] = useState("");
+  const [justUpdatedSubscribe, setJustUpdatedSubscribe] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -56,8 +57,11 @@ const ProjectInfo = () => {
   };
 
   const onSubscribe = (projectID) => {
+    setJustUpdatedSubscribe(true)
+
+    const mediaRoot = '/cXQYMmoJTmnj79aRVNDw16rkoGW/media';
     const isSubscribedForProject = project.subscribers.includes(userID);
-    const imageProject = project.image_src.replace('/media/', '');
+    const imageProject = project.image_src.replace(mediaRoot, '');
     let updatedSubscribers;
 
     if (isSubscribedForProject) {
@@ -71,12 +75,11 @@ const ProjectInfo = () => {
     const src = `${
         import.meta.env.VITE_SERVER_URL
     }/api/projects/${projectID}/update/`;
-
     axios.put(src, updatedProject)
         .then((response) => {
           console.log('Проект успешно обновлен', response.data);
           setProject(updatedProject);
-          setImageProject("/media/" + imageProject);
+          setImageProject(imageProject);
           setIsSubscribed(!isSubscribedForProject); // Инвертируем состояние подписки
           // Обновите состояние проекта в вашем компоненте
           // чтобы отразить изменения на интерфейсе
@@ -99,9 +102,12 @@ const ProjectInfo = () => {
                 <>
                   <img
                     className={styles.project__logo}
-                    src={`${import.meta.env.VITE_SERVER_URL_MEDIA}${
-                      imageProject
-                    }`}
+                    src={
+                      justUpdatedSubscribe ? (import.meta.env.VITE_SERVER_URL + "/media/"+
+                        imageProject) :
+                          (import.meta.env.VITE_SERVER_URL_MEDIA +
+                      imageProject)
+                    }
                     alt="Project Logo"
                   />
                   <div className={styles.project__info}>
