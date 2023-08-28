@@ -26,7 +26,6 @@ const handleSubmit = async (e) => {
     formData.email = formData.username.trim();
     formData.password = formData.username.trim();
 
-    console.log(username)
 
     const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/auth/users/`, {
         method: 'POST',
@@ -42,9 +41,7 @@ const handleSubmit = async (e) => {
         alert('Nice')
     } else {
         alert('Bad')
-        console.log(JSON.stringify({username: username,
-            email: email,
-            password: password,}))
+
     }
 };
 

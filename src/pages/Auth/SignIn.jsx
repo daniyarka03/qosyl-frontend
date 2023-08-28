@@ -16,7 +16,6 @@ const SignIn = () => {
   const userLogin = useSelector((state) => state.userLogin);
   const { error, loading, userInfo } = userLogin;
 
-  console.log(userInfo);
 
   useEffect(() => {
     if (userInfo) {
@@ -27,7 +26,6 @@ const SignIn = () => {
   const onSubmit = (e) => {
     e.preventDefault();
     dispatch(login(email, password));
-    console.log(email + "/" + password);
   };
 
   return (

@@ -82,7 +82,7 @@ const EditProject = () => {
         setIsLoading(false);
       })
       .catch((error) => {
-        console.log("Failed fetching", error);
+        //console.log("Failed fetching", error);
         setDataLoaded(true);
       });
   }, [projectID]);
@@ -97,26 +97,38 @@ const EditProject = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     if (validateForm()) {
-    const formData = new FormData();
-    console.log(setImageSrc)
-    formData.append("title", title);
-    formData.append("description", description);
-    formData.append("type", type);
-    formData.append("contact", contact);
-    formData.append("author_id", authorID);
-    formData.append("image_src", imageSrc);
-    formData.append("subscribers", subscribers);
-    navigate(`/project/${projectID}`);
-    axios
-      .put(src, formData)
-      .then(function (response) {
-        console.log(response);
-      })
-      .catch(function (error) {
-        console.log("An error occurred:", error);
-      });
+      const formData = new FormData();
+      if (typeof imageSrc == "string") {
+        const mediaRoot = '/cXQYMmoJTmnj79aRVNDw16rkoGW/media';
+        const relativePath = imageSrc.replace(mediaRoot, '');
+        formData.append("title", title);
+        formData.append("description", description);
+        formData.append("type", type);
+        formData.append("contact", contact);
+        formData.append("author_id", authorID);
+        formData.append("image_src", relativePath);
+        formData.append("subscribers", subscribers);
+      } else {
+        formData.append("title", title);
+        formData.append("description", description);
+        formData.append("type", type);
+        formData.append("contact", contact);
+        formData.append("author_id", authorID);
+        formData.append("image_src", imageSrc);
+        formData.append("subscribers", subscribers);
+      }
+
+      axios
+        .put(src, formData)
+        .then(function (response) {
+          navigate(`/project/${projectID}`);
+
+        })
+        .catch(function (error) {
+          console.log("An error occurred:", error);
+        });
+
     }
-    
   };
   return (
     <>

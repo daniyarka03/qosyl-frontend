@@ -55,11 +55,10 @@ const CreateComment = () => {
         author_id: userID,
         message: message
     }]}
-    console.log(updatedPost)
     axios
       .put(postUpdate,updatedPost)
       .then(function (response) {
-        console.log(response);
+        //console.log(response);
       })
       .catch(function (error) {
         console.log(error);

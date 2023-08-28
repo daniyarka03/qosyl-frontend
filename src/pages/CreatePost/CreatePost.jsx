@@ -58,7 +58,7 @@ const CreatePost = () => {
       })
       .then(function (response) {
         navigate("/profile");
-        console.log(response);
+        //console.log(response);
       })
       .catch(function (error) {
         console.log(error);

@@ -84,14 +84,7 @@ const CreateProject = () => {
       .post(projectUpdate, formData)
       .then(function (response) {
         navigate(`/project/${response.data.project_id}`, response.data);
-        console.log({
-          title: title,
-          description: description,
-          type: type,
-          image_src: `${imageSrc}`,
-          contact: contact,
-          author_id: userID,
-        });
+
       })
       .catch(function (error) {
         console.log(error);

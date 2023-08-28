@@ -75,7 +75,7 @@ const EditPost = () => {
       })
       .then((response) => {
         navigate("/profile");
-        console.log(response);
+        //console.log(response);
       })
       .catch((error) => {
         console.log(error);

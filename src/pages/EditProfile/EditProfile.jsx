@@ -26,6 +26,7 @@ const EditProfile = () => {
       setUser(data.data);
       setUserName(data.data.name);
       setImageSrc(data.data.avatar);
+
     });
   }, []);
 
@@ -47,11 +48,23 @@ const EditProfile = () => {
     event.preventDefault();
     if (validateForm()) {
     const formData = new FormData();
-    formData.append("avatar", imageSrc);
-    formData.append("name", userName);
-    formData.append("email", user.email);
-    formData.append("password", 123123);
-    formData.append("images_src", imageSrc)
+
+      if (typeof imageSrc == "string") {
+        const mediaRoot = '/cXQYMmoJTmnj79aRVNDw16rkoGW/media';
+        const relativePath = imageSrc.replace(mediaRoot, '');
+        formData.append("avatar", relativePath);
+        formData.append("name", userName);
+        formData.append("email", user.email);
+        formData.append("password", 123123);
+      } else {
+        formData.append("avatar", imageSrc);
+        formData.append("name", userName);
+        formData.append("email", user.email);
+        formData.append("password", 123123);
+      }
+
+
+    //formData.append("images_src", imageSrc)
 
     axios({
       method: "put",
@@ -63,7 +76,7 @@ const EditProfile = () => {
       },
     })
       .then(function (response) {
-        console.log(response);
+        //console.log(response);
         navigate("/profile");
       })
       .catch(function (error) {

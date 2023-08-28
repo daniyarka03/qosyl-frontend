@@ -41,7 +41,7 @@ const ProjectInfo = () => {
         setIsLoading(false);
       })
       .catch((error) => {
-        console.log(projectsAPI + projectID)
+       // console.log(projectsAPI + projectID)
         console.log(error);
       });
   }, [userID]);
