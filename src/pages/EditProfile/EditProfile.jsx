@@ -12,8 +12,8 @@ const userUpdate = `${import.meta.env.VITE_SERVER_URL}/api/users/profile/edit/`;
 
 const EditProfile = () => {
   const navigate = useNavigate();
-  const [name, setName] = useState("");
   const [user, setUser] = useState({});
+  const [userName, setUserName] = useState("");
   const [imageSrc, setImageSrc] = useState("");
 
   const userInformation = JSON.parse(localStorage.getItem("userInfo"));
@@ -24,18 +24,47 @@ const EditProfile = () => {
   useEffect(() => {
     axios.get(userAPI, config).then((data) => {
       setUser(data.data);
+      setUserName(data.data.name);
       setImageSrc(data.data.avatar);
+
     });
   }, []);
 
+  const [inputErrors, setInputErrors] = useState({
+    userName: "",
+  });
+
+  const validateForm = () => {
+    const errors = {};
+    if (!userName) {
+      errors.userName = "Введите имя пользователя";
+    }
+    setInputErrors(errors);
+  
+    return Object.keys(errors).length === 0;
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
+    if (validateForm()) {
     const formData = new FormData();
-    formData.append("avatar", imageSrc);
-    formData.append("name", user.name);
-    formData.append("email", user.email);
-    formData.append("password", 123123);
-    formData.append("images_src", imageSrc)
+
+      if (typeof imageSrc == "string") {
+        const mediaRoot = '/cXQYMmoJTmnj79aRVNDw16rkoGW/media';
+        const relativePath = imageSrc.replace(mediaRoot, '');
+        formData.append("avatar", relativePath);
+        formData.append("name", userName);
+        formData.append("email", user.email);
+        formData.append("password", 123123);
+      } else {
+        formData.append("avatar", imageSrc);
+        formData.append("name", userName);
+        formData.append("email", user.email);
+        formData.append("password", 123123);
+      }
+
+
+    //formData.append("images_src", imageSrc)
 
     axios({
       method: "put",
@@ -47,13 +76,14 @@ const EditProfile = () => {
       },
     })
       .then(function (response) {
-        console.log(response);
+        //console.log(response);
         navigate("/profile");
       })
       .catch(function (error) {
         console.log("An error occurred:", error);
       });
   };
+}
   return (
     <>
       <Navbar />
@@ -62,7 +92,8 @@ const EditProfile = () => {
           <Avatar imageSrc={imageSrc} setImageSrc={setImageSrc} />
           <h2 className={styles.header__title}>Изменение профиля</h2>
         </div>
-        <form className={styles.form} onSubmit={handleSubmit}>
+        <form className={styles.form} onSubmit={(e) => handleSubmit(e, validateForm)}>
+
           <div className={styles.form__header}>
             
             <div className={styles.form__header__inputs}>
@@ -71,9 +102,10 @@ const EditProfile = () => {
                   placeholder="Имя пользователя"
                   type="text"
                   name="text"
-                  id="projectName"
-                  value={name}
-                  onChange={(event) => setName(event.target.value)}
+                  id="userName"
+                  value={userName}
+                  onChange={(event) => setUserName(event.target.value)}
+                  error={inputErrors.userName}
                 />
               </div>
             </div>

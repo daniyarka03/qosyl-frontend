@@ -11,6 +11,7 @@ import {useCurrentUserData} from "../../actions/getCurrentUserData.js";
 
 const projectsAPI = `${import.meta.env.VITE_SERVER_URL}/api/projects/`;
 
+
 const ProjectInfo = () => {
   const [project, setProject] = useState({});
   const [isLoading, setIsLoading] = useState(true);
@@ -40,6 +41,7 @@ const ProjectInfo = () => {
         setIsLoading(false);
       })
       .catch((error) => {
+       // console.log(projectsAPI + projectID)
         console.log(error);
       });
   }, [userID]);
@@ -97,7 +99,7 @@ const ProjectInfo = () => {
                 <>
                   <img
                     className={styles.project__logo}
-                    src={`${import.meta.env.VITE_SERVER_URL}${
+                    src={`${import.meta.env.VITE_SERVER_URL_MEDIA}${
                       imageProject
                     }`}
                     alt="Project Logo"

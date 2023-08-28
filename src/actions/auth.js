@@ -71,7 +71,6 @@ export const load_user = () => async (dispatch) => {
         userLogin: res.data,
       });
 
-      console.log("USER_LOADED_SUCCESS");
     } catch (err) {
       dispatch({
         type: USER_LOADED_FAIL,

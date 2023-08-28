@@ -34,6 +34,5 @@ const store = configureStore({
     devTools: composeWithDevTools(applyMiddleware(...middleware)),
 });
 
-console.log(store.getState())
 
 export default store;

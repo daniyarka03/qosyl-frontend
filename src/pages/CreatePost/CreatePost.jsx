@@ -29,9 +29,25 @@ const CreatePost = () => {
     };
     getUser();
   }, []);
+
+  const [inputErrors, setInputErrors] = useState({
+    description: "",
+  });
+
+  const validateForm = () => {
+    const errors = {};
+  
+    if (!description) {
+      errors.description = "Введите описание поста";
+    }
+    setInputErrors(errors);
+  
+    return Object.keys(errors).length === 0;
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    navigate("/profile");
+    if (validateForm()) {
     axios
       .post(postCreate, {
         content: description,
@@ -41,12 +57,16 @@ const CreatePost = () => {
         comments: [],
       })
       .then(function (response) {
-        console.log(response);
+        navigate("/profile");
+        //console.log(response);
       })
       .catch(function (error) {
         console.log(error);
       });
+    }
   };
+
+
 
   return (
     <>
@@ -61,6 +81,7 @@ const CreatePost = () => {
           <h2 className={styles.header__title}>Создание поста</h2>
         </div>
         <form className={styles.form} onSubmit={handleSubmit}>
+        {inputErrors.description && <p className={styles.input__error}>{inputErrors.description}</p>}
           <textarea
             className={styles.textarea}
             placeholder="Описание поста"

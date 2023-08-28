@@ -69,6 +69,9 @@
     background-position: calc(100% - 15px) center
     cursor: pointer
 
+option
+    height: 5rem
+
 select.decorated option:hover
     box-shadow: 0 0 10px 100px #1882A8 inset
 
@@ -153,3 +156,9 @@ select.decorated option:hover
         display: flex
         flex-direction: column
         justify-content: space-between
+
+
+.input__error
+    @include heading-font(#ef7d7d)
+    font-size: 1.2rem
+    margin-top: 1rem

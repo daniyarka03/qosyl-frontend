@@ -64,13 +64,7 @@ const PostCard = ({
   }, [postID, postURL, userID]);
 
   const handleLike = () => {
-    console.log({
-      content: postData.content,
-      author_name: postData.author_name,
-      author_id: postData.author_id,
-      likes: postData.likes, // Используем newArray здесь
-      comments: postData.comments,
-    })
+
     try {
       if (isLiked) {
         setIsLiked(false);
