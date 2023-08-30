@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import CardSkeleton from "../../components/CardSkeleton/CardSkeleton";
 import useGetPosts from "../../hooks/useGetPosts";
-import { userAPI } from "../../constants/API";
+import { usersAPI } from "../../constants/API";
 
 const Posts = () => {
   const navigate = useNavigate();
@@ -14,14 +14,13 @@ const Posts = () => {
   const [isPostLoading, setIsPostLoading] = useState(true);
   const { posts } = useGetPosts(setIsPostLoading);
   const [avatars, setAvatars] = useState({});
-
   useEffect(() => {
-    const avatarsData = {};
     for (const post of posts) {
       axios
-        .get(userAPI + post.author_id)
+        .get(usersAPI + post.author_id)
         .then((userResponse) => {
-          avatarsData[post.author_id] = userResponse.data.avatar;
+          const avatarsData = new Map();
+          avatarsData.set(post.author_id, userResponse.data.avatar);
           setAvatars(avatarsData);
           setIsAvatarLoading(false);
         })
