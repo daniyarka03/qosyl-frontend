@@ -1,34 +1,24 @@
-import React, {useEffect, useRef, useState} from 'react';
-import styles from "./Avatar.module.sass"
-import initialAvatar from "../../assets/tiger.jpg"
+import React, { useEffect, useRef, useState } from "react";
+import styles from "./Avatar.module.sass";
 
 const Avatar = ({ imageSrc, setImageSrc }) => {
-
-  const [avatarUrl, setAvatarUrl] = useState(import.meta.env.VITE_SERVER_URL_MEDIA + imageSrc);
+  const [avatarUrl, setAvatarUrl] = useState();
   const inputRef = useRef(null);
-
-
-  // const defaultAvatarBlob = fetch(initialAvatar)
-  //   .then(response => response.blob())
-  //   .then(blob => new File([blob], 'tiger.jpg', { type: 'image/jpeg', lastModified: Date.now() }))
-  //   .catch(error => console.error('Error fetching default avatar:', error));
+  useEffect(() => {
+    if (!(typeof imageSrc === "object")) {
+      setAvatarUrl(import.meta.env.VITE_SERVER_URL_MEDIA + imageSrc);
+    }
+  }, [imageSrc]);
 
   const handleImageChange = (event) => {
     const selectedFile = event.target.files[0];
-    //console.log(selectedFile)
     if (selectedFile) {
       const reader = new FileReader();
       reader.onload = (e) => {
         setAvatarUrl(e.target.result);
-        setImageSrc(selectedFile)
+        setImageSrc(selectedFile);
       };
       reader.readAsDataURL(selectedFile);
-    } else {
-      setAvatarUrl(imageSrc);
-      // defaultAvatarBlob.then(defaultAvatarFile => {
-      //   setImageSrc(defaultAvatarFile)
-      //   console.log(defaultAvatarFile)
-      // });
     }
   };
 
@@ -43,12 +33,12 @@ const Avatar = ({ imageSrc, setImageSrc }) => {
       <input
         type="file"
         accept="image/*"
-        style={{ display: 'none' }}
+        style={{ display: "none" }}
         ref={inputRef}
         onChange={handleImageChange}
       />
     </div>
   );
-}
+};
 
 export default Avatar;
