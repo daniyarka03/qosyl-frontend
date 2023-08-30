@@ -4,16 +4,17 @@ import projectLogo from "../../assets/project-logo.svg";
 import Navbar from "../../components/Navbar/Navbar";
 import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
-//  import { randomUUID } from "crypto";
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
 
 const userAPI = `${import.meta.env.VITE_SERVER_URL}/api/users/profile/`;
 
 const CreateComment = () => {
   const location = useLocation();
-  const postsAPI = `${import.meta.env.VITE_SERVER_URL}/api/posts/`
-  const postID = location.pathname.split("/")[2]
-  const postUpdate = `${import.meta.env.VITE_SERVER_URL}/api/posts/${postID}/update/`;
+  const postsAPI = `${import.meta.env.VITE_SERVER_URL}/api/posts/`;
+  const postID = location.pathname.split("/")[2];
+  const postUpdate = `${
+    import.meta.env.VITE_SERVER_URL
+  }/api/posts/${postID}/update/`;
   const navigate = useNavigate();
   const [message, setMessage] = useState("");
   const [userID, setUserID] = useState(0);
@@ -27,7 +28,7 @@ const CreateComment = () => {
       try {
         const response = await axios.get(userAPI, config);
         setUserID(response.data.user_id);
-      } catch (error) { 
+      } catch (error) {
         console.log("Failed fetching", error);
       }
     };
@@ -35,11 +36,11 @@ const CreateComment = () => {
   }, []);
 
   useEffect(() => {
-    const getPost= async () => {
+    const getPost = async () => {
       try {
         const response = await axios.get(postsAPI + postID);
-        setPost(response.data)
-      } catch (error) { 
+        setPost(response.data);
+      } catch (error) {
         console.log("Failed fetching", error);
       }
     };
@@ -50,13 +51,19 @@ const CreateComment = () => {
     event.preventDefault();
 
     navigate(`/post/${postID}/comments`);
-    const updatedPost = {...post, comments: [...post.comments, {
-        comment_id: uuidv4(),
-        author_id: userID,
-        message: message
-    }]}
+    const updatedPost = {
+      ...post,
+      comments: [
+        ...post.comments,
+        {
+          comment_id: uuidv4(),
+          author_id: userID,
+          message: message,
+        },
+      ],
+    };
     axios
-      .put(postUpdate,updatedPost)
+      .put(postUpdate, updatedPost)
       .then(function (response) {
         //console.log(response);
       })

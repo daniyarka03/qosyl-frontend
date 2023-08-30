@@ -6,71 +6,43 @@ import styles from "./Home.module.sass";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import CardSkeleton from "../../components/CardSkeleton/CardSkeleton";
-
-const userAPI = `${import.meta.env.VITE_SERVER_URL}/api/users/profile/`;
-const projectsAPI = `${import.meta.env.VITE_SERVER_URL}/api/projects/`;
+import useGetCurrentUser from "../../hooks/useGetCurrentUser";
+import useGetProjects from "../../hooks/useGetProjects";
+import useGetPosts from "../../hooks/useGetPosts";
 
 const Home = () => {
-  const [user, setUser] = useState({});
-  const [posts, setPosts] = useState([]);
-  const [projects, setProjects] = useState([]);
   const [avatars, setAvatars] = useState({});
+  const [isAvatarLoading, setIsAvatarLoading] = useState(true);
   const [isUserLoading, setIsUserLoading] = useState(true);
   const [isPostLoading, setIsPostLoading] = useState(true);
   const [isProjectLoading, setIsProjectLoading] = useState(true);
   const navigate = useNavigate();
 
-  const userInformation = JSON.parse(localStorage.getItem("userInfo"));
-  const config = {
-    headers: { Authorization: `Bearer ${userInformation.token}` },
-  };
-  useEffect(() => {
-    axios
-      .get(userAPI, config)
-      .then((data) => {
-        setUser(data.data);
-        setIsUserLoading(false);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
+  const { currentUser } = useGetCurrentUser(setIsUserLoading);
+  const { posts } = useGetPosts(setIsPostLoading);
 
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const postsResponse = await axios.get(
-          `${import.meta.env.VITE_SERVER_URL}/api/posts`
-        );
-        setPosts(postsResponse.data);
-
         const avatarsData = {};
-        for (const post of postsResponse.data) {
+        for (const post of posts) {
           const userAPI = `${import.meta.env.VITE_SERVER_URL}/api/users/${
             post.author_id
           }`;
+          console.log(userAPI)  
           const userResponse = await axios.get(userAPI);
           avatarsData[post.author_id] = userResponse.data.avatar;
         }
         setAvatars(avatarsData);
-        setIsPostLoading(false);
+        setIsAvatarLoading(false);
       } catch (error) {
         console.log(error);
       }
     };
-
     fetchPosts();
   }, []);
 
-  useEffect(() => {
-    axios
-      .get(projectsAPI)
-      .then((data) => {
-        setProjects(data.data);
-        setIsProjectLoading(false)
-      })
-      .catch((error) => console.log(error));
-  }, []);
+  const { projects } = useGetProjects(setIsProjectLoading);
 
   const lastPosts = posts.slice(posts.length - 2);
   const lastProjects = projects.slice(projects.length - 2);
@@ -84,10 +56,10 @@ const Home = () => {
             <CardSkeleton cards={1} width={200} />
           ) : (
             <>
-              <p className={styles.header__title}>Привет, {user.name}</p>
+              <p className={styles.header__title}>Привет, {currentUser.name}</p>
               <img
                 className={styles.header__avatar}
-                src={`${import.meta.env.VITE_SERVER_URL_MEDIA}${user.avatar}`}
+                src={`${import.meta.env.VITE_SERVER_URL_MEDIA}${currentUser.avatar}`}
               />
             </>
           )}
