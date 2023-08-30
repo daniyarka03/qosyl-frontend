@@ -1,53 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Navbar from "../../components/Navbar/Navbar.jsx";
 import styles from "./Users.module.sass";
 import Input from "../../components/Input/Input.jsx";
 import searchIcon from "../../assets/search-icon.svg";
 import UserCard from "../../components/UserCard/UserCard.jsx";
-import axios from "axios";
 import CardSkeleton from "../../components/CardSkeleton/CardSkeleton.jsx";
-
-const usersAPI = `${import.meta.env.VITE_SERVER_URL}/api/users/`;
-const currentUserAPI = `${import.meta.env.VITE_SERVER_URL}/api/users/profile/`;
+import useGetUsers from "../../hooks/useGetUsers.js";
+import useGetCurrentUser from "../../hooks/useGetCurrentUser.js";
+import useFilterUsers from "../../hooks/useFilterUsers.js";
 
 const Users = () => {
-  const [currentUser, setCurrentUser] = useState({});
-  const [users, setUsers] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-
-  const userInformation = JSON.parse(localStorage.getItem("userInfo"));
-  const config = {
-    headers: { Authorization: `Bearer ${userInformation.token}` },
-  };
-  useEffect(() => {
-    axios.get(currentUserAPI, config).then((data) => {
-      setCurrentUser(data.data);
-    });
-  }, []);
-
-  useEffect(() => {
-    const getUsers = async () => {
-      try {
-        const response = await axios.get(usersAPI);
-        setUsers(response.data);
-        setIsLoading(false);
-      } catch {
-        console.error("Error fetching users:", users);
-      }
-    };
-    getUsers();
-  }, []);
-
+  const { currentUser } = useGetCurrentUser(setIsLoading);
+  const { users } = useGetUsers(setIsLoading);
   const [inputText, setInputText] = useState("");
-  const [filteredUsers, setFilteredUsers] = useState(users);
-
-  useEffect(() => {
-    const filtered = users.filter((user) => {
-      return user.name.toLowerCase().includes(inputText.toLowerCase());
-    });
-    setFilteredUsers(filtered);
-    
-  }, [inputText, users]);
+  const { filteredUsers } = useFilterUsers(inputText, users);
 
   return (
     <div className={styles.container}>

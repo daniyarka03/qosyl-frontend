@@ -2,35 +2,18 @@ import React, { useState, useEffect } from "react";
 import styles from "./Projects.module.sass";
 import Input from "../../components/Input/Input";
 import searchIcon from "../../assets/search-icon.svg";
-import axios from "axios";
 import ProjectCard from "../../components/ProjectCard/ProjectCard";
-import Carousel from "../../components/Carousel/Carousel";
 import Navbar from "../../components/Navbar/Navbar";
 import CardSkeleton from "../../components/CardSkeleton/CardSkeleton";
 import { useNavigate } from "react-router-dom";
-
-const projectsAPI = `${import.meta.env.VITE_SERVER_URL}/api/projects/`;
-
+import useGetProjects from "../../hooks/useGetProjects";
+import useFilterProjects from "../../hooks/useFilterProjects";
 const Projects = ({ isAuthenticated }) => {
   const navigate = useNavigate();
-  const [projects, setProjects] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  useEffect(() => {
-    axios.get(projectsAPI).then((data) => {
-      setProjects(data.data);
-      setIsLoading(false);
-    });
-  }, []);
-
-  const [filteredProjects, setFilteredProjects] = useState(projects);
   const [inputText, setInputText] = useState("");
-
-  useEffect(() => {
-    const filtered = projects.filter((project) => {
-      return project.title.toLowerCase().includes(inputText.toLowerCase());
-    });
-    setFilteredProjects(filtered);
-  }, [inputText, projects]);
+  const [isProjectLoading, setIsProjectLoading] = useState(true);
+  const { projects } = useGetProjects(setIsProjectLoading);
+  const { filteredProjects } = useFilterProjects(inputText, projects);
 
   return (
     <>
@@ -49,7 +32,7 @@ const Projects = ({ isAuthenticated }) => {
           />
         </header>
         <section className={styles.projects}>
-          {isLoading ? (
+          {isProjectLoading ? (
             <CardSkeleton cards={8} />
           ) : (
             <>

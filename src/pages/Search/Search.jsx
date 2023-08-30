@@ -1,8 +1,8 @@
 import React from "react";
 import styles from "./Search.module.sass";
 import Navbar from "../../components/Navbar/Navbar";
-import searchProjectsIcon from "../../assets/search-projects-icon.svg"
-import searchUsersIcon from "../../assets/search-users-icon.svg"
+import searchProjectsIcon from "../../assets/search-projects-icon.svg";
+import searchUsersIcon from "../../assets/search-users-icon.svg";
 import { Link } from "react-router-dom";
 
 const Search = () => {

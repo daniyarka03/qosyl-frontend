@@ -6,11 +6,9 @@ import descriptionIcon from "../../assets/description-icon.svg";
 import contactIcon from "../../assets/contact-icon.svg";
 import CardSkeleton from "../../components/CardSkeleton/CardSkeleton";
 import axios from "axios";
-import {useCurrentUserData} from "../../actions/getCurrentUserData.js";
-
+import { useCurrentUserData } from "../../actions/getCurrentUserData.js";
 
 const projectsAPI = `${import.meta.env.VITE_SERVER_URL}/api/projects/`;
-
 
 const ProjectInfo = () => {
   const [project, setProject] = useState({});
@@ -21,10 +19,8 @@ const ProjectInfo = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-
   const projectID = location.pathname.split("/").pop();
   const { userID } = useCurrentUserData();
-
 
   // useEffect(() => {
   //   axios.get(userAPI, config).then((data) => {
@@ -42,7 +38,7 @@ const ProjectInfo = () => {
         setIsLoading(false);
       })
       .catch((error) => {
-       // console.log(projectsAPI + projectID)
+        // console.log(projectsAPI + projectID)
         console.log(error);
       });
   }, [userID]);
@@ -57,36 +53,41 @@ const ProjectInfo = () => {
   };
 
   const onSubscribe = (projectID) => {
-    setJustUpdatedSubscribe(true)
+    setJustUpdatedSubscribe(true);
 
-    const mediaRoot = '/cXQYMmoJTmnj79aRVNDw16rkoGW/media';
+    const mediaRoot = "/cXQYMmoJTmnj79aRVNDw16rkoGW/media";
     const isSubscribedForProject = project.subscribers.includes(userID);
-    const imageProject = project.image_src.replace(mediaRoot, '');
+    const imageProject = project.image_src.replace(mediaRoot, "");
     let updatedSubscribers;
 
     if (isSubscribedForProject) {
-      updatedSubscribers = project.subscribers.filter(id => id !== userID); // Удаляем пользователя
+      updatedSubscribers = project.subscribers.filter((id) => id !== userID); // Удаляем пользователя
     } else {
       updatedSubscribers = [...project.subscribers, userID]; // Добавляем пользователя
     }
 
-    const updatedProject = { ...project, subscribers: updatedSubscribers, image_src: imageProject };
+    const updatedProject = {
+      ...project,
+      subscribers: updatedSubscribers,
+      image_src: imageProject,
+    };
 
     const src = `${
-        import.meta.env.VITE_SERVER_URL
+      import.meta.env.VITE_SERVER_URL
     }/api/projects/${projectID}/update/`;
-    axios.put(src, updatedProject)
-        .then((response) => {
-          console.log('Проект успешно обновлен', response.data);
-          setProject(updatedProject);
-          setImageProject(imageProject);
-          setIsSubscribed(!isSubscribedForProject); // Инвертируем состояние подписки
-          // Обновите состояние проекта в вашем компоненте
-          // чтобы отразить изменения на интерфейсе
-        })
-        .catch((error) => {
-          console.error('Ошибка при обновлении проекта', error);
-        });
+    axios
+      .put(src, updatedProject)
+      .then((response) => {
+        console.log("Проект успешно обновлен", response.data);
+        setProject(updatedProject);
+        setImageProject(imageProject);
+        setIsSubscribed(!isSubscribedForProject); // Инвертируем состояние подписки
+        // Обновите состояние проекта в вашем компоненте
+        // чтобы отразить изменения на интерфейсе
+      })
+      .catch((error) => {
+        console.error("Ошибка при обновлении проекта", error);
+      });
   };
 
   return (
@@ -103,45 +104,47 @@ const ProjectInfo = () => {
                   <img
                     className={styles.project__logo}
                     src={
-                      justUpdatedSubscribe ? (import.meta.env.VITE_SERVER_URL + "/media/"+
-                        imageProject) :
-                          (import.meta.env.VITE_SERVER_URL_MEDIA +
-                      imageProject)
+                      justUpdatedSubscribe
+                        ? import.meta.env.VITE_SERVER_URL +
+                          "/media/" +
+                          imageProject
+                        : import.meta.env.VITE_SERVER_URL_MEDIA + imageProject
                     }
                     alt="Project Logo"
                   />
                   <div className={styles.project__info}>
                     <p className={styles.project__title}>{project.title}</p>
                     <p className={styles.project__type}>{project.type}</p>
-                    <p className={styles.project__type}>Подписчики: {project.subscribers.length}</p>
+                    <p className={styles.project__type}>
+                      Подписчики: {project.subscribers.length}
+                    </p>
                   </div>
 
-
-
-              {userID === project.author_id ? (
-                <>
-                  <button
-                    className={`${styles.button} ${styles.button__edit}`}
-                    onClick={() => navigate(`/edit-project/${projectID}`)}
-                  >
-                    Изменить
-                  </button>
-                  <button
-                    className={`${styles.button} ${styles.button__delete}`}
-                    onClick={deleteProject}
-                  >
-                    Удалить
-                  </button>
+                  {userID === project.author_id ? (
+                    <>
+                      <button
+                        className={`${styles.button} ${styles.button__edit}`}
+                        onClick={() => navigate(`/edit-project/${projectID}`)}
+                      >
+                        Изменить
+                      </button>
+                      <button
+                        className={`${styles.button} ${styles.button__delete}`}
+                        onClick={deleteProject}
+                      >
+                        Удалить
+                      </button>
+                    </>
+                  ) : (
+                    <button
+                      className={`${styles.button} ${styles.button__subscribe}`}
+                      onClick={() => onSubscribe(project.project_id)}
+                    >
+                      {(!isSubscribed && "Подписаться") || "Отписаться"}
+                    </button>
+                  )}
                 </>
-              ) : (
-                <button
-                  className={`${styles.button} ${styles.button__subscribe}`}
-                  onClick={() => onSubscribe(project.project_id)}
-                >
-                  {!isSubscribed && "Подписаться" || "Отписаться"}
-                </button>
               )}
-                </>)}
             </div>
           </div>
         </header>

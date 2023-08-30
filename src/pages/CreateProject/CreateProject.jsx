@@ -8,7 +8,7 @@ import animalsImage from "../../assets/animals.png";
 import Avatar from "../../components/Avatar/Avatar";
 import { useNavigate } from "react-router-dom";
 
-const projectUpdate = `${import.meta.env.VITE_SERVER_URL}/api/projects/create/`;
+const projectCreate = `${import.meta.env.VITE_SERVER_URL}/api/projects/create/`;
 const userAPI = `${import.meta.env.VITE_SERVER_URL}/api/users/profile/`;
 
 const CreateProject = () => {
@@ -81,7 +81,7 @@ const CreateProject = () => {
     formData.append("image_src", imageSrc);
     formData.append("subscribers", "");
     axios
-      .post(projectUpdate, formData)
+      .post(projectCreate, formData)
       .then(function (response) {
         navigate(`/project/${response.data.project_id}`, response.data);
 
