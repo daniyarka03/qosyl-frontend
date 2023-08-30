@@ -1,15 +1,14 @@
-import React, {useEffect, useRef, useState} from 'react';
-import styles from "./Avatar.module.sass"
+import React, { useEffect, useRef, useState } from "react";
+import styles from "./Avatar.module.sass";
 
 const Avatar = ({ imageSrc, setImageSrc }) => {
-
   const [avatarUrl, setAvatarUrl] = useState();
   const inputRef = useRef(null);
   useEffect(() => {
-    if (!(typeof imageSrc === 'object')) {
-      setAvatarUrl(import.meta.env.VITE_SERVER_URL_MEDIA + imageSrc)
-    } 
-  }, [imageSrc])
+    if (!(typeof imageSrc === "object")) {
+      setAvatarUrl(import.meta.env.VITE_SERVER_URL_MEDIA + imageSrc);
+    }
+  }, [imageSrc]);
 
   const handleImageChange = (event) => {
     const selectedFile = event.target.files[0];
@@ -17,11 +16,9 @@ const Avatar = ({ imageSrc, setImageSrc }) => {
       const reader = new FileReader();
       reader.onload = (e) => {
         setAvatarUrl(e.target.result);
-        setImageSrc(selectedFile)
+        setImageSrc(selectedFile);
       };
       reader.readAsDataURL(selectedFile);
-    } else {
-      setAvatarUrl(imageSrc);
     }
   };
 
@@ -36,12 +33,12 @@ const Avatar = ({ imageSrc, setImageSrc }) => {
       <input
         type="file"
         accept="image/*"
-        style={{ display: 'none' }}
+        style={{ display: "none" }}
         ref={inputRef}
         onChange={handleImageChange}
       />
     </div>
   );
-}
+};
 
 export default Avatar;
