@@ -16,9 +16,15 @@ const EditProfile = () => {
   const [userName, setUserName] = useState(currentUser.name);
   const [imageSrc, setImageSrc] = useState(currentUser.avatar);
 
+  
   const [inputErrors, setInputErrors] = useState({
     userName: "",
   });
+
+  useEffect(() => {
+    setUserName(currentUser.name)
+    setImageSrc(currentUser.avatar)
+  }, [currentUser])
 
   const validateForm = () => {
     const errors = {};
