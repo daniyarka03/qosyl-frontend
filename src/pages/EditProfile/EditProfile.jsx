@@ -98,6 +98,7 @@ const EditProfile = () => {
                   value={userName}
                   onChange={(event) => setUserName(event.target.value)}
                   error={inputErrors.userName}
+                  maxlength={30}
                 />
               </div>
             </div>

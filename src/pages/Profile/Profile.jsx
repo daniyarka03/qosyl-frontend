@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./Profile.module.sass";
 import Navbar from "../../components/Navbar/Navbar";
 import PostCard from "../../components/PostCard/PostCard";
@@ -18,7 +18,13 @@ const Profile = () => {
 
   const { currentUser } = useGetCurrentUser(setIsUserLoading);
   const { projects } = useGetProjects(setIsProjectLoading);
-  const { posts, handleDeletePost } = useGetPosts(setIsPostLoading);
+  const { posts, setPosts } = useGetPosts(setIsPostLoading);
+
+  const handleDeletePost = (deletedPostID) => {
+    setPosts((prevPosts) =>
+      prevPosts.filter((post) => post.post_id !== deletedPostID)
+    );
+  };
 
   const navigate = useNavigate();
 
@@ -48,7 +54,9 @@ const Profile = () => {
           <>
             <img
               className={styles.profile__avatar}
-              src={`${import.meta.env.VITE_SERVER_URL_MEDIA}${currentUser.avatar}`}
+              src={`${import.meta.env.VITE_SERVER_URL_MEDIA}${
+                currentUser.avatar
+              }`}
             />
             <div className={styles.profile__name}>{currentUser.name}</div>
           </>
@@ -91,8 +99,7 @@ const Profile = () => {
                 <PostCard
                   key={post.post_id}
                   post={post}
-                  avatar={user.avatar}
-                  isUserPost={user.user_id === post.author_id}
+                  isUserPost={currentUser.user_id === post.author_id}
                   onDelete={handleDeletePost}
                 />
               );

@@ -34,7 +34,7 @@ const SignIn = () => {
         <img className={styles.header__logo} src={projectLogo} alt="qosyl.me" />
         <h2 className={styles.header__title}>Авторизация</h2>
       </div>
-      {error && <div className="alert alert-danger">{error}</div>}
+      {error && <div className={`${styles.alert} ${styles.alert__danger}`}>{error}</div>}
       {loading && <div className={`${styles.alert} ${styles.alert__info}`}>Загрузка...</div>}
       <form action="" className={styles.form} onSubmit={(e) => onSubmit(e)}>
         <div className={styles.input__wrapper}>
