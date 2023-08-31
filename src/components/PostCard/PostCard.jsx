@@ -7,14 +7,14 @@ import likeIconFilled from "../../assets/like-icon.svg";
 import commentIcon from "../../assets/comment-icon.svg";
 import { useCurrentUserData } from "../../actions/getCurrentUserData";
 import 'react-loading-skeleton/dist/skeleton.css'
+import { usersAPI } from "../../constants/API";
+import CardSkeleton from "../CardSkeleton/CardSkeleton";
 
 const PostCard = ({
   isUserPost,
   onDelete,
   isComment,
-    avatar,
-    post,
-    id
+  post,
 }) => {
   const [isLiked, setIsLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(0);
@@ -112,15 +112,23 @@ const PostCard = ({
     }
   };
 
+    const [user, setUser] = useState({});
+
+    useEffect(() => {
+        axios.get(usersAPI+`${post.author_id}`).then((data) => {
+            setUser(data.data);
+        });
+    }, []);
+
   return (
     <div className={styles.post}>
       <div className={styles.wrapper}>
         <div className={styles.post__creator}>
           <img
             className={styles.post__creator__avatar}
-            src={`${import.meta.env.VITE_SERVER_URL_MEDIA}${avatar}`}
+            src={`${import.meta.env.VITE_SERVER_URL_MEDIA}${user.avatar}`}
           />
-          <p className={styles.post__creator__name}>{post.author_name}</p>
+          <p className={styles.post__creator__name}>{user.name}</p>
         </div>
         <p className={styles.post__description}>{post.content}</p>
         {!isComment && <div className={styles.post__actions}>

@@ -10,12 +10,7 @@ const useGetPosts = (setIsPostLoading) => {
       setIsPostLoading(false);
     });
   }, []);
-  const handleDeletePost = (deletedPostID) => {
-    setPosts((prevPosts) =>
-      prevPosts.filter((post) => post.post_id !== deletedPostID)
-    );
-  };
-  return { posts, handleDeletePost };
+  return { posts, setPosts };
 };
 
 export default useGetPosts;

@@ -23,6 +23,21 @@ const CreateComment = () => {
   const userToken = JSON.parse(localStorage.getItem("userInfo")).token;
   const config = { headers: { Authorization: `Bearer ${userToken}` } };
 
+  const [inputErrors, setInputErrors] = useState({
+    message: "",
+  });
+  
+  const validateForm = () => {
+    const errors = {};
+  
+    if (!message) {
+      errors.message = "Введите комментарий";
+    }
+    setInputErrors(errors);
+  
+    return Object.keys(errors).length === 0;
+  };
+
   useEffect(() => {
     const getUser = async () => {
       try {
@@ -49,7 +64,7 @@ const CreateComment = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-
+    if (validateForm()) {
     navigate(`/post/${postID}/comments`);
     const updatedPost = {
       ...post,
@@ -70,6 +85,7 @@ const CreateComment = () => {
       .catch(function (error) {
         console.log(error);
       });
+    }
   };
 
   return (
@@ -85,12 +101,14 @@ const CreateComment = () => {
           <h2 className={styles.header__title}>Создание комментария</h2>
         </div>
         <form className={styles.form} onSubmit={handleSubmit}>
+        {inputErrors.message && <p className={styles.input__error}>{inputErrors.message}</p>}
           <textarea
             className={styles.textarea}
             placeholder="Описание комментария"
             value={message}
             onChange={(event) => setMessage(event.target.value)}
           />
+
           <button className={styles.form__button} type="submit">
             Добавить
           </button>
