@@ -71,6 +71,12 @@ const Profile = () => {
         </button>
         <button
           className={styles.settings__action}
+          onClick={() => navigate("/create-job")}
+        >
+          Добавить вакансию
+        </button>
+        <button
+          className={styles.settings__action}
           onClick={() => navigate("/edit-profile")}
         >
           Изменить

@@ -35,7 +35,6 @@ const CreateProject = () => {
     getUser();
   }, []);
 
-  
   const [inputErrors, setInputErrors] = useState({
     title: "",
     type: "",
@@ -43,54 +42,51 @@ const CreateProject = () => {
     contact: "",
   });
 
-  
   const validateForm = () => {
     const errors = {};
-  
+
     if (!title) {
       errors.title = "Введите название проекта";
     }
-  
+
     if (!type) {
       errors.type = "Выберите тип проекта";
     }
-  
+
     if (!description) {
       errors.description = "Введите описание проекта";
     }
-  
+
     if (!contact) {
       errors.contact = "Введите контактные данные";
     }
-  
+
     setInputErrors(errors);
-  
+
     return Object.keys(errors).length === 0;
   };
 
   const handleSubmit = (event) => {
-
     event.preventDefault();
     if (validateForm()) {
-    const formData = new FormData();
-    formData.append("title", title);
-    formData.append("description", description);
-    formData.append("type", type);
-    formData.append("contact", contact);
-    formData.append("author_id", userID);
-    formData.append("image_src", imageSrc);
-    formData.append("subscribers", "");
-    axios
-      .post(projectCreate, formData)
-      .then(function (response) {
-        navigate(`/project/${response.data.project_id}`, response.data);
-
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+      const formData = new FormData();
+      formData.append("title", title);
+      formData.append("description", description);
+      formData.append("type", type);
+      formData.append("contact", contact);
+      formData.append("author_id", userID);
+      formData.append("image_src", imageSrc);
+      formData.append("subscribers", "");
+      axios
+        .post(projectCreate, formData)
+        .then(function (response) {
+          navigate(`/project/${response.data.project_id}`, response.data);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    }
   };
-}
 
   return (
     <>
@@ -125,7 +121,6 @@ const CreateProject = () => {
               </div>
 
               <div className={styles.input__wrapper}>
-              
                 <select
                   className={`${styles.input__wrapper} ${styles.select}`}
                   value={type}
@@ -140,29 +135,19 @@ const CreateProject = () => {
                   <option value="Образовательное приложение">
                     Образовательное приложение
                   </option>
-                  <option value="Игра">
-                    Игра
-                  </option>
-                  <option value="Эко проект">
-                    Эко проект
-                  </option>
-                  <option value="Интернет-магазин">
-                    Интернет-магазин
-                  </option>
+                  <option value="Игра">Игра</option>
+                  <option value="Эко проект">Эко проект</option>
+                  <option value="Интернет-магазин">Интернет-магазин</option>
                   <option value="Исследовательский проект">
                     Исследовательский проект
                   </option>
-                  <option value="Творческий проект">
-                    Творческий проект
-                  </option>
-                  <option value="Культурный проект">
-                    Культурный проект
-                  </option>
-
-
+                  <option value="Творческий проект">Творческий проект</option>
+                  <option value="Культурный проект">Культурный проект</option>
                   <option value="Другое">Другое</option>
                 </select>
-                {inputErrors.type && <p className={styles.input__error}>{inputErrors.type}</p>}
+                {inputErrors.type && (
+                  <p className={styles.input__error}>{inputErrors.type}</p>
+                )}
               </div>
             </div>
           </div>
@@ -173,7 +158,9 @@ const CreateProject = () => {
             onChange={(event) => setDescription(event.target.value)}
             maxLength="800"
           />
-          {inputErrors.description && <p className={styles.input__error}>{inputErrors.description}</p>}
+          {inputErrors.description && (
+            <p className={styles.input__error}>{inputErrors.description}</p>
+          )}
           <div className={styles.form__contacts}>
             <p className={styles.contacts__header}>Контакты</p>
             <div className={styles.contacts__info}>
