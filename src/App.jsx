@@ -28,6 +28,7 @@ import styles from './App.module.sass';
 import PostComments from "./pages/PostComments/PostComments";
 import CreateComment from "./pages/CreateComment/CreateComment";
 import PageNotFound from './pages/404/PageNotFound';
+import StudentsClub from "./pages/StudentsClub/StudentsClub.jsx";
 
 
 
@@ -71,6 +72,9 @@ const App = () => {
 
                       <Route path="/create-post" element={<CreatePost />} />
                       <Route path="/edit-post/:id" element={<EditPost />} />
+
+                      <Route path="/students-club/:id" element={<StudentsClub />} />
+
 
                       <Route path="/search" element={<Search />} />
                       <Route path="/search/projects" element={<Projects />} />
