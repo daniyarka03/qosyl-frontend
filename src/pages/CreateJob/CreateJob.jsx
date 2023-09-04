@@ -6,10 +6,13 @@ import axios from "axios";
 import Input from "../../components/Input/Input";
 import useGetCurrentUser from "../../hooks/useGetCurrentUser";
 import useGetProjects from "../../hooks/useGetProjects";
+import { useNavigate } from "react-router-dom";
 
-const createJob = "";
-
+const createJob =
+  "https://qosyl.me:8000/cXQYMmoJTmnj79aRVNDw16rkoGW/api/jobs/create";
+  
 const CreateJob = () => {
+  const navigate = useNavigate();
   const [isUserLoading, setIsUserLoading] = useState(true);
   const [isProjectLoading, setIsProjectLoading] = useState(true);
   const { currentUser } = useGetCurrentUser(setIsUserLoading);
@@ -17,6 +20,7 @@ const CreateJob = () => {
 
   const [jobTitle, setJobTitle] = useState("");
   const [project, setProject] = useState("");
+  const [projectID, setProjectID] = useState("");
   const [jobFormat, setJobFormat] = useState("");
   const [jobDescription, setJobDescription] = useState("");
   const [jobResponsibilites, setJobResponsibilities] = useState("");
@@ -24,24 +28,39 @@ const CreateJob = () => {
   const [jobOffer, setJobOffer] = useState("");
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (validateForm()) {
-      const formData = new FormData();
-      formData.append("title", jobTitle);
-      formData.append("type", project);
-      formData.append("work_format", jobFormat);
-      formData.append("description", jobDescription);
-      formData.append("responsibility", jobResponsibilites);
-      formData.append("requirements", jobRequirements);
-      formData.append("we_offer", jobOffer);
-      axios
-        .post(projectCreate, formData)
-        .then(function (response) {
-          navigate(`/project/${response.data.project_id}`, response.data);
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-    }
+    const formData = new FormData();
+    formData.append("title", jobTitle);
+    formData.append("project_id", projectID);
+    formData.append("work_format", jobFormat);
+    formData.append("description", jobDescription);
+    formData.append("responsibility", jobResponsibilites);
+    formData.append("requirements", jobRequirements);
+    formData.append("we_offer", jobOffer);
+    console.log(jobTitle);
+    console.log(projectID);
+    console.log(jobFormat);
+    console.log(jobDescription);
+    console.log(jobResponsibilites);
+    console.log(jobRequirements);
+    console.log(jobOffer);
+
+    axios
+      .post(createJob, formData)
+      .then(function (response) {
+        console.log(response);
+        // navigate(`/project/${response.data.project_id}`, response.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
+  const handleChange = (event) => {
+    const selectedProject = event.target.value;
+    const selectedProjectID = event.target.options[event.target.selectedIndex].getAttribute('data-projectid');
+  
+    setProject(selectedProject);
+    setProjectID(selectedProjectID);
   };
 
   return (
@@ -74,7 +93,7 @@ const CreateJob = () => {
           <select
             className={styles.select}
             value={project}
-            onChange={(event) => setProject(event.target.value)}
+            onChange={handleChange}
           >
             <option value="" disabled hidden>
               Проект
@@ -88,19 +107,20 @@ const CreateJob = () => {
                 .filter((project) => project.author_id === currentUser.user_id)
                 .map((project) => {
                   return (
-                    <option key={project.project_id} value={project.title}>
+                    <option
+                      key={project.project_id}
+                      value={project.title}
+                      data-projectid={project.project_id} // Add this attribute to store project ID
+                    >
                       {project.title}
                     </option>
                   );
                 })
             ) : (
-              <option value="">Проектов нету :/</option>
+              <option value="" onClick={() => navigate("/create-project")}>
+                Проектов нету :/
+              </option>
             )}
-            {/* <option value="Игра">Игра</option>
-            <option value="Эко проект">Эко проект</option>
-            <option value="Интернет-магазин">Интернет-магазин</option>
-            <option value="Творческий проект">Творческий проект</option>
-            <option value="Культурный проект">Культурный проект</option> */}
           </select>
           <select
             className={styles.select}
@@ -142,10 +162,10 @@ const CreateJob = () => {
             onChange={(event) => setJobOffer(event.target.value)}
             maxLength="800"
           />
+          <button className={styles.form__button} type="submit">
+            Создать
+          </button>
         </form>
-        <button className={styles.form__button} type="submit">
-          Создать
-        </button>
       </div>
     </>
   );
