@@ -91,13 +91,8 @@
         transition: .3s
         border-radius: 0.75rem
         background: #FF3CC8
-        width: 40rem
-        position: absolute
-        right: 0
-        @media screen and (max-width: 520px)
-            width: 35rem
-        @media screen and (max-width: 400px)
-            width: 30rem
+        grid-column: span 3
+        border: 0
 
 .select
     outline: none
@@ -124,4 +119,10 @@
     padding: 3rem 2.5rem
     min-height: 20rem
     resize: none
-    margin-top: 6rem
+    margin-top: 4rem
+
+.input__wrapper
+    height: 2.9rem
+    @media screen and (max-width: 1080px)
+        margin-top: 2rem
+        margin-bottom: 4rem

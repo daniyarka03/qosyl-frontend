@@ -3,20 +3,25 @@ import styles from "./Jobs.module.sass";
 import Navbar from '../../components/Navbar/Navbar';
 import { useNavigate } from 'react-router-dom';
 import Input from '../../components/Input/Input';
-import useGetProjects from '../../hooks/useGetProjects';
-import useFilterProjects from '../../hooks/useFilterProjects';
+import useGetJobs from '../../hooks/useGetJobs';
 import searchIcon from "../../assets/search-icon.svg";
-import ProjectCard from "../../components/ProjectCard/ProjectCard";
+import JobCard from "../../components/JobCard/JobCard";
 import CardSkeleton from "../../components/CardSkeleton/CardSkeleton";
+import useFilterJobs from '../../hooks/useFilterJobs';
+import useGetProjects from '../../hooks/useGetProjects';
 
 
 const Jobs = () => {
     const navigate = useNavigate();
     const [inputText, setInputText] = useState("");
-    const [isProjectLoading, setIsProjectLoading] = useState(true);
+    const [isJobLoading, setIsJobLoading] = useState(true);
+    const [isProjectLoading, setIsProjectLoading] = useState("");
+    const { jobs } = useGetJobs(setIsJobLoading);
     const { projects } = useGetProjects(setIsProjectLoading);
-    const { filteredProjects } = useFilterProjects(inputText, projects);
-  
+    const { filteredJobs } = useFilterJobs(inputText, jobs);
+
+
+
     return (
       <>
         <Navbar />
@@ -38,13 +43,13 @@ const Jobs = () => {
               <CardSkeleton cards={8} />
             ) : (
               <>
-                {filteredProjects.map((project) => {
+                {filteredJobs.map((job) => {
                   return (
-                    <ProjectCard
-                      key={project.project_id}
-                      project={project}
+                    <JobCard
+                      key={job.job_id}
+                      job={job}
                       onClick={() => {
-                        navigate(`/project/${project.project_id}`);
+                        navigate(`/job/${job.job_id}`);
                       }}
                     />
                   );

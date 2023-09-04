@@ -1,16 +1,51 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../../components/Navbar/Navbar";
 import styles from "./JobInfo.module.sass";
-import cleekLogo from "../../assets/cleek-logo.png";
 import descriptionIcon from "../../assets/description-icon.svg";
-import contactIcon from "../../assets/contact-icon.svg";
 import responsibilitiesIcon from "../../assets/responsibilities-icon.svg";
 import requirementsIcon from "../../assets/requirements-icon.svg";
 import giftIcon from "../../assets/gift-icon.svg";
 import CardSkeleton from "../../components/CardSkeleton/CardSkeleton";
+import { useLocation, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { jobsAPI, projectsAPI } from "../../constants/API";
 
 const JobInfo = () => {
-  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
+  const [isJobLoading, setIsJobLoading] = useState(true);
+  const [isProjectLoading, setIsProjectLoading] = useState(true);
+  const location = useLocation();
+  const jobID = location.pathname.split("/").pop();
+  const [job, setJob] = useState({});
+  const [project, setProject] = useState({});
+  useEffect(() => {
+    axios
+      .get(jobsAPI + jobID)
+      .then((data) => {
+        setJob(data.data);
+        setIsJobLoading(false);
+        axios
+          .get(projectsAPI + data.data.project_id)
+          .then((data) => {
+            setProject(data.data);
+            setIsProjectLoading(false);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
+  const src = `${import.meta.env.VITE_SERVER_URL}/api/jobs/${jobID}/delete`;
+
+  const deleteJob = () => {
+    axios.delete(src).then(() => {});
+    navigate("/profile");
+  };
+
   return (
     <>
       <Navbar />
@@ -18,7 +53,7 @@ const JobInfo = () => {
         <header className={styles.header}>
           <div className={styles.header__wrapper}>
             <div className={styles.project__header}>
-              {isLoading ? (
+              {isProjectLoading ? (
                 <CardSkeleton cards={1} width={200} />
               ) : (
                 <>
@@ -31,25 +66,26 @@ const JobInfo = () => {
                     //       imageProject
                     //     : import.meta.env.VITE_SERVER_URL_MEDIA + imageProject
                     // }
-                    src={cleekLogo}
-                    alt="Project Logo"
+                    src={`${import.meta.env.VITE_SERVER_URL_MEDIA}${
+                      project.image_src
+                    }`}
                   />
                   <div className={styles.project__info}>
-                    <p className={styles.project__title}>Имя вакансии</p>
-                    <p className={styles.project__type}>Тип вакансии</p>
+                    <p className={styles.project__title}>{job.title}</p>
+                    <p className={styles.project__type}>{job.work_format}</p>
                   </div>
 
-                  {/* {userID === project.author_id ? (
+                  {job.project_id === project.project_id ? (
                     <>
                       <button
                         className={`${styles.button} ${styles.button__edit}`}
-                        onClick={() => navigate(`/edit-project/${projectID}`)}
+                        onClick={() => navigate(`/edit-job/${jobID}`)}
                       >
                         Изменить
                       </button>
                       <button
                         className={`${styles.button} ${styles.button__delete}`}
-                        onClick={deleteProject}
+                        onClick={deleteJob}
                       >
                         Удалить
                       </button>
@@ -57,11 +93,11 @@ const JobInfo = () => {
                   ) : (
                     <button
                       className={`${styles.button} ${styles.button__subscribe}`}
-                      onClick={() => onSubscribe(project.project_id)}
+                      // onClick={() => onSubscribe(project.project_id)}
                     >
-                      {(!isSubscribed && "Подписаться") || "Отписаться"}
+                      {/* {(!isSubscribed && "Подписаться") || "Отписаться"} */}
                     </button>
-                  )} */}
+                  )}
                 </>
               )}
             </div>
@@ -77,10 +113,10 @@ const JobInfo = () => {
               />
               <h3 className={styles.description__title}>Описание</h3>
             </div>
-            {isLoading ? (
+            {isJobLoading ? (
               <CardSkeleton cards={1} />
             ) : (
-              <p className={styles.description__text}>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Error quisquam repellat enim, consectetur tenetur vel placeat. Delectus aliquam animi fugiat corporis, deserunt reprehenderit eius vel accusantium dolor atque eos temporibus?</p>
+              <p className={styles.description__text}>{job.description}</p>
             )}
           </div>
         </section>
@@ -94,10 +130,10 @@ const JobInfo = () => {
               />
               <h3 className={styles.description__title}>Обязанности</h3>
             </div>
-            {isLoading ? (
+            {isJobLoading ? (
               <CardSkeleton cards={1} />
             ) : (
-              <p className={styles.description__text}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis nulla ex ullam saepe, expedita incidunt qui deleniti esse adipisci? Iure sequi reprehenderit voluptas qui temporibus debitis consectetur mollitia omnis velit.</p>
+              <p className={styles.description__text}>{job.responsibility}</p>
             )}
           </div>
         </section>
@@ -111,27 +147,23 @@ const JobInfo = () => {
               />
               <h3 className={styles.description__title}>Требования</h3>
             </div>
-            {isLoading ? (
+            {isJobLoading ? (
               <CardSkeleton cards={1} />
             ) : (
-              <p className={styles.description__text}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis nulla ex ullam saepe, expedita incidunt qui deleniti esse adipisci? Iure sequi reprehenderit voluptas qui temporibus debitis consectetur mollitia omnis velit.</p>
+              <p className={styles.description__text}>{job.requirements}</p>
             )}
           </div>
         </section>
         <section className={styles.description}>
           <div className={styles.description__wrapper}>
             <div className={styles.description__header}>
-              <img
-                className={styles.description__img}
-                src={giftIcon}
-                alt=""
-              />
+              <img className={styles.description__img} src={giftIcon} alt="" />
               <h3 className={styles.description__title}>Условия</h3>
             </div>
-            {isLoading ? (
+            {isJobLoading ? (
               <CardSkeleton cards={1} />
             ) : (
-              <p className={styles.description__text}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis nulla ex ullam saepe, expedita incidunt qui deleniti esse adipisci? Iure sequi reprehenderit voluptas qui temporibus debitis consectetur mollitia omnis velit.</p>
+              <p className={styles.description__text}>{job.we_offer}</p>
             )}
           </div>
         </section>

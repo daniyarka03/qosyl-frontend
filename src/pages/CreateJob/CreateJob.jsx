@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 
 const createJob =
   "https://qosyl.me:8000/cXQYMmoJTmnj79aRVNDw16rkoGW/api/jobs/create/";
-  
+
 const CreateJob = () => {
   const navigate = useNavigate();
   const [isUserLoading, setIsUserLoading] = useState(true);
@@ -36,19 +36,11 @@ const CreateJob = () => {
     formData.append("responsibility", jobResponsibilites);
     formData.append("requirements", jobRequirements);
     formData.append("we_offer", jobOffer);
-    console.log(jobTitle);
-    console.log(projectID);
-    console.log(jobFormat);
-    console.log(jobDescription);
-    console.log(jobResponsibilites);
-    console.log(jobRequirements);
-    console.log(jobOffer);
 
     axios
       .post(createJob, formData)
       .then(function (response) {
-        console.log(response);
-        // navigate(`/project/${response.data.project_id}`, response.data);
+        navigate(`/job/${response.data.job_id}`);
       })
       .catch(function (error) {
         console.log(error);
@@ -57,8 +49,11 @@ const CreateJob = () => {
 
   const handleChange = (event) => {
     const selectedProject = event.target.value;
-    const selectedProjectID = event.target.options[event.target.selectedIndex].getAttribute('data-projectid');
-  
+    const selectedProjectID =
+      event.target.options[event.target.selectedIndex].getAttribute(
+        "data-projectid"
+      );
+
     setProject(selectedProject);
     setProjectID(selectedProjectID);
   };
