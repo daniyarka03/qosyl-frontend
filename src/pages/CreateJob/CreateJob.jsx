@@ -9,7 +9,7 @@ import useGetProjects from "../../hooks/useGetProjects";
 import { useNavigate } from "react-router-dom";
 
 const createJob =
-  "https://qosyl.me:8000/cXQYMmoJTmnj79aRVNDw16rkoGW/api/jobs/create";
+  "https://qosyl.me:8000/cXQYMmoJTmnj79aRVNDw16rkoGW/api/jobs/create/";
   
 const CreateJob = () => {
   const navigate = useNavigate();
