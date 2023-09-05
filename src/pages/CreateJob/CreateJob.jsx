@@ -26,25 +26,74 @@ const CreateJob = () => {
   const [jobResponsibilites, setJobResponsibilities] = useState("");
   const [jobRequirements, setJobRequirements] = useState("");
   const [jobOffer, setJobOffer] = useState("");
+
+  const [inputErrors, setInputErrors] = useState({
+    jobTitle: "",
+    project: "",
+    jobFormat: "",
+    jobDescription: "",
+    jobResponsibilites: "",
+    jobRequirements: "",
+    jobOffer: "",
+  });
+
+  const validateForm = () => {
+    const errors = {};
+
+    if (!jobTitle) {
+      errors.jobTitle = "Введите название вакансии";
+    }
+
+    if (!project) {
+      errors.project = "Выберите ваш проект";
+    }
+
+    if (!jobFormat) {
+      errors.jobFormat = "Выберите формат работы";
+    }
+
+    if (!jobDescription) {
+      errors.jobDescription = "Введите описание вакансии";
+    }
+
+    if (!jobResponsibilites) {
+      errors.jobResponsibilites = "Введите обязанности для вакансии";
+    }
+
+    if (!jobRequirements) {
+      errors.jobRequirements = "Введите требования вакансии";
+    }
+
+    if (!jobOffer) {
+      errors.jobOffer = "Введите условия вакансии";
+    }
+
+    setInputErrors(errors);
+
+    return Object.keys(errors).length === 0;
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    const formData = new FormData();
-    formData.append("title", jobTitle);
-    formData.append("project_id", projectID);
-    formData.append("work_format", jobFormat);
-    formData.append("description", jobDescription);
-    formData.append("responsibility", jobResponsibilites);
-    formData.append("requirements", jobRequirements);
-    formData.append("we_offer", jobOffer);
+    if (validateForm()) {
+      const formData = new FormData();
+      formData.append("title", jobTitle);
+      formData.append("project_id", projectID);
+      formData.append("work_format", jobFormat);
+      formData.append("description", jobDescription);
+      formData.append("responsibility", jobResponsibilites);
+      formData.append("requirements", jobRequirements);
+      formData.append("we_offer", jobOffer);
 
-    axios
-      .post(createJob, formData)
-      .then(function (response) {
-        navigate(`/job/${response.data.job_id}`);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+      axios
+        .post(createJob, formData)
+        .then(function (response) {
+          navigate(`/job/${response.data.job_id}`);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    }
   };
 
   const handleChange = (event) => {
@@ -82,6 +131,7 @@ const CreateJob = () => {
                 value={jobTitle}
                 onChange={(event) => setJobTitle(event.target.value)}
                 maxlength="100"
+                error={inputErrors.jobTitle}
               />
             </div>
           </div>
