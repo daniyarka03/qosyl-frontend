@@ -22,6 +22,7 @@ const EditProject = () => {
 
   const [title, setTitle] = useState("");
   const [type, setType] = useState("");
+  const [devStage, setDevStage] = useState("");
   const [description, setDescription] = useState("");
   const [contact, setContact] = useState("");
   const [authorID, setAuthorID] = useState("");
@@ -37,6 +38,7 @@ const EditProject = () => {
     type: "",
     description: "",
     contact: "",
+    devStage: "",
   });
 
   const validateForm = () => {
@@ -48,6 +50,10 @@ const EditProject = () => {
 
     if (!type) {
       errors.type = "Выберите тип проекта";
+    }
+
+    if (!devStage) {
+      errors.devStage = "Выберите стадию разработки";
     }
 
     if (!description) {
@@ -69,6 +75,7 @@ const EditProject = () => {
       .then((response) => {
         setTitle(response.data.title);
         setType(response.data.type);
+        setDevStage(response.data.dev_stage);
         setDescription(response.data.description);
         setContact(response.data.contact);
         setAuthorID(response.data.author_id);
@@ -99,6 +106,7 @@ const EditProject = () => {
         formData.append("title", title);
         formData.append("description", description);
         formData.append("type", type);
+        formData.append("dev_stage", devStage);
         formData.append("contact", contact);
         formData.append("author_id", authorID);
         formData.append("image_src", relativePath);
@@ -107,6 +115,7 @@ const EditProject = () => {
         formData.append("title", title);
         formData.append("description", description);
         formData.append("type", type);
+        formData.append("dev_stage", devStage);
         formData.append("contact", contact);
         formData.append("author_id", authorID);
         formData.append("image_src", imageSrc);
@@ -183,7 +192,23 @@ const EditProject = () => {
                 </div>
               </div>
             </div>
-
+            <div className={styles.input__wrapper}>
+            <select
+              className={`${styles.input__wrapper} ${styles.select}`}
+              value={devStage}
+              onChange={(event) => setDevStage(event.target.value)}
+            >
+              <option value="" disabled hidden>
+                Стадия разработки
+              </option>
+              <option value="Идея">Идея</option>
+              <option value="MVP">MVP</option>
+              <option value="Scale">Scale</option>
+            </select>
+            {inputErrors.devStage && (
+              <p className={styles.input__error}>{inputErrors.devStage}</p>
+            )}
+          </div>
             <textarea
               className={styles.textarea}
               placeholder="Описание"

@@ -16,6 +16,7 @@ const CreateProject = () => {
 
   const [title, setTitle] = useState("");
   const [type, setType] = useState("");
+  const [devStage, setDevStage] = useState("");
   const [description, setDescription] = useState("");
   const [contact, setContact] = useState("");
   const [userID, setUserID] = useState(0);
@@ -40,6 +41,7 @@ const CreateProject = () => {
     type: "",
     description: "",
     contact: "",
+    devStage: ""
   });
 
   const validateForm = () => {
@@ -51,6 +53,10 @@ const CreateProject = () => {
 
     if (!type) {
       errors.type = "Выберите тип проекта";
+    }
+
+    if (!devStage) {
+      errors.devStage = "Выберите стадию разработки";
     }
 
     if (!description) {
@@ -73,6 +79,7 @@ const CreateProject = () => {
       formData.append("title", title);
       formData.append("description", description);
       formData.append("type", type);
+      formData.append("dev_stage", devStage);
       formData.append("contact", contact);
       formData.append("author_id", userID);
       formData.append("image_src", imageSrc);
@@ -81,6 +88,7 @@ const CreateProject = () => {
         .post(projectCreate, formData)
         .then(function (response) {
           navigate(`/project/${response.data.project_id}`, response.data);
+          console.log(devStage)
         })
         .catch(function (error) {
           console.log(error);
@@ -150,6 +158,23 @@ const CreateProject = () => {
                 )}
               </div>
             </div>
+          </div>
+          <div className={styles.input__wrapper}>
+            <select
+              className={`${styles.input__wrapper} ${styles.select}`}
+              value={devStage}
+              onChange={(event) => setDevStage(event.target.value)}
+            >
+              <option value="" disabled hidden>
+                Стадия разработки
+              </option>
+              <option value="Идея">Идея</option>
+              <option value="MVP">MVP</option>
+              <option value="Scale">Scale</option>
+            </select>
+            {inputErrors.devStage && (
+              <p className={styles.input__error}>{inputErrors.devStage}</p>
+            )}
           </div>
           <textarea
             className={styles.textarea}

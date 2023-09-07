@@ -9,6 +9,7 @@ import { useCurrentUserData } from "../../actions/getCurrentUserData";
 import 'react-loading-skeleton/dist/skeleton.css'
 import { usersAPI } from "../../constants/API";
 import CardSkeleton from "../CardSkeleton/CardSkeleton";
+import useGetCurrentUser from "../../hooks/useGetCurrentUser";
 
 const PostCard = ({
   isUserPost,
@@ -28,6 +29,8 @@ const PostCard = ({
   }/api/posts/${postID}/delete/`;
   const postURL = `${import.meta.env.VITE_SERVER_URL}/api/posts/${postID}`;
   const { userID } = useCurrentUserData();
+  const [isUserLoading, setIsUserLoading] = useState(true);
+  const {currentUser} = useGetCurrentUser(setIsUserLoading);
   const deletePost = () => {
     axios
       .delete(deletePostURL)
@@ -120,6 +123,11 @@ const PostCard = ({
         });
     }, []);
 
+    const navigateToAuthor = () => {
+      if (currentUser.user_id === post.author_id) navigate("/profile");
+      else navigate(`/user/${post.author_id}`);
+    }
+
   return (
     <div className={styles.post}>
       <div className={styles.wrapper}>
@@ -127,6 +135,7 @@ const PostCard = ({
           <img
             className={styles.post__creator__avatar}
             src={`${import.meta.env.VITE_SERVER_URL_MEDIA}${user.avatar}`}
+            onClick={navigateToAuthor}
           />
           <p className={styles.post__creator__name}>{user.name}</p>
         </div>

@@ -13,8 +13,11 @@ const EditProfile = () => {
   const [isUserLoading, setIsUserLoading] = useState(true);
   const navigate = useNavigate();
   const { currentUser } = useGetCurrentUser(setIsUserLoading);
-  const [userName, setUserName] = useState(currentUser.name);
   const [imageSrc, setImageSrc] = useState(currentUser.avatar);
+  const [userName, setUserName] = useState(currentUser.name);
+  const [userHobby, setUserHobby] = useState(currentUser.hobbies);
+  const [userProfession, setUserProfession] = useState(currentUser.speciality);
+  const [userStudyPlace, setUserStudyPlace] = useState(currentUser.study_place);
 
   
   const [inputErrors, setInputErrors] = useState({
@@ -24,6 +27,9 @@ const EditProfile = () => {
   useEffect(() => {
     setUserName(currentUser.name)
     setImageSrc(currentUser.avatar)
+    setUserHobby(currentUser.hobbies)
+    setUserProfession(currentUser.speciality)
+    setUserStudyPlace(currentUser.study_place)
   }, [currentUser])
 
   const validateForm = () => {
@@ -40,7 +46,6 @@ const EditProfile = () => {
     event.preventDefault();
     if (validateForm()) {
       const formData = new FormData();
-
       if (typeof imageSrc == "string") {
         const mediaRoot = "/cXQYMmoJTmnj79aRVNDw16rkoGW/media";
         const relativePath = imageSrc.replace(mediaRoot, "");
@@ -48,15 +53,20 @@ const EditProfile = () => {
         formData.append("name", userName);
         formData.append("email", currentUser.email);
         formData.append("password", 123123);
+        formData.append("hobbies", userHobby);
+        formData.append("speciality", userProfession);
+        formData.append("study_place", userStudyPlace);
       } else {
         formData.append("avatar", imageSrc);
         formData.append("name", userName);
         formData.append("email", currentUser.email);
         formData.append("password", 123123);
+        formData.append("hobbies", userHobby);
+        formData.append("speciality", userProfession);
+        formData.append("study_place", userStudyPlace);
       }
 
       //formData.append("images_src", imageSrc)
-
       axios({
         method: "put",
         url: userUpdate,
@@ -98,6 +108,39 @@ const EditProfile = () => {
                   value={userName}
                   onChange={(event) => setUserName(event.target.value)}
                   error={inputErrors.userName}
+                  maxlength={30}
+                />
+              </div>
+              <div className={styles.input__wrapper}>
+                <Input
+                  placeholder="Хобби"
+                  type="text"
+                  name="text"
+                  id="userHobby"
+                  value={userHobby}
+                  onChange={(event) => setUserHobby(event.target.value)}
+                  maxlength={30}
+                />
+              </div>
+              <div className={styles.input__wrapper}>
+                <Input
+                  placeholder="Место учебы"
+                  type="text"
+                  name="text"
+                  id="userStudyPlace"
+                  value={userStudyPlace}
+                  onChange={(event) => setUserStudyPlace(event.target.value)}
+                  maxlength={30}
+                />
+              </div>
+              <div className={styles.input__wrapper}>
+                <Input
+                  placeholder="Специальность"
+                  type="text"
+                  name="text"
+                  id="userProfession"
+                  value={userProfession}
+                  onChange={(event) => setUserProfession(event.target.value)}
                   maxlength={30}
                 />
               </div>
