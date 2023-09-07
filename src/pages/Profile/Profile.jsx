@@ -83,6 +83,12 @@ const Profile = () => {
           Подписки на проекты
         </button>
         <button
+            className={styles.settings__action}
+            onClick={() => navigate("/create-students-club")}
+        >
+          Создать студенческий клуб
+        </button>
+        <button
           className={styles.settings__action}
           onClick={() => logoutHandler()}
         >

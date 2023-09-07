@@ -3,6 +3,7 @@ const userAPI = `${import.meta.env.VITE_SERVER_URL}/api/users/profile/`;
 const usersAPI = `${import.meta.env.VITE_SERVER_URL}/api/users/`;
 const projectsAPI = `${import.meta.env.VITE_SERVER_URL}/api/projects/`;
 const postsAPI = `${import.meta.env.VITE_SERVER_URL}/api/posts/`;
+const studentsClubsAPI = `${import.meta.env.VITE_SERVER_URL}/api/students_clubs/`;
 
 // POST
 
@@ -20,4 +21,5 @@ export {
   projectCreate,
   postCreate,
   userUpdate,
+  studentsClubsAPI
 };

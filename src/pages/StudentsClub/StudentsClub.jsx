@@ -45,7 +45,7 @@ const StudentsClub = () => {
 
     const src = `${
         import.meta.env.VITE_SERVER_URL
-    }/api/students-clubs/${clubID}/delete`;
+    }/api/students_clubs/${clubID}/delete`;
 
     const deleteClub = () => {
         axios.delete(src).then(() => {});
@@ -121,7 +121,7 @@ const StudentsClub = () => {
                                         <>
                                             <button
                                                 className={`${styles.button} ${styles.button__edit}`}
-                                                onClick={() => navigate(`/edit-club/${clubID}`)}
+                                                onClick={() => navigate(`/edit-students-club/${clubID}`)}
                                             >
                                                 Изменить
                                             </button>

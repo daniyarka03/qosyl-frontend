@@ -29,6 +29,9 @@ import PostComments from "./pages/PostComments/PostComments";
 import CreateComment from "./pages/CreateComment/CreateComment";
 import PageNotFound from './pages/404/PageNotFound';
 import StudentsClub from "./pages/StudentsClub/StudentsClub.jsx";
+import CreateStudentsClub from "./pages/CreateStudentsClub/CreateStudentsClub.jsx";
+import EditStudentsClub from "./pages/EditStudentsClub/EditStudentsClub.jsx";
+import SearchStudentsClubs from "./pages/SearchStudentsClubs/SearchStudentsClubs.jsx";
 
 
 
@@ -74,11 +77,15 @@ const App = () => {
                       <Route path="/edit-post/:id" element={<EditPost />} />
 
                       <Route path="/students-club/:id" element={<StudentsClub />} />
+                      <Route path="/create-students-club" element={<CreateStudentsClub />} />
+                      <Route path="/edit-students-club/:id" element={<EditStudentsClub />} />
 
 
                       <Route path="/search" element={<Search />} />
                       <Route path="/search/projects" element={<Projects />} />
                       <Route path="/search/users" element={<Users />} />
+                      <Route path="/search/students-clubs" element={<SearchStudentsClubs />} />
+
                       <Route path="/posts" element={<Posts />} />
                       <Route path="/notifications" element={<Notifications />} />
                       <Route path="/profile" element={<Profile />} />
