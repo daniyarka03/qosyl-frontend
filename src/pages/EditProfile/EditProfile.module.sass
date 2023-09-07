@@ -51,13 +51,12 @@
 
 .input__wrapper
     min-width: 40rem
-    margin-top: 0
-    align-self: flex-end
-    &:nth-child(2)
-        margin-top: 5rem
+    margin-top: 5rem
+    &:nth-child(1)
+        margin-top: 0
     @media screen and (max-width: 840px)
         min-width: 35.2rem
-        margin: 0 auto
+        margin: 5rem auto
     @media screen and (max-width: 390px)
         min-width: 30.2rem
 
@@ -68,14 +67,12 @@ select.decorated option:hover
 .form
     display: flex
     flex-direction: column
-    
+    margin-top: 2rem
     &__header
         display: flex
         align-items: center
         margin-top: 4rem
-        align-self: flex-end
-        @media screen and (max-width: 1000px) 
-            align-self: center
+        align-self: center
         @media screen and (max-width: 840px)
             flex-direction: column
             margin-top: 2rem
@@ -99,10 +96,8 @@ select.decorated option:hover
         border-radius: 0.75rem
         background: #FF3CC8
         width: 40rem
-        align-self: flex-end
         margin-top: 5rem
-        @media screen and (max-width: 1000px) 
-            align-self: center
+        align-self: center
         @media screen and (max-width: 840px)
             margin-top: 4rem
         @media screen and (max-width: 840px)
