@@ -44,33 +44,34 @@
         margin-top: 2rem
         @media screen and (min-width: 600px)
             font-size: 1.5rem
-        
+
     &__action:nth-child(4)
         background-color: #FF6161
         color: $white
 
 .info
-    display: grid
-    grid-template-columns: 1fr 1fr
-    @media screen and (max-width: 860px)
-        display: flex
-        flex-direction: column
-        width: clamp(26rem, 100%, 40rem)
+    display: flex
+    flex-direction: column
+    width: clamp(26rem, 100%, 40rem)
     &__block
         margin-top: 6rem
-    &__block:nth-child(2)
-        margin-left: 8rem
-        @media screen and (max-width: 860px)
-            margin-left: 0
-
     &__header
+        cursor: pointer
+        outline: none
         @include heading-font($white)
         font-size: 1.5rem
+        transition: .3s
         @media screen and (min-width: 600px)
             font-size: 2rem
+        &:nth-child(2)
+            margin-left: 4rem
+        &:hover
+            transform: scale(1.1)
+    &__headers
+        display: flex
+        margin-top: 8rem
+        padding: 0
+        list-style-type: none
 
-
-.post__wrapper
-    width: clamp(28rem, 100%, 40rem)
-.project__wrapper
-    width: clamp(28rem, 100%, 40rem)
+.selectedTab 
+  border-bottom: 2px solid white

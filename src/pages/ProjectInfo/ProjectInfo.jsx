@@ -10,7 +10,7 @@ import { useCurrentUserData } from "../../actions/getCurrentUserData.js";
 
 const projectsAPI = `${import.meta.env.VITE_SERVER_URL}/api/projects/`;
 
-const ProjectInfo = () => {
+const ProjectInfo = ({ setProjectDeleted }) => {
   const [project, setProject] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const [isSubscribed, setIsSubscribed] = useState(false);
@@ -48,8 +48,10 @@ const ProjectInfo = () => {
   }/api/projects/${projectID}/delete`;
 
   const deleteProject = () => {
-    axios.delete(src).then(() => {});
-    navigate("/profile");
+    axios.delete(src).then(() => {
+      setProjectDeleted(true);
+      navigate("/profile");
+    });
   };
 
   const onSubscribe = (projectID) => {

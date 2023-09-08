@@ -7,6 +7,14 @@ import { useNavigate } from "react-router-dom";
 import Avatar from "../../components/Avatar/Avatar";
 import { userUpdate } from "../../constants/API";
 import useGetCurrentUser from "../../hooks/useGetCurrentUser";
+import CreatableSelect from "react-select/creatable";
+import Select from "react-select";
+
+const hobbieOptions = [
+  { value: "Учеба", label: "Учеба", color: "#5243AA" },
+  { value: "Чтение", label: "Чтение", color: "#FF8B00" },
+  { value: "Программирование", label: "Программирование", color: "#FFC400" },
+];
 
 const EditProfile = () => {
   const userInformation = JSON.parse(localStorage.getItem("userInfo"));
@@ -15,22 +23,38 @@ const EditProfile = () => {
   const { currentUser } = useGetCurrentUser(setIsUserLoading);
   const [imageSrc, setImageSrc] = useState(currentUser.avatar);
   const [userName, setUserName] = useState(currentUser.name);
-  const [userHobby, setUserHobby] = useState(currentUser.hobbies);
   const [userProfession, setUserProfession] = useState(currentUser.speciality);
   const [userStudyPlace, setUserStudyPlace] = useState(currentUser.study_place);
+  const [userHobbies, setUserHobbies] = useState([]);
 
-  
   const [inputErrors, setInputErrors] = useState({
     userName: "",
   });
 
   useEffect(() => {
-    setUserName(currentUser.name)
-    setImageSrc(currentUser.avatar)
-    setUserHobby(currentUser.hobbies)
-    setUserProfession(currentUser.speciality)
-    setUserStudyPlace(currentUser.study_place)
-  }, [currentUser])
+    if (currentUser.hobbies) {
+      const testArray = [];
+      JSON.parse(currentUser.hobbies).forEach((hobbyName) => {
+        testArray.push({
+          value: hobbyName.value,
+          label: hobbyName.label,
+          color: "#5243AA",
+        });
+      });
+      setUserHobbies(testArray);
+    }
+  }, [currentUser.hobbies]);
+
+  const handleHobbies = (newHobbies) => {
+    setUserHobbies(newHobbies);
+  };
+
+  useEffect(() => {
+    setUserName(currentUser.name);
+    setImageSrc(currentUser.avatar);
+    setUserProfession(currentUser.speciality);
+    setUserStudyPlace(currentUser.study_place);
+  }, [currentUser]);
 
   const validateForm = () => {
     const errors = {};
@@ -53,7 +77,8 @@ const EditProfile = () => {
         formData.append("name", userName);
         formData.append("email", currentUser.email);
         formData.append("password", 123123);
-        formData.append("hobbies", userHobby);
+        console.log(userHobbies);
+        formData.append("hobbies", JSON.stringify(userHobbies));
         formData.append("speciality", userProfession);
         formData.append("study_place", userStudyPlace);
       } else {
@@ -61,7 +86,7 @@ const EditProfile = () => {
         formData.append("name", userName);
         formData.append("email", currentUser.email);
         formData.append("password", 123123);
-        formData.append("hobbies", userHobby);
+        formData.append("hobbies", userHobbies);
         formData.append("speciality", userProfession);
         formData.append("study_place", userStudyPlace);
       }
@@ -112,14 +137,30 @@ const EditProfile = () => {
                 />
               </div>
               <div className={styles.input__wrapper}>
-                <Input
+                <CreatableSelect
+                  isMulti
+                  options={hobbieOptions}
                   placeholder="Хобби"
-                  type="text"
-                  name="text"
-                  id="userHobby"
-                  value={userHobby}
-                  onChange={(event) => setUserHobby(event.target.value)}
-                  maxlength={30}
+                  noOptionsMessage={() => "Нет опций :/"}
+                  value={userHobbies}
+                  onChange={handleHobbies}
+                  formatCreateLabel={() => "Создать"}
+                  styles={{
+                    control: (baseStyles, state) => ({
+                      ...baseStyles,
+                      borderRadius: "1.2rem",
+                    }),
+                    valueContainer: (baseStyles, state) => ({
+                      ...baseStyles,
+                      padding: "2rem",
+                    }),
+                    placeholder: (baseStyles, state) => ({
+                      ...baseStyles,
+                      fontSize: "1.25rem",
+                      color: "#534e4e",
+                      fontWeight: "700",
+                    }),
+                  }}
                 />
               </div>
               <div className={styles.input__wrapper}>
