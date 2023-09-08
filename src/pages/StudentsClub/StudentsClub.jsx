@@ -117,35 +117,40 @@ const StudentsClub = () => {
                                         {/*</p>*/}
                                     </div>
 
-                                    {userID === club.author_id ? (
-                                        <>
+                                    <div className={styles.project__control}>
+                                        {userID === club.author_id ? (
+                                            <>
+                                                <button
+                                                    className={`${styles.button} ${styles.button__edit}`}
+                                                    onClick={() => navigate(`/edit-students-club/${clubID}`)}
+                                                >
+                                                    Изменить
+                                                </button>
+                                                <button
+                                                    className={`${styles.button} ${styles.button__delete}`}
+                                                    onClick={deleteClub}
+                                                >
+                                                    Удалить
+                                                </button>
+                                            </>
+                                        ) : (
                                             <button
-                                                className={`${styles.button} ${styles.button__edit}`}
-                                                onClick={() => navigate(`/edit-students-club/${clubID}`)}
+                                                className={`${styles.button} ${styles.button__subscribe}`}
+                                                // onClick={() => onSubscribe(club.club_id)}
                                             >
-                                                Изменить
+                                                Вступить
+                                                {/*{(!isSubscribed && "Подписаться") || "Отписаться"}*/}
                                             </button>
-                                            <button
-                                                className={`${styles.button} ${styles.button__delete}`}
-                                                onClick={deleteClub}
-                                            >
-                                                Удалить
-                                            </button>
-                                        </>
-                                    ) : (
-                                        <button
-                                            className={`${styles.button} ${styles.button__subscribe}`}
-                                            // onClick={() => onSubscribe(club.club_id)}
-                                        >
-                                            Вступить
-                                            {/*{(!isSubscribed && "Подписаться") || "Отписаться"}*/}
-                                        </button>
-                                    )}
+                                        )}
+                                    </div>
                                 </>
                             )}
                         </div>
                     </div>
                 </header>
+
+
+
                 <section className={styles.description}>
                     <div className={styles.description__wrapper}>
                         <div className={styles.description__header}>

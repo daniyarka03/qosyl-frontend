@@ -12,11 +12,8 @@
     margin-left: 15%
   @media screen and (max-width: 600px)
     margin: 0 auto
-    max-width: 50rem
   @media screen and (max-width: 550px)
-    max-width: 40rem
   @media screen and (max-width: 440px)
-    max-width: 30rem
 .header
   background-color: $white
   border-bottom-left-radius: 4rem
@@ -31,6 +28,7 @@
     display: flex
     align-items: center
     position: relative
+    justify-content: space-between
     @media screen and (max-width: 1120px)
       flex-direction: column
     @media screen and (max-width: 440px)
@@ -40,11 +38,13 @@
     display: flex
     flex-direction: column
     margin-left: 5.6rem
+    flex: auto
     @media screen and (max-width: 1120px)
       align-self: flex-start
       margin-left: 0
       margin-top: 3rem
     @media screen and (max-width: 920px)
+      margin-bottom: 2rem
       align-self: center
       text-align: center
   &__logo
@@ -55,6 +55,14 @@
     @media screen and (max-width: 1120px)
       align-self: flex-start
     @media screen and (max-width: 920px)
+      align-self: center
+  &__control
+    display: flex
+    @media screen and (max-width: 1120px)
+      flex-direction: row
+      gap: 2rem
+    @media screen and (max-width: 920px)
+      flex-direction: column
       align-self: center
   &__title
     @include heading-font($primary-color)
@@ -89,7 +97,6 @@
   @media screen and (max-width: 1120px)
     margin-left: 0
     width: clamp(20rem, 100%, 30rem)
-    margin-top: 2rem
     align-self: flex-end
   @media screen and (max-width: 920px)
     align-self: center
