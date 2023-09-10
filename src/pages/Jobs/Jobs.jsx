@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styles from "./Jobs.module.sass";
 import Navbar from '../../components/Navbar/Navbar';
 import { useNavigate } from 'react-router-dom';
@@ -7,21 +7,14 @@ import useGetJobs from '../../hooks/useGetJobs';
 import searchIcon from "../../assets/search-icon.svg";
 import JobCard from "../../components/JobCard/JobCard";
 import CardSkeleton from "../../components/CardSkeleton/CardSkeleton";
-import useFilterJobs from '../../hooks/useFilterJobs';
-import useGetProjects from '../../hooks/useGetProjects';
-
+import useFilter from '../../hooks/useFilter';
 
 const Jobs = () => {
     const navigate = useNavigate();
     const [inputText, setInputText] = useState("");
     const [isJobLoading, setIsJobLoading] = useState(true);
-    const [isProjectLoading, setIsProjectLoading] = useState("");
     const { jobs } = useGetJobs(setIsJobLoading);
-    const { projects } = useGetProjects(setIsProjectLoading);
-    const { filteredJobs } = useFilterJobs(inputText, jobs);
-
-
-
+    const { filteredJobs } = useFilter(inputText, jobs);
     return (
       <>
         <Navbar />
@@ -39,7 +32,7 @@ const Jobs = () => {
             />
           </header>
           <section className={styles.projects}>
-            {isProjectLoading ? (
+            {isJobLoading ? (
               <CardSkeleton cards={8} />
             ) : (
               <>

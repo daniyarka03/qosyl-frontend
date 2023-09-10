@@ -6,8 +6,7 @@ import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useCurrentUserData } from "../../actions/getCurrentUserData";
 import CardSkeleton from "../../components/CardSkeleton/CardSkeleton";
-
-const postsAPI = `${import.meta.env.VITE_SERVER_URL}/api/posts/`;
+import { postsAPI } from "../../constants/API";
 
 const EditPost = () => {
   const location = useLocation();
@@ -54,34 +53,34 @@ const EditPost = () => {
 
   const validateForm = () => {
     const errors = {};
-  
+
     if (!content) {
       errors.description = "Введите описание поста";
     }
     setInputErrors(errors);
-  
+
     return Object.keys(errors).length === 0;
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
     if (validateForm()) {
-    axios
-      .put(postUpdate, {
-        content: content,
-        author_name: authorName,
-        author_id: authorID,
-        likes: likes,
-      })
-      .then((response) => {
-        navigate("/profile");
-        //console.log(response);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+      axios
+        .put(postUpdate, {
+          content: content,
+          author_name: authorName,
+          author_id: authorID,
+          likes: likes,
+        })
+        .then((response) => {
+          navigate("/profile");
+          //console.log(response);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   };
-}
 
   return (
     <>
@@ -99,7 +98,9 @@ const EditPost = () => {
           <CardSkeleton />
         ) : (
           <form onSubmit={handleSubmit} className={styles.form}>
-            {inputErrors.description && <p className={styles.input__error}>{inputErrors.description}</p>}
+            {inputErrors.description && (
+              <p className={styles.input__error}>{inputErrors.description}</p>
+            )}
             <textarea
               className={styles.textarea}
               placeholder="Описание"

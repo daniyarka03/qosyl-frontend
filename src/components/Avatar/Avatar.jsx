@@ -27,7 +27,6 @@ const Avatar = ({ imageSrc, setImageSrc }) => {
       const file = new File([blob], "defaultAvatar.jpg", {
         type: "image/jpeg",
       });
-      console.log(file)
       setImageSrc(file);
     }
   }, [imageSrc]);

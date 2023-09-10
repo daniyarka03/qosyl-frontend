@@ -5,29 +5,27 @@ import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import CommentCard from "../../components/CommentCard/CommentCard.jsx";
 import CardSkeleton from "../../components/CardSkeleton/CardSkeleton";
-
-const postsAPI = `${import.meta.env.VITE_SERVER_URL}/api/posts/`;
-
+import { postsAPI } from "../../constants/API";
 
 const PostComments = () => {
   const navigate = useNavigate();
-  const [comments, setComments] = useState([])
-  const [isLoading, setIsLoading] = useState(true)
+  const [comments, setComments] = useState([]);
+  const [isCommentLoading, setIsCommentLoading] = useState(true);
   const location = useLocation();
-  const postID = location.pathname.split("/")[2]
+  const postID = location.pathname.split("/")[2];
 
   useEffect(() => {
     const fetchComments = async () => {
-        try {
-          const response = await axios.get(postsAPI + postID)
-          setComments(response.data.comments)
-          setIsLoading(false)
-        } catch (error) {
-          console.log(error);
-        }
-      };
-      fetchComments();
-  }, [])
+      try {
+        const response = await axios.get(postsAPI + postID);
+        setComments(response.data.comments);
+        setIsCommentLoading(false);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchComments();
+  }, []);
 
   return (
     <div>
@@ -41,13 +39,15 @@ const PostComments = () => {
           Написать
         </button>
         <div className={styles.post__wrapper}>
-          {isLoading && <CardSkeleton cards={4}/>}
-          {comments.map((comment) => (
-            <CommentCard
-              key={comment.comment_id}
-              comment={comment}
-            />
-          ))}
+          {isCommentLoading ? (
+            <CardSkeleton cards={4} />
+          ) : (
+            <>
+              {comments.map((comment) => (
+                <CommentCard key={comment.comment_id} comment={comment} />
+              ))}
+            </>
+          )}
         </div>
       </div>
     </div>

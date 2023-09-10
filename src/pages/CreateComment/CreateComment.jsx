@@ -26,15 +26,11 @@ const CreateComment = () => {
   const [inputErrors, setInputErrors] = useState({
     message: "",
   });
-  
+
   const validateForm = () => {
     const errors = {};
-  
-    if (!message) {
-      errors.message = "Введите комментарий";
-    }
+    if (!message) errors.message = "Введите комментарий";
     setInputErrors(errors);
-  
     return Object.keys(errors).length === 0;
   };
 
@@ -65,26 +61,26 @@ const CreateComment = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     if (validateForm()) {
-    navigate(`/post/${postID}/comments`);
-    const updatedPost = {
-      ...post,
-      comments: [
-        ...post.comments,
-        {
-          comment_id: uuidv4(),
-          author_id: userID,
-          message: message,
-        },
-      ],
-    };
-    axios
-      .put(postUpdate, updatedPost)
-      .then(function (response) {
-        //console.log(response);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+      navigate(`/post/${postID}/comments`);
+      const updatedPost = {
+        ...post,
+        comments: [
+          ...post.comments,
+          {
+            comment_id: uuidv4(),
+            author_id: userID,
+            message: message,
+          },
+        ],
+      };
+      axios
+        .put(postUpdate, updatedPost)
+        .then(function (response) {
+          //console.log(response);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
     }
   };
 
@@ -101,7 +97,9 @@ const CreateComment = () => {
           <h2 className={styles.header__title}>Создание комментария</h2>
         </div>
         <form className={styles.form} onSubmit={handleSubmit}>
-        {inputErrors.message && <p className={styles.input__error}>{inputErrors.message}</p>}
+          {inputErrors.message && (
+            <p className={styles.input__error}>{inputErrors.message}</p>
+          )}
           <textarea
             className={styles.textarea}
             placeholder="Описание комментария"
