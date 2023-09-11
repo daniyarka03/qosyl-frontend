@@ -29,6 +29,9 @@ const Search = () => {
           <Link to={"./jobs"} className={styles.card__wrapper}>
             <img className={styles.card__logo} src={searchJobsIcon} />
             <p className={styles.card__title}>Вакансии</p>
+          </Link>
+        </div>
+        <div className={styles.card}>
           <Link to={"./students-clubs"} className={styles.card__wrapper}>
             <img className={styles.card__logo} src={searchUsersIcon} />
             <p className={styles.card__title}>Студенческие клубы</p>

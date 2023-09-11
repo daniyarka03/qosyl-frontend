@@ -16,6 +16,12 @@ const ProfileSettings = ({navigate, logoutHandler}) => {
           Добавить вакансию
         </button>
         <button
+            className={styles.settings__action}
+            onClick={() => navigate("/create-students-club")}
+        >
+            Добавить студенчский клуб
+        </button>
+        <button
           className={styles.settings__action}
           onClick={() => navigate("/edit-profile")}
         >

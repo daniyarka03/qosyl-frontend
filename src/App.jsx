@@ -72,7 +72,7 @@ const App = () => {
                         projectDeleted={projectDeleted}
                         setProjectDeleted={setProjectDeleted}
                       />
-
+                    }/>
                   <Route path="/create-project" element={<CreateProject />} />
                   <Route path="/edit-project/:id" element={<EditProject />} />
 

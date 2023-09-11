@@ -125,7 +125,7 @@ const EditStudentsClub = () => {
                 </p>
                 <form className={styles.form} onSubmit={handleSubmit}>
                     <div className={styles.form__header}>
-                        <Avatar setImageSrc={setImageSrc} />
+                        <Avatar imageSrc={imageSrc} setImageSrc={setImageSrc}  />
                         <div className={styles.form__header__inputs}>
                             <div className={styles.input__wrapper}>
                                 <Input

@@ -7,7 +7,7 @@ import Navbar from "../../components/Navbar/Navbar";
 import CardSkeleton from "../../components/CardSkeleton/CardSkeleton";
 import { useNavigate } from "react-router-dom";
 import useGetProjects from "../../hooks/useGetProjects";
-import useFilterProjects from "../../hooks/useFilterProjects";
+import useFilter from "../../hooks/useFilter.js";
 import StudentsClub from "../StudentsClub/StudentsClub.jsx";
 import StudentsClubCard from "../../components/StudentsClubCard/StudentsClubCard.jsx";
 import useGetStudentsClubs from "../../hooks/useGetStudentsClubs.js";
