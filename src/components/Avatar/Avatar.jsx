@@ -11,6 +11,7 @@ const Avatar = ({ imageSrc, setImageSrc }) => {
     }
     if (!imageSrc) {
       setAvatarUrl(defaultAvatar);
+
       // Convert defaultAvatar to File object
       const base64String = defaultAvatar.split(",")[1];
       const binaryString = atob(base64String);
@@ -20,14 +21,7 @@ const Avatar = ({ imageSrc, setImageSrc }) => {
         uint8Array[i] = binaryString.charCodeAt(i);
       }
 
-      // Create a Blob
-      const blob = new Blob([uint8Array], { type: "image/jpeg" });
-
-      // Create a File object
-      const file = new File([blob], "defaultAvatar.jpg", {
-        type: "image/jpeg",
-      });
-      setImageSrc(file);
+      setImageSrc("images/students_club/defaultAvatar.png");
     }
   }, [imageSrc]);
 
