@@ -28,10 +28,7 @@ const Posts = () => {
           ) : (
             <>
               {posts.map((post) => (
-                <PostCard
-                  key={post.post_id}
-                  post={post}
-                />
+                <PostCard key={post.post_id} post={post} />
               ))}
             </>
           )}

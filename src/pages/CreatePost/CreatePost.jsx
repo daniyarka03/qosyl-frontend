@@ -5,9 +5,7 @@ import Navbar from "../../components/Navbar/Navbar";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import useGetCurrentUser from "../../hooks/useGetCurrentUser";
-
-const postCreate = `${import.meta.env.VITE_SERVER_URL}/api/posts/create/`;
-const userAPI = `${import.meta.env.VITE_SERVER_URL}/api/users/profile/`;
+import { postCreate, userAPI } from "../../constants/API";
 
 const CreatePost = () => {
   const navigate = useNavigate();
@@ -21,12 +19,8 @@ const CreatePost = () => {
 
   const validateForm = () => {
     const errors = {};
-
-    if (!description) {
-      errors.description = "Введите описание поста";
-    }
+    if (!description) errors.description = "Введите описание поста";
     setInputErrors(errors);
-
     return Object.keys(errors).length === 0;
   };
 

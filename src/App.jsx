@@ -41,6 +41,8 @@ const App = () => {
     setAuth(isAuthenticated);
   }, [isAuthenticated]);
 
+  const [projectDeleted, setProjectDeleted] = useState(false);
+
   return (
     <div className={styles.App}>
       <Provider store={store}>
@@ -57,7 +59,15 @@ const App = () => {
                     path="/password/reset/confirm/:uid/:token"
                     element={<ResetPasswordConfirm />}
                   />
-                  <Route path="/project/:id" element={<ProjectInfo />} />
+                  <Route
+                    path="/project/:id"
+                    element={
+                      <ProjectInfo
+                        projectDeleted={projectDeleted}
+                        setProjectDeleted={setProjectDeleted}
+                      />
+                    }
+                  />
 
                   <Route path="/create-project" element={<CreateProject />} />
                   <Route path="/edit-project/:id" element={<EditProject />} />
@@ -71,11 +81,19 @@ const App = () => {
                   <Route path="/search/jobs" element={<Jobs />} />
                   <Route path="/posts" element={<Posts />} />
                   <Route path="/notifications" element={<Notifications />} />
-                  <Route path="/profile" element={<Profile />} />
+                  <Route
+                    path="/profile"
+                    element={
+                      <Profile
+                        projectDeleted={projectDeleted}
+                        setProjectDeleted={setProjectDeleted}
+                      />
+                    }
+                  />
                   <Route path="/edit-profile" element={<EditProfile />} />
 
                   <Route path="/create-job" element={<CreateJob />} />
-                  <Route path="/edit-job/:id" element ={<EditJob />} />
+                  <Route path="/edit-job/:id" element={<EditJob />} />
                   <Route path="/job/:id" element={<JobInfo />} />
                   <Route
                     path="/subscriptions-projects"

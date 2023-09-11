@@ -4,13 +4,13 @@ import styles from "./ProjectInfo.module.sass";
 import { useLocation, useNavigate } from "react-router-dom";
 import descriptionIcon from "../../assets/description-icon.svg";
 import contactIcon from "../../assets/contact-icon.svg";
-import CardSkeleton from "../../components/CardSkeleton/CardSkeleton";
 import axios from "axios";
 import { useCurrentUserData } from "../../actions/getCurrentUserData.js";
+import { projectsAPI } from "../../constants/API";
+import ProjectInfoHeader from "../../components/ProjectInfoHeader/ProjectInfoHeader";
+import ProjectInfoDescription from "../../components/ProjectInfoDescription/ProjectInfoDescription";
 
-const projectsAPI = `${import.meta.env.VITE_SERVER_URL}/api/projects/`;
-
-const ProjectInfo = () => {
+const ProjectInfo = ({ setProjectDeleted }) => {
   const [project, setProject] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const [isSubscribed, setIsSubscribed] = useState(false);
@@ -18,15 +18,8 @@ const ProjectInfo = () => {
   const [justUpdatedSubscribe, setJustUpdatedSubscribe] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
-
   const projectID = location.pathname.split("/").pop();
   const { userID } = useCurrentUserData();
-
-  // useEffect(() => {
-  //   axios.get(userAPI, config).then((data) => {
-  //     setUserID(data.data.user_id);
-  //   });
-  // }, []);
 
   useEffect(() => {
     axios
@@ -38,7 +31,6 @@ const ProjectInfo = () => {
         setIsLoading(false);
       })
       .catch((error) => {
-        // console.log(projectsAPI + projectID)
         console.log(error);
       });
   }, [userID]);
@@ -48,8 +40,10 @@ const ProjectInfo = () => {
   }/api/projects/${projectID}/delete`;
 
   const deleteProject = () => {
-    axios.delete(src).then(() => {});
-    navigate("/profile");
+    axios.delete(src).then(() => {
+      setProjectDeleted(true);
+      navigate("/profile");
+    });
   };
 
   const onSubscribe = (projectID) => {
@@ -78,7 +72,6 @@ const ProjectInfo = () => {
     axios
       .put(src, updatedProject)
       .then((response) => {
-        console.log("Проект успешно обновлен", response.data);
         setProject(updatedProject);
         setImageProject(imageProject);
         setIsSubscribed(!isSubscribedForProject); // Инвертируем состояние подписки
@@ -94,94 +87,30 @@ const ProjectInfo = () => {
     <>
       <Navbar />
       <div className={styles.wrapper}>
-        <header className={styles.header}>
-          <div className={styles.header__wrapper}>
-            <div className={styles.project__header}>
-              {isLoading ? (
-                <CardSkeleton cards={1} width={200} />
-              ) : (
-                <>
-                  <img
-                    className={styles.project__logo}
-                    src={
-                      justUpdatedSubscribe
-                        ? import.meta.env.VITE_SERVER_URL +
-                          "/media/" +
-                          imageProject
-                        : import.meta.env.VITE_SERVER_URL_MEDIA + imageProject
-                    }
-                    alt="Project Logo"
-                  />
-                  <div className={styles.project__info}>
-                    <p className={styles.project__title}>{project.title}</p>
-                    <p className={styles.project__type}>{project.type}</p>
-                    <p className={styles.project__type}>
-                      Подписчики: {project.subscribers.length}
-                    </p>
-                  </div>
-
-                  {userID === project.author_id ? (
-                    <>
-                      <button
-                        className={`${styles.button} ${styles.button__edit}`}
-                        onClick={() => navigate(`/edit-project/${projectID}`)}
-                      >
-                        Изменить
-                      </button>
-                      <button
-                        className={`${styles.button} ${styles.button__delete}`}
-                        onClick={deleteProject}
-                      >
-                        Удалить
-                      </button>
-                    </>
-                  ) : (
-                    <button
-                      className={`${styles.button} ${styles.button__subscribe}`}
-                      onClick={() => onSubscribe(project.project_id)}
-                    >
-                      {(!isSubscribed && "Подписаться") || "Отписаться"}
-                    </button>
-                  )}
-                </>
-              )}
-            </div>
-          </div>
-        </header>
-        <section className={styles.description}>
-          <div className={styles.description__wrapper}>
-            <div className={styles.description__header}>
-              <img
-                className={styles.description__img}
-                src={descriptionIcon}
-                alt=""
-              />
-              <h3 className={styles.description__title}>Описание</h3>
-            </div>
-            {isLoading ? (
-              <CardSkeleton cards={1} />
-            ) : (
-              <p className={styles.description__text}>{project.description}</p>
-            )}
-          </div>
-        </section>
-        <section className={styles.description}>
-          <div className={styles.description__wrapper}>
-            <div className={styles.description__header}>
-              <img
-                className={styles.description__img}
-                src={contactIcon}
-                alt=""
-              />
-              <h3 className={styles.description__title}>Контакты</h3>
-            </div>
-            {isLoading ? (
-              <CardSkeleton cards={1} />
-            ) : (
-              <p className={styles.description__text}>{project.contact}</p>
-            )}
-          </div>
-        </section>
+        <ProjectInfoHeader
+          isLoading={isLoading}
+          project={project}
+          userID={userID}
+          projectID={projectID}
+          deleteProject={deleteProject}
+          isSubscribed={isSubscribed}
+          onSubscribe={onSubscribe}
+          justUpdatedSubscribe={justUpdatedSubscribe}
+          imageProject={imageProject}
+          navigate={navigate}
+        />
+        <ProjectInfoDescription
+          isLoading={isLoading}
+          title={"Описание"}
+          icon={descriptionIcon}
+          description={project.description}
+        />
+        <ProjectInfoDescription
+          isLoading={isLoading}
+          title={"Контакты"}
+          icon={contactIcon}
+          description={project.contact}
+        />
       </div>
     </>
   );

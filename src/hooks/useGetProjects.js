@@ -10,7 +10,7 @@ const useGetProjects = (setIsProjectLoading) => {
       setIsProjectLoading(false)
     });
   }, []);
-  return { projects };
+  return { projects, setProjects };
 };
 
 export default useGetProjects;

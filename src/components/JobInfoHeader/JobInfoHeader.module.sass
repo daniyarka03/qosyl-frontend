@@ -1,0 +1,79 @@
+@import "../../colors"
+@import "../../mixins"
+
+.header
+    background-color: $white
+    border-bottom-left-radius: 4rem
+    border-bottom-right-radius: 4rem
+    &__wrapper
+        padding: 4rem 8rem 4rem
+        @media (max-width: 592px)
+            padding: 4rem 4rem 4rem
+
+.project
+    &__header
+        display: flex
+        align-items: center
+        position: relative
+        @media screen and (max-width: 1120px)
+            flex-direction: column
+        @media screen and (max-width: 440px)
+            display: flex
+            flex-direction: column
+    &__info
+        display: flex
+        flex-direction: column
+        margin-left: 5.6rem
+        @media screen and (max-width: 1120px)
+            align-self: flex-start
+            margin-left: 0
+            margin-top: 3rem
+        @media screen and (max-width: 920px)
+            align-self: center
+            text-align: center
+    &__logo
+        width: 10rem
+        height: 10rem
+        border-radius: .8rem
+        object-fit: cover
+        @media screen and (max-width: 1120px)
+            align-self: flex-start
+        @media screen and (max-width: 920px)
+            align-self: center
+    &__title
+        @include heading-font($primary-color)
+        font-size: 4rem
+        @media screen and (max-width: 440px)
+            margin-top: 1rem
+    &__type
+        @include heading-font($secondary-color)
+        font-size: 1.5rem
+        margin-top: 1rem
+    &__members
+        margin-top: 2rem
+        display: flex
+        align-items: center
+        &__text
+            @include heading-font($primary-color)
+            font-size: 1.4rem
+            margin-left: 1rem
+
+.button
+    @include default-button
+    font-size: 1.2rem
+    padding: 1.4rem 6rem
+    right: 0
+    &__subscribe
+        margin-left: clamp(20rem, 30%,20rem)
+    &__edit
+        margin-left: clamp(5rem, 10%, 20rem)
+    &__delete
+        margin-left: 5rem
+        background-color: #FF3CC8
+    @media screen and (max-width: 1120px)
+        margin-left: 0
+        width: clamp(20rem, 100%, 30rem)
+        margin-top: 2rem
+        align-self: flex-end
+    @media screen and (max-width: 920px)
+        align-self: center

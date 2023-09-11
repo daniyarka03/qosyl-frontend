@@ -27,7 +27,6 @@ const Avatar = ({ imageSrc, setImageSrc }) => {
       const file = new File([blob], "defaultAvatar.jpg", {
         type: "image/jpeg",
       });
-      console.log(file)
       setImageSrc(file);
     }
   }, [imageSrc]);
@@ -39,7 +38,6 @@ const Avatar = ({ imageSrc, setImageSrc }) => {
       reader.onload = (e) => {
         setAvatarUrl(e.target.result);
         setImageSrc(selectedFile);
-        console.log(e.target.result);
       };
       reader.readAsDataURL(selectedFile);
     }
