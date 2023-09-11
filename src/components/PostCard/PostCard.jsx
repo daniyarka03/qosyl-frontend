@@ -9,7 +9,8 @@ import { useCurrentUserData } from "../../actions/getCurrentUserData";
 import 'react-loading-skeleton/dist/skeleton.css'
 import { usersAPI } from "../../constants/API";
 import CardSkeleton from "../CardSkeleton/CardSkeleton";
-
+import useGetCurrentUser from "../../hooks/useGetCurrentUser";
+import { getFormattedDate } from "../../utils/formatDate";
 const PostCard = ({
   isUserPost,
   onDelete,
@@ -28,6 +29,9 @@ const PostCard = ({
   }/api/posts/${postID}/delete/`;
   const postURL = `${import.meta.env.VITE_SERVER_URL}/api/posts/${postID}`;
   const { userID } = useCurrentUserData();
+  const [isUserLoading, setIsUserLoading] = useState(true);
+  const {currentUser} = useGetCurrentUser(setIsUserLoading);
+  const postDate = getFormattedDate(post)
   const deletePost = () => {
     axios
       .delete(deletePostURL)
@@ -120,15 +124,25 @@ const PostCard = ({
         });
     }, []);
 
+    const navigateToAuthor = () => {
+      if (currentUser.user_id === post.author_id) navigate("/profile");
+      else navigate(`/user/${post.author_id}`);
+    }
+
+
   return (
     <div className={styles.post}>
       <div className={styles.wrapper}>
-        <div className={styles.post__creator}>
-          <img
-            className={styles.post__creator__avatar}
-            src={`${import.meta.env.VITE_SERVER_URL_MEDIA}${user.avatar}`}
-          />
-          <p className={styles.post__creator__name}>{user.name}</p>
+        <div className={styles.post__header}>
+          <div className={styles.post__creator}>
+            <img
+              className={styles.post__creator__avatar}
+              src={`${import.meta.env.VITE_SERVER_URL_MEDIA}${user.avatar}`}
+              onClick={navigateToAuthor}
+            />
+            <p className={styles.post__creator__name}>{user.name}</p>
+          </div>
+          <p className={styles.post__date}>{postDate}</p>
         </div>
         <p className={styles.post__description}>{post.content}</p>
         {!isComment && <div className={styles.post__actions}>

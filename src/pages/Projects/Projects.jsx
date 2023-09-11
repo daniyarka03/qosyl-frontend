@@ -7,13 +7,13 @@ import Navbar from "../../components/Navbar/Navbar";
 import CardSkeleton from "../../components/CardSkeleton/CardSkeleton";
 import { useNavigate } from "react-router-dom";
 import useGetProjects from "../../hooks/useGetProjects";
-import useFilterProjects from "../../hooks/useFilterProjects";
+import useFilter from "../../hooks/useFilter";
 const Projects = ({ isAuthenticated }) => {
   const navigate = useNavigate();
   const [inputText, setInputText] = useState("");
   const [isProjectLoading, setIsProjectLoading] = useState(true);
   const { projects } = useGetProjects(setIsProjectLoading);
-  const { filteredProjects } = useFilterProjects(inputText, projects);
+  const { filteredProjects } = useFilter(inputText, projects);
 
   return (
     <>

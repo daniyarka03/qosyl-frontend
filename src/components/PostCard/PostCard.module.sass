@@ -9,6 +9,13 @@
     margin-top: 2.5rem
     background-color: $white
     border-radius: 1.2rem
+    &__header
+        display: flex
+        align-items: center
+        justify-content: space-between
+    &__date
+        @include heading-font($black)
+        font-size: 1.3rem
     &__creator
         display: flex
         align-items: center
@@ -17,6 +24,7 @@
             height: 5rem
             border-radius: 1.2rem
             object-fit: cover
+            cursor: pointer
         &__name
             @include heading-font($black)
             font-size: 1rem

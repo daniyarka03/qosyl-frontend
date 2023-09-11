@@ -1,0 +1,73 @@
+@import "../../mixins"
+@import "../../colors"
+
+.container
+    width: 114.6rem
+    margin: 14rem auto
+    padding-bottom: 5rem
+    position: relative
+    @media screen and (max-width: 1300px)
+        width: 90rem
+    @media screen and (max-width: 1080px)
+        margin-top: 7rem
+        width: 80rem
+    @media screen and (max-width: 970px)
+        width: 70rem
+    @media screen and (max-width: 900px)
+        width: 60rem
+    @media screen and (max-width: 800px)
+        width: 50rem
+    @media screen and (max-width: 700px)
+        width: 40rem
+    @media screen and (max-width: 520px)
+        width: 35rem
+    @media screen and (max-width: 400px)
+        width: 30rem
+
+.header
+    display: flex
+    align-items: center
+    justify-content: space-between
+    @media screen and (max-width: 1080px)
+        flex-direction: column
+    @media screen and (max-width: 520px)
+        flex-direction: column
+        align-items: start
+
+    &__logo
+        width: 20rem
+        height: 20rem
+        border-radius: 1.2rem
+        @media screen and (max-width: 700px)
+            width: 15rem
+            height: 15rem
+        @media screen and (max-width: 520px)
+            width: 10rem
+            height: 10rem
+    &__text
+        @include heading-font($white)
+        text-align: end
+        width: 52rem
+        @media screen and (max-width: 1080px)
+            text-align: center
+        @media screen and (max-width: 520px)
+            text-align: start
+            width: auto
+        @media screen and (max-width: 400px)
+            width: 30rem
+
+    &__title
+        font-size: 3.6rem
+        @media screen and (max-width: 700px)
+            font-size: 3rem
+        @media screen and (max-width: 400px)
+            font-size: 2.5rem
+
+    &__subtitle
+        font-size: 2.4rem
+        @media screen and (max-width: 700px)
+            font-size: 2rem
+        @media screen and (max-width: 520px)
+            width: 100%
+        @media screen and (max-width: 400px)
+            font-size: 1.7rem

@@ -5,11 +5,17 @@
     margin-top: 2.2rem
     border-radius: 1.8rem
     cursor: pointer
+    &__date
+        @include heading-font($black)
+        font-size: 1.3rem
+    &__main
+        display: flex
     &__wrapper
         padding: 1.5rem
     &__header
         display: flex
-        align-items: flex-start
+        align-items: center
+        justify-content: space-between
     &__logo
         width: 3.7rem
         height: 3.7rem

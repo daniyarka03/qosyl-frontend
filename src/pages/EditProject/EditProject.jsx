@@ -1,16 +1,13 @@
 import React, { useEffect, useState } from "react";
 import styles from "./EditProject.module.sass";
 import projectLogo from "../../assets/project-logo.svg";
-import Input from "../../components/Input/Input";
 import Navbar from "../../components/Navbar/Navbar";
 import axios from "axios";
-import animalsImage from "../../assets/animals.png";
 import { useLocation, useNavigate } from "react-router-dom";
-import Avatar from "../../components/Avatar/Avatar";
 import { useCurrentUserData } from "../../actions/getCurrentUserData";
 import CardSkeleton from "../../components/CardSkeleton/CardSkeleton";
-
-const projectsAPI = `${import.meta.env.VITE_SERVER_URL}/api/projects/`;
+import { projectsAPI } from "../../constants/API";
+import EditProjectForm from "../../components/EditProjectForm/EditProjectForm";
 
 const EditProject = () => {
   const navigate = useNavigate();
@@ -21,7 +18,8 @@ const EditProject = () => {
   }/api/projects/${projectID}/update/`;
 
   const [title, setTitle] = useState("");
-  const [type, setType] = useState("");
+  const [projectType, setProjectType] = useState("");
+  const [devStage, setDevStage] = useState("");
   const [description, setDescription] = useState("");
   const [contact, setContact] = useState("");
   const [authorID, setAuthorID] = useState("");
@@ -32,47 +30,45 @@ const EditProject = () => {
 
   const { userID } = useCurrentUserData();
 
-
   const [inputErrors, setInputErrors] = useState({
     title: "",
-    type: "",
+    projectType: "",
     description: "",
     contact: "",
+    devStage: "",
   });
 
-  
   const validateForm = () => {
     const errors = {};
-  
-    if (!title) {
-      errors.title = "Введите название проекта";
-    }
-  
-    if (!type) {
-      errors.type = "Выберите тип проекта";
-    }
-  
-    if (!description) {
-      errors.description = "Введите описание проекта";
-    }
-  
-    if (!contact) {
-      errors.contact = "Введите контактные данные";
-    }
-  
+    if (!title) errors.title = "Введите название проекта";
+    if (!projectType) errors.projectType = "Выберите тип проекта";
+    if (!devStage) errors.devStage = "Выберите стадию разработки";
+    if (!description) errors.description = "Введите описание проекта";
+    if (!contact) errors.contact = "Введите контактные данные";
     setInputErrors(errors);
-  
     return Object.keys(errors).length === 0;
   };
-  
-
 
   useEffect(() => {
     axios
       .get(projectsAPI + projectID)
       .then((response) => {
         setTitle(response.data.title);
-        setType(response.data.type);
+
+        const testArray = [];
+        testArray.push({
+          value: response.data.type,
+          label: response.data.type,
+        });
+        setProjectType(testArray);
+
+        const testArray2 = [];
+        testArray2.push({
+          value: response.data.dev_stage,
+          label: response.data.dev_stage,
+        });
+        setDevStage(testArray2);
+
         setDescription(response.data.description);
         setContact(response.data.contact);
         setAuthorID(response.data.author_id);
@@ -82,7 +78,6 @@ const EditProject = () => {
         setIsLoading(false);
       })
       .catch((error) => {
-        //console.log("Failed fetching", error);
         setDataLoaded(true);
       });
   }, [projectID]);
@@ -93,17 +88,17 @@ const EditProject = () => {
     }
   }, [dataLoaded, authorID]);
 
-
   const handleSubmit = (event) => {
     event.preventDefault();
     if (validateForm()) {
       const formData = new FormData();
       if (typeof imageSrc == "string") {
-        const mediaRoot = '/cXQYMmoJTmnj79aRVNDw16rkoGW/media';
-        const relativePath = imageSrc.replace(mediaRoot, '');
+        const mediaRoot = "/cXQYMmoJTmnj79aRVNDw16rkoGW/media";
+        const relativePath = imageSrc.replace(mediaRoot, "");
         formData.append("title", title);
         formData.append("description", description);
-        formData.append("type", type);
+        formData.append("type", projectType.value || projectType[0].value);
+        formData.append("dev_stage", devStage.value || devStage[0].value);
         formData.append("contact", contact);
         formData.append("author_id", authorID);
         formData.append("image_src", relativePath);
@@ -111,7 +106,8 @@ const EditProject = () => {
       } else {
         formData.append("title", title);
         formData.append("description", description);
-        formData.append("type", type);
+        formData.append("type", projectType.value || projectType[0].value);
+        formData.append("dev_stage", devStage.value || devStage[0].value);
         formData.append("contact", contact);
         formData.append("author_id", authorID);
         formData.append("image_src", imageSrc);
@@ -122,12 +118,10 @@ const EditProject = () => {
         .put(src, formData)
         .then(function (response) {
           navigate(`/project/${projectID}`);
-
         })
         .catch(function (error) {
           console.log("An error occurred:", error);
         });
-
     }
   };
   return (
@@ -145,93 +139,24 @@ const EditProject = () => {
         {isLoading ? (
           <CardSkeleton />
         ) : (
-          <form className={styles.form} onSubmit={handleSubmit}>
-            <div className={styles.form__header}>
-              <Avatar imageSrc={imageSrc} setImageSrc={setImageSrc}   />
-              <div className={styles.form__header__inputs}>
-                <div className={styles.input__wrapper}>
-                  <Input
-                    placeholder="Название проекта"
-                    type="text"
-                    name="text"
-                    id="projectName"
-                    value={title}
-                    onChange={(event) => setTitle(event.target.value)}
-                    error={inputErrors.title}
-                  />
-                </div>
-
-                <div className={styles.input__wrapper}>
-                  <select
-                    className={`${styles.input__wrapper} ${styles.select}`}
-                    value={type}
-                    onChange={(event) => setType(event.target.value)}
-                    error={inputErrors.type}
-                  >
-                    <option value="" disabled hidden>
-                      Тип проекта
-                    </option>
-                    <option value="Социальное приложение">
-                      Социальное приложение
-                    </option>
-                    <option value="Образовательное приложение">
-                      Образовательное приложение
-                    </option>
-                    <option value="Игра">
-                      Игра
-                    </option>
-                    <option value="Эко проект">
-                      Эко проект
-                    </option>
-                    <option value="Интернет-магазин">
-                      Интернет-магазин
-                    </option>
-                    <option value="Исследовательский проект">
-                      Исследовательский проект
-                    </option>
-                    <option value="Творческий проект">
-                      Творческий проект
-                    </option>
-                    <option value="Культурный проект">
-                      Культурный проект
-                    </option>
-                    <option value="Другое">Другое</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            
-            <textarea
-              className={styles.textarea}
-              placeholder="Описание"
-              value={description}
-              onChange={(event) => setDescription(event.target.value)}
-            />
-            {inputErrors.description && <p className={styles.input__error}>{inputErrors.description}</p>}
-            <div className={styles.form__contacts}>
-              <p className={styles.contacts__header}>Контакты</p>
-              <div className={styles.contacts__info}>
-                <img className={styles.contacts__image} src={animalsImage} />
-                <div className={styles.contacts__actions}>
-                  <div className={styles.input__wrapper}>
-                    <Input
-                      placeholder="Впиши любой контакт"
-                      type="text"
-                      name="text"
-                      id="projectContact"
-                      value={contact}
-                      onChange={(event) => setContact(event.target.value)}
-                      maxlength={30}
-                      error={inputErrors.contact}
-                    />
-                  </div>
-                  <button className={styles.form__button} type="submit">
-                    Изменить
-                  </button>
-                </div>
-              </div>
-            </div>
-          </form>
+          <EditProjectForm
+            handleSubmit={handleSubmit}
+            imageSrc={imageSrc}
+            setImageSrc={setImageSrc}
+            title={title}
+            setTitle={setTitle}
+            projectType={projectType}
+            setProjectType={setProjectType}
+            devStage={devStage}
+            setDevStage={setDevStage}
+            description={description}
+            setDescription={setDescription}
+            contact={contact}
+            setContact={setContact}
+            validateForm={validateForm}
+            inputErrors={inputErrors}
+            userID={userID}
+          />
         )}
       </div>
     </>
