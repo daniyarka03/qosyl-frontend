@@ -26,11 +26,17 @@ import useIsAuthenticated from "./hooks/useIsAuthenticated";
 import styles from "./App.module.sass";
 import PostComments from "./pages/PostComments/PostComments";
 import CreateComment from "./pages/CreateComment/CreateComment";
-import PageNotFound from "./pages/404/PageNotFound";
+
+import PageNotFound from './pages/404/PageNotFound';
+import StudentsClub from "./pages/StudentsClub/StudentsClub.jsx";
+import CreateStudentsClub from "./pages/CreateStudentsClub/CreateStudentsClub.jsx";
+import EditStudentsClub from "./pages/EditStudentsClub/EditStudentsClub.jsx";
+import SearchStudentsClubs from "./pages/SearchStudentsClubs/SearchStudentsClubs.jsx";
 import Jobs from "./pages/Jobs/Jobs";
 import CreateJob from "./pages/CreateJob/CreateJob";
 import EditJob from "./pages/EditJob/EditJob";
 import JobInfo from "./pages/JobInfo/JobInfo";
+
 
 const App = () => {
   const isAuthenticated = useIsAuthenticated();
@@ -66,15 +72,16 @@ const App = () => {
                         projectDeleted={projectDeleted}
                         setProjectDeleted={setProjectDeleted}
                       />
-                    }
-                  />
 
                   <Route path="/create-project" element={<CreateProject />} />
                   <Route path="/edit-project/:id" element={<EditProject />} />
 
                   <Route path="/create-post" element={<CreatePost />} />
                   <Route path="/edit-post/:id" element={<EditPost />} />
-
+                  <Route path="/students-club/:id" element={<StudentsClub />} />
+                  <Route path="/create-students-club" element={<CreateStudentsClub />} />
+                  <Route path="/edit-students-club/:id" element={<EditStudentsClub />} />
+                  <Route path="/search/students-clubs" element={<SearchStudentsClubs />} />
                   <Route path="/search" element={<Search />} />
                   <Route path="/search/projects" element={<Projects />} />
                   <Route path="/search/users" element={<Users />} />
@@ -120,6 +127,7 @@ const App = () => {
         </BrowserRouter>
       </Provider>
     </div>
+
   );
 };
 

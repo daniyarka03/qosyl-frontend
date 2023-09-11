@@ -47,6 +47,7 @@ const Profile = ({ projectDeleted, setProjectDeleted }) => {
   return (
     <div className={styles.wrapper}>
       <Navbar />
+
       <ProfileHeader isUserLoading={isUserLoading} currentUser={currentUser} />
       <ProfileSettings logoutHandler={logoutHandler} navigate={navigate} />
       <ProfileTabs
@@ -60,6 +61,7 @@ const Profile = ({ projectDeleted, setProjectDeleted }) => {
         handleDeletePost={handleDeletePost}
         navigate={navigate}
       />
+
     </div>
   );
 };
