@@ -1,6 +1,7 @@
-import React from "react";
+import React, {useState} from "react";
 import CardSkeleton from "../CardSkeleton/CardSkeleton";
 import styles from "./JobInfoHeader.module.sass";
+import useGetCurrentUser from "../../hooks/useGetCurrentUser.js";
 
 const JobInfoHeader = ({
   isProjectLoading,
@@ -10,6 +11,11 @@ const JobInfoHeader = ({
   deleteJob,
   navigate,
 }) => {
+
+  const [isUserLoading, setIsUserLoading] = useState(true);
+  const { currentUser } = useGetCurrentUser(setIsUserLoading);
+
+
   return (
     <header className={styles.header}>
       <div className={styles.header__wrapper}>
@@ -36,7 +42,7 @@ const JobInfoHeader = ({
                 <p className={styles.project__type}>{job.work_format}</p>
               </div>
 
-              {job.project_id === project.project_id ? (
+              {project.author_id === currentUser.user_id ? (
                 <>
                   <button
                     className={`${styles.button} ${styles.button__edit}`}
@@ -56,7 +62,7 @@ const JobInfoHeader = ({
                   className={`${styles.button} ${styles.button__subscribe}`}
                   // onClick={() => onSubscribe(project.project_id)}
                 >
-                  {/* {(!isSubscribed && "Подписаться") || "Отписаться"} */}
+                  Откликнуться
                 </button>
               )}
             </>

@@ -18,7 +18,7 @@ const JobCard = ({ job, onClick }) => {
       .catch((error) => {
         console.log(error);
       });
-  }, []);
+  }, [job]);
 
   return (
     <>

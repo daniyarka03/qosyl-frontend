@@ -1,6 +1,6 @@
 import React from 'react'
 import styles from "./ProfileSettings.module.sass";
-const ProfileSettings = ({navigate}) => {
+const ProfileSettings = ({navigate, logoutHandler}) => {
   return (
     <div className={styles.settings}>
         <button

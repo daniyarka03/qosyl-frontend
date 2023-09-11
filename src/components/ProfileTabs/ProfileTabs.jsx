@@ -13,7 +13,9 @@ const ProfileTabs = ({
   projects,
   currentUser,
   handleDeletePost,
+                       navigate
 }) => {
+
   return (
     <div className={styles.info}>
       <Tabs

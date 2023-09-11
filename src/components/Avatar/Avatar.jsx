@@ -38,7 +38,6 @@ const Avatar = ({ imageSrc, setImageSrc }) => {
       reader.onload = (e) => {
         setAvatarUrl(e.target.result);
         setImageSrc(selectedFile);
-        console.log(e.target.result);
       };
       reader.readAsDataURL(selectedFile);
     }

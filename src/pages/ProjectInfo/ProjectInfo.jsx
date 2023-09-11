@@ -72,7 +72,6 @@ const ProjectInfo = ({ setProjectDeleted }) => {
     axios
       .put(src, updatedProject)
       .then((response) => {
-        console.log("Проект успешно обновлен", response.data);
         setProject(updatedProject);
         setImageProject(imageProject);
         setIsSubscribed(!isSubscribedForProject); // Инвертируем состояние подписки

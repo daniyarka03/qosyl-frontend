@@ -48,7 +48,7 @@ const Profile = ({ projectDeleted, setProjectDeleted }) => {
     <div className={styles.wrapper}>
       <Navbar />
       <ProfileHeader isUserLoading={isUserLoading} currentUser={currentUser} />
-      <ProfileSettings navigate={navigate} />
+      <ProfileSettings logoutHandler={logoutHandler} navigate={navigate} />
       <ProfileTabs
         selectedTab={selectedTab}
         setSelectedTab={setSelectedTab}
@@ -58,6 +58,7 @@ const Profile = ({ projectDeleted, setProjectDeleted }) => {
         projects={projects}
         currentUser={currentUser}
         handleDeletePost={handleDeletePost}
+        navigate={navigate}
       />
     </div>
   );
