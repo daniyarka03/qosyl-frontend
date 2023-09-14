@@ -1,12 +1,15 @@
 import React from "react";
 import styles from "./EditJobForm.module.sass";
-import Input from "../Input/Input";
+import Select from "react-select";
+import selectStyles from "../../constants/selectStyles";
+import { jobFormatOptions, jobTitleOptions } from "../../constants/options";
 const EditJobForm = ({
   handleSubmit,
   jobTitle,
   setJobTitle,
   project,
   setProject,
+  selectedOption,
   jobFormat,
   setJobFormat,
   jobDescription,
@@ -19,95 +22,143 @@ const EditJobForm = ({
   setJobOffer,
   validateForm,
   inputErrors,
+  setInputErrors,
   handleChange,
   projects,
   currentUser,
 }) => {
+  const jobProjectOptions = projects
+    .filter((project) => project.author_id === currentUser.user_id)
+    .map((project) => ({
+      value: project.project_id,
+      label: project.title,
+    }));
+
   return (
     <form className={styles.form} onSubmit={handleSubmit}>
-      <div className={styles.input__wrapper}>
-        <div className={styles.input__wrapper}>
-          <Input
-            placeholder="Название вакансии"
-            type="text"
-            name="text"
-            id="jobName"
-            value={jobTitle}
-            onChange={(event) => setJobTitle(event.target.value)}
-            maxlength="100"
-            error={inputErrors.jobTitle}
-          />
-        </div>
-      </div>
-      <select className={styles.select} value={project} onChange={handleChange}>
-        <option value="" disabled hidden>
-          Проект
-        </option>
-
-        {}
-        {projects.filter((project) => project.author_id === currentUser.user_id)
-          .length > 0 ? (
-          projects
-            .filter((project) => project.author_id === currentUser.user_id)
-            .map((project) => {
-              return (
-                <option
-                  key={project.project_id}
-                  value={project.title}
-                  data-projectid={project.project_id} // Add this attribute to store project ID
-                >
-                  {project.title}
-                </option>
-              );
-            })
-        ) : (
-          <option value="" onClick={() => navigate("/create-project")}>
-            Проектов нету :/
-          </option>
+      <div className={styles.select__wrapper}>
+        <Select
+          isSearchable={true}
+          noOptionsMessage={() => "Вакансия не найдена :("}
+          placeholder={"Вакансия"}
+          options={jobTitleOptions}
+          value={jobTitle}
+          onChange={(value) => {
+            setJobTitle(value);
+            setInputErrors((prevErrors) => ({
+              ...prevErrors,
+              jobTitle: value.value ? "" : "Выберите вакансию",
+            }));
+          }}
+          styles={selectStyles}
+        />
+        {inputErrors.jobTitle && (
+          <p className={styles.input__error}>{inputErrors.jobTitle}</p>
         )}
-      </select>
-      <select
-        className={styles.select}
-        value={jobFormat}
-        onChange={(event) => setJobFormat(event.target.value)}
-      >
-        <option value="" disabled hidden>
-          Формат работы
-        </option>
-        <option value="Очный">Очный</option>
-        <option value="Удаленный">Удаленный</option>
-        <option value="Гибридный">Гибридный</option>
-      </select>
+      </div>
+      <div className={styles.select__wrapper}>
+        <Select
+          styles={selectStyles}
+          value={selectedOption} // Здесь selectedOption - это текущее выбранное значение
+          onChange={handleChange} // Функция обработки изменений
+          options={jobProjectOptions} // Массив опций для выбора
+          placeholder="Проект" // Текст-плейсхолдер
+        />
+        {inputErrors.project && (
+          <p className={styles.input__error}>{inputErrors.project}</p>
+        )}
+      </div>
+      <div className={styles.select__wrapper}>
+        <Select
+          placeholder={"Формат"}
+          options={jobFormatOptions}
+          value={jobFormat}
+          onChange={(value) => {
+            setJobFormat(value);
+            setInputErrors((prevErrors) => ({
+              ...prevErrors,
+              jobFormat: value.value ? "" : "Выберите формат",
+            }));
+          }}
+          styles={selectStyles}
+        />
+        {inputErrors.jobFormat && (
+          <p className={styles.input__error}>{inputErrors.jobFormat}</p>
+        )}
+      </div>
+
       <textarea
         className={styles.textarea}
         placeholder="Описание"
         value={jobDescription}
-        onChange={(event) => setJobDescription(event.target.value)}
+        onChange={(event) => {
+          setJobDescription(event.target.value);
+          setInputErrors((prevErrors) => ({
+            ...prevErrors,
+            jobDescription: event.target.value
+              ? ""
+              : "Введите описание вакансии",
+          }));
+        }}
         maxLength="800"
       />
+      {inputErrors.jobDescription && (
+        <p className={styles.input__error}>{inputErrors.jobDescription}</p>
+      )}
       <textarea
         className={styles.textarea}
         placeholder="Обязанности"
         value={jobResponsibilites}
-        onChange={(event) => setJobResponsibilities(event.target.value)}
+        onChange={(event) => {
+          setJobResponsibilities(event.target.value);
+          setInputErrors((prevErrors) => ({
+            ...prevErrors,
+            jobResponsibilites: event.target.value
+              ? ""
+              : "Введите обязанности вакансии",
+          }));
+        }}
         maxLength="800"
       />
+      {inputErrors.jobResponsibilites && (
+        <p className={styles.input__error}>{inputErrors.jobResponsibilites}</p>
+      )}
       <textarea
         className={styles.textarea}
         placeholder="Требования"
         value={jobRequirements}
-        onChange={(event) => setJobRequirements(event.target.value)}
+        onChange={(event) => {
+          setJobRequirements(event.target.value);
+          setInputErrors((prevErrors) => ({
+            ...prevErrors,
+            jobRequirements: event.target.value
+              ? ""
+              : "Введите требования вакансии",
+          }));
+        }}
         maxLength="800"
       />
+      {inputErrors.jobRequirements && (
+        <p className={styles.input__error}>{inputErrors.jobRequirements}</p>
+      )}
       <textarea
         className={styles.textarea}
         placeholder="Мы предлагаем"
         value={jobOffer}
-        onChange={(event) => setJobOffer(event.target.value)}
+        onChange={(event) => {
+          setJobOffer(event.target.value);
+          setInputErrors((prevErrors) => ({
+            ...prevErrors,
+            jobOffer: event.target.value ? "" : "Введите условия вакансии",
+          }));
+        }}
         maxLength="800"
       />
+      {inputErrors.jobOffer && (
+        <p className={styles.input__error}>{inputErrors.jobOffer}</p>
+      )}
       <button className={styles.form__button} type="submit">
-        Создать
+        Изменить
       </button>
     </form>
   );

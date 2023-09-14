@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "./ProjectInfoHeader.module.sass";
 import CardSkeleton from "../CardSkeleton/CardSkeleton";
+import menuDropdownIcon from "../../assets/menu-dropdown-icon.svg";
 const ProjectInfoHeader = ({
   isLoading,
   project,
@@ -11,7 +12,7 @@ const ProjectInfoHeader = ({
   onSubscribe,
   justUpdatedSubscribe,
   imageProject,
-  navigate
+  navigate,
 }) => {
   return (
     <header className={styles.header}>
@@ -21,25 +22,28 @@ const ProjectInfoHeader = ({
             <CardSkeleton cards={1} width={200} />
           ) : (
             <>
-              <img
-                className={styles.project__logo}
-                src={
-                  justUpdatedSubscribe
-                    ? import.meta.env.VITE_SERVER_URL + "/media/" + imageProject
-                    : import.meta.env.VITE_SERVER_URL_MEDIA + imageProject
-                }
-                alt="Project Logo"
-              />
-              <div className={styles.project__info}>
-                <p className={styles.project__title}>{project.title}</p>
-                <p className={styles.project__type}>{project.type}</p>
-                <p className={styles.project__type}>
-                  Подписчики: {project.subscribers.length}
-                </p>
+              <div className={styles.project__intro}>
+                <img
+                  className={styles.project__logo}
+                  src={
+                    justUpdatedSubscribe
+                      ? import.meta.env.VITE_SERVER_URL +
+                        "/media/" +
+                        imageProject
+                      : import.meta.env.VITE_SERVER_URL_MEDIA + imageProject
+                  }
+                  alt="Project Logo"
+                />
+                <div className={styles.project__info}>
+                  <p className={styles.project__title}>{project.title}</p>
+                  <p className={styles.project__type}>{project.type}</p>
+                  <p className={styles.project__type}>
+                    Подписчики: {project.subscribers.length}
+                  </p>
+                </div>
               </div>
-
               {userID === project.author_id ? (
-                <>
+                <div className={styles.project__settings}>
                   <button
                     className={`${styles.button} ${styles.button__edit}`}
                     onClick={() => navigate(`/edit-project/${projectID}`)}
@@ -52,7 +56,7 @@ const ProjectInfoHeader = ({
                   >
                     Удалить
                   </button>
-                </>
+                </div>
               ) : (
                 <button
                   className={`${styles.button} ${styles.button__subscribe}`}

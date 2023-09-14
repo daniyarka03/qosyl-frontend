@@ -41,7 +41,7 @@ const CreateProjectForm = ({
               id="projectName"
               value={title}
               onChange={(event) => setTitle(event.target.value)}
-              maxlength="100"
+              maxlength="25"
               error={inputErrors.title}
             />
           </div>

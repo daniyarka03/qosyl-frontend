@@ -34,10 +34,15 @@ const Profile = ({ projectDeleted, setProjectDeleted }) => {
     }
   }, [projectDeleted]);
 
+  const [hobbies, setHobbies] = useState([]);
+  useEffect(() => {
+    if (currentUser.hobbies) {
+      setHobbies(JSON.parse(currentUser.hobbies));
+    }
+  }, [currentUser.hobbies]);
+
   const navigate = useNavigate();
-
   const dispatch = useDispatch();
-
   const logoutHandler = () => {
     //localStorage.removeItem('userInfo');
     window.location.replace("/");
@@ -47,8 +52,13 @@ const Profile = ({ projectDeleted, setProjectDeleted }) => {
   return (
     <div className={styles.wrapper}>
       <Navbar />
-
-      <ProfileHeader isUserLoading={isUserLoading} currentUser={currentUser} />
+      <ProfileHeader
+        isUserLoading={isUserLoading}
+        currentUser={currentUser}
+        hobbies={hobbies}
+        navigate={navigate}
+        logoutHandler={logoutHandler}
+      />
       <ProfileSettings logoutHandler={logoutHandler} navigate={navigate} />
       <ProfileTabs
         selectedTab={selectedTab}
@@ -61,7 +71,6 @@ const Profile = ({ projectDeleted, setProjectDeleted }) => {
         handleDeletePost={handleDeletePost}
         navigate={navigate}
       />
-
     </div>
   );
 };

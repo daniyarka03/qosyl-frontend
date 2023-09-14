@@ -18,6 +18,7 @@ const CreateJob = () => {
 
   const [jobTitle, setJobTitle] = useState("");
   const [project, setProject] = useState("");
+  const [selectedOption, setSelectedOption] = useState(null); // Добавьте state для выбранной опции
   const [projectID, setProjectID] = useState("");
   const [jobFormat, setJobFormat] = useState("");
   const [jobDescription, setJobDescription] = useState("");
@@ -37,8 +38,10 @@ const CreateJob = () => {
 
   const validateForm = () => {
     const errors = {};
-    if (!jobTitle) errors.jobTitle = "Введите название вакансии";
-    if (!project) errors.project = "Выберите ваш проект";
+    if (!jobTitle) errors.jobTitle = "Выберите вакансию";
+    if (!selectedOption) {
+      errors.project = "Выберите ваш проект";
+    }
     if (!jobFormat) errors.jobFormat = "Выберите формат работы";
     if (!jobDescription) errors.jobDescription = "Введите описание вакансии";
     if (!jobResponsibilites)
@@ -72,14 +75,13 @@ const CreateJob = () => {
     }
   };
 
-  const handleChange = (event) => {
-    const selectedProject = event.target.value;
-    const selectedProjectID =
-      event.target.options[event.target.selectedIndex].getAttribute(
-        "data-projectid"
-      );
-    setProject(selectedProject);
-    setProjectID(selectedProjectID);
+  const handleChange = (selectedOption) => {
+    setSelectedOption(selectedOption);
+    setProjectID(selectedOption ? selectedOption.value : ""); // Обновляем projectID или оставляем пустую строку, если ничего не выбрано
+    setInputErrors((prevErrors) => ({
+      ...prevErrors,
+      project: selectedOption ? "" : "Выберите ваш проект",
+    }));
   };
 
   return (
@@ -101,6 +103,7 @@ const CreateJob = () => {
           setJobTitle={setJobTitle}
           project={project}
           setProject={setProject}
+          selectedOption={selectedOption}
           jobFormat={jobFormat}
           setJobFormat={setJobFormat}
           jobDescription={jobDescription}
@@ -112,6 +115,7 @@ const CreateJob = () => {
           jobOffer={jobOffer}
           setJobOffer={setJobOffer}
           validateForm={validateForm}
+          setInputErrors={setInputErrors}
           inputErrors={inputErrors}
           handleChange={handleChange}
           projects={projects}
