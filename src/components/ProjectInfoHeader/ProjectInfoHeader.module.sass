@@ -11,9 +11,14 @@
             padding: 4rem 4rem 4rem
 
 .project
+    &__intro
+        display: flex
+        @media screen and (max-width: 1120px)
+            align-self: flex-start
     &__header
         display: flex
         align-items: center
+        justify-content: space-between
         position: relative
         @media screen and (max-width: 1120px)
             flex-direction: column
@@ -23,11 +28,7 @@
     &__info
         display: flex
         flex-direction: column
-        margin-left: 5.6rem
-        @media screen and (max-width: 1120px)
-            align-self: flex-start
-            margin-left: 0
-            margin-top: 3rem
+        margin-left: 4rem
         @media screen and (max-width: 920px)
             align-self: center
             text-align: center
@@ -45,6 +46,11 @@
         font-size: 4rem
         @media screen and (max-width: 440px)
             margin-top: 1rem
+    &__settings
+        @media screen and (max-width: 1120px)
+            align-self: flex-end
+            display: flex
+            flex-direction: column
     &__type
         @include heading-font($secondary-color)
         font-size: 1.5rem
@@ -71,9 +77,6 @@
         margin-left: 5rem
         background-color: #FF3CC8
     @media screen and (max-width: 1120px)
-        margin-left: 0
-        width: clamp(20rem, 100%, 30rem)
         margin-top: 2rem
-        align-self: flex-end
     @media screen and (max-width: 920px)
         align-self: center

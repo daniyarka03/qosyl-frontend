@@ -34,8 +34,8 @@
     background-color: #fff
     background-position: calc(100% - 15px) center
     cursor: pointer
-    @media screen and (max-width: 1080px)
-        margin-top: 5rem
+    &__wrapper
+        margin-top: 2rem
 
 .form > :nth-child(1),
 .form > :nth-child(2),
@@ -55,3 +55,8 @@
     @media screen and (max-width: 1080px)
         margin-top: 2rem
         margin-bottom: 4rem
+
+.input__error
+    @include heading-font(#ef7d7d)
+    font-size: 1.2rem
+    margin-top: 1rem

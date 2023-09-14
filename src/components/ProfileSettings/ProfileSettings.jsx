@@ -1,47 +1,36 @@
-import React from 'react'
+import React from "react";
 import styles from "./ProfileSettings.module.sass";
-const ProfileSettings = ({navigate, logoutHandler}) => {
+import editProfileIcon from "../../assets/profile-edit-icon.svg";
+import logoutProfileIcon from "../../assets/profile-logout-icon.svg";
+const ProfileSettings = ({ navigate, logoutHandler }) => {
   return (
     <div className={styles.settings}>
-        <button
-          className={styles.settings__action}
-          onClick={() => navigate("/create-project")}
-        >
-          Добавить проект
-        </button>
-        <button
-          className={styles.settings__action}
-          onClick={() => navigate("/create-job")}
-        >
-          Добавить вакансию
-        </button>
-        <button
-            className={styles.settings__action}
-            onClick={() => navigate("/create-students-club")}
-        >
-            Добавить студенчский клуб
-        </button>
-        <button
-          className={styles.settings__action}
-          onClick={() => navigate("/edit-profile")}
-        >
-          Изменить
-        </button>
+      <button
+        className={styles.settings__action}
+        onClick={() => navigate("/create-project")}
+      >
+        Добавить проект
+      </button>
+      <button
+        className={styles.settings__action}
+        onClick={() => navigate("/create-job")}
+      >
+        Добавить вакансию
+      </button>
+      <button
+        className={styles.settings__action}
+        onClick={() => navigate("/create-students-club")}
+      >
+        Добавить студенческий клуб
+      </button>
+      <button
+        className={styles.settings__action}
+        onClick={() => navigate("/subscriptions-projects")}
+      >
+        Подписки на проекты
+      </button>
+    </div>
+  );
+};
 
-        <button
-          className={styles.settings__action}
-          onClick={() => navigate("/subscriptions-projects")}
-        >
-          Подписки на проекты
-        </button>
-        <button
-          className={styles.settings__action}
-          onClick={() => logoutHandler()}
-        >
-          Выйти
-        </button>
-      </div>
-  )
-}
-
-export default ProfileSettings
+export default ProfileSettings;

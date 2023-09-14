@@ -62,8 +62,9 @@ const EditProfile = () => {
         formData.append("name", userName);
         formData.append("email", currentUser.email);
         formData.append("password", 123123);
-        console.log(userHobbies);
         formData.append("hobbies", JSON.stringify(userHobbies));
+        // console.log(JSON.stringify(userHobbies))
+        // console.log(userHobbies)
         formData.append("speciality", userProfession);
         formData.append("study_place", userStudyPlace);
       } else {

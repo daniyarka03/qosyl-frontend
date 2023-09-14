@@ -18,6 +18,8 @@ const EditJob = () => {
 
   const [jobTitle, setJobTitle] = useState("");
   const [project, setProject] = useState("");
+  const [selectedOption, setSelectedOption] = useState(null); // Добавьте state для выбранной опции
+
   const [projectID, setProjectID] = useState("");
   const [jobFormat, setJobFormat] = useState("");
   const [jobDescription, setJobDescription] = useState("");
@@ -59,9 +61,23 @@ const EditJob = () => {
     axios
       .get(jobsAPI + jobID)
       .then((data) => {
-        setJobTitle(data.data.title);
+        const testArray = [];
+        testArray.push({
+          value: data.data.title,
+          label: data.data.title,
+        });
+        setJobTitle(testArray);
+
         setProjectID(data.data.project_id);
-        setJobFormat(data.data.work_format);
+
+        const testArray2 = [];
+        testArray2.push({
+          value: data.data.work_format,
+          label: data.data.work_format,
+        });
+        setJobFormat(testArray2);
+
+        // setJobFormat(data.data.work_format);
         setJobDescription(data.data.description);
         setJobResponsibilities(data.data.responsibility);
         setJobRequirements(data.data.requirements);
@@ -72,6 +88,10 @@ const EditJob = () => {
         );
         if (selectedProject) {
           setProject(selectedProject.title);
+          setSelectedOption({
+            value: selectedProject.project_id,
+            label: selectedProject.title,
+          });
         }
       })
       .catch((error) => {
@@ -83,9 +103,9 @@ const EditJob = () => {
     event.preventDefault();
     if (validateForm()) {
       const formData = new FormData();
-      formData.append("title", jobTitle);
+      formData.append("title", jobTitle.value || jobTitle[0].value);
       formData.append("project_id", projectID);
-      formData.append("work_format", jobFormat);
+      formData.append("work_format", jobFormat.value || jobFormat[0].value);
       formData.append("description", jobDescription);
       formData.append("responsibility", jobResponsibilites);
       formData.append("requirements", jobRequirements);
@@ -101,14 +121,13 @@ const EditJob = () => {
     }
   };
 
-  const handleChange = (event) => {
-    const selectedProject = event.target.value;
-    const selectedProjectID =
-      event.target.options[event.target.selectedIndex].getAttribute(
-        "data-projectid"
-      );
-    setProjectID(selectedProjectID);
-    setProject(selectedProject);
+  const handleChange = (selectedOption) => {
+    setSelectedOption(selectedOption);
+    setProjectID(selectedOption ? selectedOption.value : ""); // Обновляем projectID или оставляем пустую строку, если ничего не выбрано
+    setInputErrors((prevErrors) => ({
+      ...prevErrors,
+      project: selectedOption ? "" : "Выберите ваш проект",
+    }));
   };
 
   return (
@@ -130,6 +149,7 @@ const EditJob = () => {
           setJobTitle={setJobTitle}
           project={project}
           setProject={setProject}
+          selectedOption={selectedOption}
           jobFormat={jobFormat}
           setJobFormat={setJobFormat}
           jobDescription={jobDescription}
@@ -141,6 +161,7 @@ const EditJob = () => {
           jobOffer={jobOffer}
           setJobOffer={setJobOffer}
           validateForm={validateForm}
+          setInputErrors={setInputErrors}
           inputErrors={inputErrors}
           handleChange={handleChange}
           projects={projects}

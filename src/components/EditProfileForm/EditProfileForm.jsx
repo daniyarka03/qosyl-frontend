@@ -44,6 +44,7 @@ const EditProfileForm = ({
           </div>
           <div className={styles.input__wrapper}>
             <CreatableSelect
+              isSearchable={true}
               closeMenuOnSelect={false}
               components={animatedComponents}
               isMulti
