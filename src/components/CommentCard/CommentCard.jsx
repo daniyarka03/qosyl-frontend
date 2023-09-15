@@ -8,15 +8,15 @@ import { useNavigate } from "react-router-dom";
 const CommentCard = ({ comment }) => {
   const navigate = useNavigate();
   const [isUserLoading, setIsUserLoading] = useState(true);
-  // const [user, setUser] = useState({});
+  const [user, setUser] = useState({});
   const { currentUser } = useGetCurrentUser(setIsUserLoading);
 
-  // useEffect(() => {
-  //   axios.get(usersAPI + `${comment.author_id}`).then((data) => {
-  //     setUser(data.data);
-  //     setIsUserLoading(false);
-  //   });
-  // }, []);
+  useEffect(() => {
+    axios.get(usersAPI + `${comment.author_id}`).then((data) => {
+      setUser(data.data);
+      setIsUserLoading(false);
+    });
+  }, []);
 
   const navigateToAuthor = () => {
     if (currentUser.user_id === comment.author_id) navigate("/profile");
@@ -30,10 +30,10 @@ const CommentCard = ({ comment }) => {
           <img
             onClick={navigateToAuthor}
             className={styles.post__creator__avatar}
-            src={`${import.meta.env.VITE_SERVER_URL_MEDIA}${currentUser.avatar}`}
+            src={`${import.meta.env.VITE_SERVER_URL_MEDIA}${user.avatar}`}
           />
           <p className={styles.post__creator__name} onClick={navigateToAuthor}>
-            {currentUser.name}
+            {user.name}
           </p>
         </div>
         <p className={styles.post__description}>{comment.message}</p>
