@@ -3,13 +3,12 @@ import styles from "./EditProfileForm.module.sass";
 import CreatableSelect from "react-select/creatable";
 import makeAnimated from "react-select/animated";
 import Input from "../../components/Input/Input";
+import { hobbieOptions, jobTitleOptions } from "../../constants/options";
+import Select from "react-select";
+import selectStyles from "../../constants/selectStyles";
 const animatedComponents = makeAnimated();
 
-const hobbieOptions = [
-  { value: "Учеба", label: "Учеба", color: "#5243AA" },
-  { value: "Чтение", label: "Чтение", color: "#FF8B00" },
-  { value: "Программирование", label: "Программирование", color: "#FFC400" },
-];
+
 
 const EditProfileForm = ({
   handleSubmit,
@@ -24,7 +23,7 @@ const EditProfileForm = ({
   inputErrors,
 }) => {
   const handleHobbies = (newHobbies) => {
-    setUserHobbies(newHobbies);
+    if (newHobbies.length < 11) setUserHobbies(newHobbies);
   };
   return (
     <form className={styles.form} onSubmit={handleSubmit}>
@@ -86,16 +85,23 @@ const EditProfileForm = ({
               onChange={(event) => setUserStudyPlace(event.target.value)}
               maxlength={30}
             />
+            {inputErrors.userStudyPlace && (
+              <p className={styles.input__error}>
+                {inputErrors.userStudyPlace}
+              </p>
+            )}
           </div>
-          <div className={styles.input__wrapper}>
-            <Input
+          <div className={styles.select__wrapper}>
+            <Select
+              isSearchable={true}
+              noOptionsMessage={() => "Специальность не найдена :("}
               placeholder="Специальность"
-              type="text"
-              name="text"
-              id="userProfession"
+              options={jobTitleOptions}
               value={userProfession}
-              onChange={(event) => setUserProfession(event.target.value)}
-              maxlength={30}
+              onChange={(value) => {
+                setUserProfession(value);
+              }}
+              styles={selectStyles}
             />
           </div>
         </div>

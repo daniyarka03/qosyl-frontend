@@ -24,6 +24,8 @@ const EditProfile = () => {
   });
 
   useEffect(() => {
+    setUserName(currentUser.name);
+    setImageSrc(currentUser.avatar);
     if (currentUser.hobbies) {
       const testArray = [];
       JSON.parse(currentUser.hobbies).forEach((hobbyName) => {
@@ -35,12 +37,14 @@ const EditProfile = () => {
       });
       setUserHobbies(testArray);
     }
-  }, [currentUser.hobbies]);
-
-  useEffect(() => {
-    setUserName(currentUser.name);
-    setImageSrc(currentUser.avatar);
-    setUserProfession(currentUser.speciality);
+    if (currentUser.speciality) {
+      const testArray2 = [];
+      testArray2.push({
+        value: currentUser.speciality,
+        label: currentUser.speciality,
+      });
+      setUserProfession(testArray2);
+    }
     setUserStudyPlace(currentUser.study_place);
   }, [currentUser]);
 
@@ -63,9 +67,7 @@ const EditProfile = () => {
         formData.append("email", currentUser.email);
         formData.append("password", 123123);
         formData.append("hobbies", JSON.stringify(userHobbies));
-        // console.log(JSON.stringify(userHobbies))
-        // console.log(userHobbies)
-        formData.append("speciality", userProfession);
+        formData.append("speciality", userProfession.value || userProfession[0].value);
         formData.append("study_place", userStudyPlace);
       } else {
         formData.append("avatar", imageSrc);
@@ -73,7 +75,7 @@ const EditProfile = () => {
         formData.append("email", currentUser.email);
         formData.append("password", 123123);
         formData.append("hobbies", userHobbies);
-        formData.append("speciality", userProfession);
+        formData.append("speciality", userProfession.value || userProfession[0].value);
         formData.append("study_place", userStudyPlace);
       }
       axios({
