@@ -36,12 +36,39 @@ import Jobs from "./pages/Jobs/Jobs";
 import CreateJob from "./pages/CreateJob/CreateJob";
 import EditJob from "./pages/EditJob/EditJob";
 import JobInfo from "./pages/JobInfo/JobInfo";
+import axios from "axios";
 
 
 const App = () => {
   const isAuthenticated = useIsAuthenticated();
 
   const [auth, setAuth] = useState(false);
+
+  const userInfoFromLocalStorage = JSON.parse(localStorage.getItem('userInfo'));
+
+  axios.get(`${import.meta.env.VITE_SERVER_URL}/api/users`)
+      .then((response) => {
+        // Проверьте, есть ли email среди данных пользователей
+        const users = response.data;
+        const userEmailToCheck = userInfoFromLocalStorage.email; // Замените на нужный email
+
+        const userWithEmail = users.find((user) => user.email === userEmailToCheck);
+
+        if (userWithEmail) {
+          // Пользователь с указанным email найден, выполните необходимые действия
+          console.log(`Пользователь с email ${userEmailToCheck} найден.`);
+        } else {
+          // Пользователь с указанным email не найден, выполните другие действия,
+          // например, удаление userInfo из localStorage
+          console.log(`Пользователь с email ${userEmailToCheck} не найден.`);
+          localStorage.removeItem('userInfo');
+          window.location.replace("/");
+        }
+      })
+      .catch((error) => {
+        // Обработайте ошибку, если запрос GET не удался
+        console.error(`Ошибка при выполнении запроса GET: ${error.message}`);
+      });
 
   useEffect(() => {
     setAuth(isAuthenticated);

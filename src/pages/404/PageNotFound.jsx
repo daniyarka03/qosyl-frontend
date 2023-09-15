@@ -21,7 +21,7 @@ const PageNotFound = () => {
             </p>
             <button
               className={styles.info__btn}
-              onClick={() => navigate("/home")}
+              onClick={() => navigate("/")}
             >
               Вернуться на главное
             </button>
