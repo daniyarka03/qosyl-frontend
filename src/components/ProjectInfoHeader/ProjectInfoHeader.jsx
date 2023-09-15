@@ -1,7 +1,10 @@
 import React from "react";
 import styles from "./ProjectInfoHeader.module.sass";
 import CardSkeleton from "../CardSkeleton/CardSkeleton";
+import { AiOutlineEdit } from "react-icons/ai";
+import {AiOutlineDelete} from "react-icons/ai"
 import menuDropdownIcon from "../../assets/menu-dropdown-icon.svg";
+import { Link } from "react-router-dom";
 const ProjectInfoHeader = ({
   isLoading,
   project,
@@ -44,18 +47,12 @@ const ProjectInfoHeader = ({
               </div>
               {userID === project.author_id ? (
                 <div className={styles.project__settings}>
-                  <button
-                    className={`${styles.button} ${styles.button__edit}`}
-                    onClick={() => navigate(`/edit-project/${projectID}`)}
-                  >
-                    Изменить
-                  </button>
-                  <button
-                    className={`${styles.button} ${styles.button__delete}`}
-                    onClick={deleteProject}
-                  >
-                    Удалить
-                  </button>
+                  <Link className={styles.project__settings__item} to={`/edit-project/${projectID}`}>
+                    <AiOutlineEdit size={"6rem"} color="41b1e4"/>
+                  </Link>
+                  <Link className={styles.project__settings__item} onClick={deleteProject}>
+                    <AiOutlineDelete size={"6rem"}  color="d40b4e"/>
+                  </Link>
                 </div>
               ) : (
                 <button
