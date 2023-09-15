@@ -104,6 +104,7 @@ const CreateProject = () => {
           setContact={setContact}
           validateForm={validateForm}
           inputErrors={inputErrors}
+          setInputErrors={setInputErrors}
           userID={userID}
         />
       </div>

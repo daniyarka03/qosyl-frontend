@@ -3,7 +3,7 @@ import {composeWithDevTools} from "redux-devtools-extension";
 import thunk from "redux-thunk";
 import rootReducer from "./reducers";
 import {configureStore, getDefaultMiddleware} from "@reduxjs/toolkit";
-import { userLoginReducer } from './reducers/userReducers';
+import { userLoginReducer, userRegisterReducer } from './reducers/userReducers';
 
 
 const middleware = [thunk];
@@ -11,6 +11,7 @@ const middleware = [thunk];
 
 const reducer = combineReducers({
     userLogin: userLoginReducer,
+    userRegister: userRegisterReducer,
 });
 
 const userInfoFromStorage = localStorage.getItem('userInfo')

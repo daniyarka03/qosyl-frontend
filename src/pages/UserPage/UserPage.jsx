@@ -9,6 +9,7 @@ import useGetProjects from "../../hooks/useGetProjects";
 import useGetPosts from "../../hooks/useGetPosts";
 import useGetUserByID from "../../hooks/useGetUserByID";
 import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
+import uuid from "react-uuid";
 
 const UserPage = () => {
   const [isUserLoading, setIsUserLoading] = useState(true);
@@ -44,7 +45,26 @@ const UserPage = () => {
               className={styles.profile__avatar}
               src={`${import.meta.env.VITE_SERVER_URL_MEDIA}${user.avatar}`}
             />
-            <div className={styles.profile__name}>{user.name}</div>
+
+            <div className={styles.profile__info}>
+              <p className={styles.profile__text}>
+                Имя пользователя: {user.name}
+              </p>
+              <p className={styles.profile__text}>
+                Специальность: {user.speciality}
+              </p>
+              <p className={styles.profile__text}>
+                Место учебы: {user.study_place}
+              </p>
+            </div>
+            <div className={styles.profile__hobbies}>
+              
+            <div className={styles.profile__hobbies__list}>
+              {JSON.parse(user.hobbies).map((hobby) => (
+                <p key={uuid()} className={styles.profile__hobbies__item}>{hobby.value}</p>
+              ))}
+            </div>
+          </div>
           </>
         )}
       </div>

@@ -155,6 +155,7 @@ const EditProject = () => {
             setContact={setContact}
             validateForm={validateForm}
             inputErrors={inputErrors}
+            setInputErrors={setInputErrors}
             userID={userID}
           />
         )}

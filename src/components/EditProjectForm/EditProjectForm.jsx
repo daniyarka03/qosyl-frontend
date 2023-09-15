@@ -27,6 +27,7 @@ const EditProjectForm = ({
   userID,
   validateForm,
   inputErrors,
+  setInputErrors,
 }) => {
   return (
     <form className={styles.form} onSubmit={handleSubmit}>
@@ -40,8 +41,14 @@ const EditProjectForm = ({
               name="text"
               id="projectName"
               value={title}
-              onChange={(event) => setTitle(event.target.value)}
-              maxlength="100"
+              onChange={(event) => {
+                setTitle(event.target.value);
+                setInputErrors((prevErrors) => ({
+                  ...prevErrors,
+                  title: event.target.value ? "" : "Введите название проекта",
+                }));
+              }}
+              maxlength="25"
               error={inputErrors.title}
             />
           </div>
@@ -56,6 +63,10 @@ const EditProjectForm = ({
               value={projectType}
               onChange={(value) => {
                 setProjectType(value);
+                setInputErrors((prevErrors) => ({
+                  ...prevErrors,
+                  projectType: value.value ? "" : "Выберите тип проекта",
+                }));
               }}
               styles={selectStyles}
             />
@@ -81,7 +92,13 @@ const EditProjectForm = ({
         className={styles.textarea}
         placeholder="Описание"
         value={description}
-        onChange={(event) => setDescription(event.target.value)}
+        onChange={(event) => {
+          setDescription(event.target.value);
+          setInputErrors((prevErrors) => ({
+            ...prevErrors,
+            description: event.target.value ? "" : "Введите описание проекта",
+          }));
+        }}
         maxLength="800"
       />
       {inputErrors.description && (
@@ -99,7 +116,15 @@ const EditProjectForm = ({
                 name="text"
                 id="projectContact"
                 value={contact}
-                onChange={(event) => setContact(event.target.value)}
+                onChange={(event) => {
+                  setContact(event.target.value);
+                  setInputErrors((prevErrors) => ({
+                    ...prevErrors,
+                    contact: event.target.value
+                      ? ""
+                      : "Введите контактные данные",
+                  }));
+                }}
                 maxlength={30}
                 error={inputErrors.contact}
               />
