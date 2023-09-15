@@ -7,6 +7,7 @@ import contactIcon from "../../assets/contact-icon.svg";
 import CardSkeleton from "../../components/CardSkeleton/CardSkeleton";
 import axios from "axios";
 import { useCurrentUserData } from "../../actions/getCurrentUserData.js";
+import Swal from "sweetalert2";
 
 const studentsClubsAPI = `${import.meta.env.VITE_SERVER_URL}/api/students_clubs/`;
 
@@ -21,6 +22,16 @@ const StudentsClub = () => {
 
     const clubID = location.pathname.split("/").pop();
     const { userID } = useCurrentUserData();
+
+    const onModalContact = (club) => {
+        console.log(club)
+        Swal.fire({
+            title: 'Ниже контакты! Скопируй и напиши ему',
+            text: club.contact,
+            icon: 'success',
+            confirmButtonText: 'Хорошо'
+        })
+    }
 
     // useEffect(() => {
     //   axios.get(userAPI, config).then((data) => {
@@ -136,6 +147,7 @@ const StudentsClub = () => {
                                         ) : (
                                             <button
                                                 className={`${styles.button} ${styles.button__subscribe}`}
+                                                onClick={() => onModalContact(club)}
                                                 // onClick={() => onSubscribe(club.club_id)}
                                             >
                                                 Вступить
@@ -181,7 +193,7 @@ const StudentsClub = () => {
                         {isLoading ? (
                             <CardSkeleton cards={1} />
                         ) : (
-                            <p className={styles.description__text}>Contact</p>
+                            <p className={styles.description__text}>{club.contact || "Не заполнено"}</p>
                         )}
                     </div>
                 </section>

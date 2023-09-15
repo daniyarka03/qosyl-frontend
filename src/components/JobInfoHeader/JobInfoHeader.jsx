@@ -2,6 +2,8 @@ import React, {useState} from "react";
 import CardSkeleton from "../CardSkeleton/CardSkeleton";
 import styles from "./JobInfoHeader.module.sass";
 import useGetCurrentUser from "../../hooks/useGetCurrentUser.js";
+import axios from "axios";
+import Swal from "sweetalert2";
 
 const JobInfoHeader = ({
   isProjectLoading,
@@ -14,6 +16,15 @@ const JobInfoHeader = ({
 
   const [isUserLoading, setIsUserLoading] = useState(true);
   const { currentUser } = useGetCurrentUser(setIsUserLoading);
+
+  const onModalContant = (project) => {
+    Swal.fire({
+      title: 'Ниже контакты! Скопируй и напиши ему',
+      text: project.contact,
+      icon: 'success',
+      confirmButtonText: 'Хорошо'
+    })
+  }
 
 
   return (
@@ -60,7 +71,7 @@ const JobInfoHeader = ({
               ) : (
                 <button
                   className={`${styles.button} ${styles.button__subscribe}`}
-                  // onClick={() => onSubscribe(project.project_id)}
+                  onClick={() => onModalContant(project)}
                 >
                   Откликнуться
                 </button>
