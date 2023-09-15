@@ -8,6 +8,7 @@ import CardSkeleton from "../../components/CardSkeleton/CardSkeleton";
 import useGetCurrentUser from "../../hooks/useGetCurrentUser";
 import useGetProjects from "../../hooks/useGetProjects";
 import useGetPosts from "../../hooks/useGetPosts";
+import AvatarSkeleton from "../../components/AvatarSkeleton/AvatarSkeleton";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -24,19 +25,16 @@ const Home = () => {
       <Navbar />
       <div className={styles.container}>
         <div className={styles.header}>
-          {isUserLoading ? (
-            <CardSkeleton cards={1} width={200} />
-          ) : (
+      
             <>
               <p className={styles.header__title}>Привет, {currentUser.name}</p>
-              <img
+              {isUserLoading ? <AvatarSkeleton /> : <img
                 className={styles.header__avatar}
                 src={`${import.meta.env.VITE_SERVER_URL_MEDIA}${
                   currentUser.avatar
                 }`}
-              />
+              />}
             </>
-          )}
         </div>
         <section className={styles.section}>
           <p className={styles.section__title}>Последние посты</p>

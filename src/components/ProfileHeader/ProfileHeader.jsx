@@ -4,6 +4,7 @@ import CardSkeleton from "../CardSkeleton/CardSkeleton";
 import editProfileIcon from "../../assets/profile-edit-icon.svg";
 import logoutProfileIcon from "../../assets/profile-logout-icon.svg";
 import uuid from "react-uuid";
+import AvatarSkeleton from "../AvatarSkeleton/AvatarSkeleton";
 const ProfileHeader = ({
   currentUser,
   isUserLoading,
@@ -13,17 +14,14 @@ const ProfileHeader = ({
 }) => {
   return (
     <div className={styles.profile__wrapper}>
-      {isUserLoading ? (
-        <CardSkeleton cards={1} />
-      ) : (
         <div className={styles.profile}>
-
-          <img
+          {isUserLoading ? <AvatarSkeleton /> : <img
             className={styles.profile__avatar}
             src={`${import.meta.env.VITE_SERVER_URL_MEDIA}${
               currentUser.avatar
             }`}
-          />
+          />}
+          
 
           <div className={styles.profile__info}>
             <p className={styles.profile__text}>
@@ -57,8 +55,7 @@ const ProfileHeader = ({
             </div>
           </div>
         </div>
-        
-      )}
+      
     </div>
   );
 };

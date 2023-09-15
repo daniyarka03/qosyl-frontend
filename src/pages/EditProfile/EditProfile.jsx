@@ -74,7 +74,7 @@ const EditProfile = () => {
         formData.append("name", userName);
         formData.append("email", currentUser.email);
         formData.append("password", 123123);
-        formData.append("hobbies", userHobbies);
+        formData.append("hobbies",  JSON.stringify(userHobbies));
         formData.append("speciality", userProfession.value || userProfession[0].value);
         formData.append("study_place", userStudyPlace);
       }

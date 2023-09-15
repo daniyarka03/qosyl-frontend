@@ -60,7 +60,7 @@ const UserPage = () => {
             <div className={styles.profile__hobbies}>
               
             <div className={styles.profile__hobbies__list}>
-              {JSON.parse(user.hobbies).map((hobby) => (
+              {user.hobbies && JSON.parse(user.hobbies).map((hobby) => (
                 <p key={uuid()} className={styles.profile__hobbies__item}>{hobby.value}</p>
               ))}
             </div>

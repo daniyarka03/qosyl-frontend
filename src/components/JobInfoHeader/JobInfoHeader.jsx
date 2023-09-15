@@ -4,6 +4,9 @@ import styles from "./JobInfoHeader.module.sass";
 import useGetCurrentUser from "../../hooks/useGetCurrentUser.js";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { AiOutlineEdit } from "react-icons/ai";
+import {AiOutlineDelete} from "react-icons/ai"
+import { Link } from "react-router-dom";
 
 const JobInfoHeader = ({
   isProjectLoading,
@@ -35,6 +38,7 @@ const JobInfoHeader = ({
             <CardSkeleton cards={1} width={200} />
           ) : (
             <>
+              <div className={styles.project__intro}>
               <img
                 className={styles.project__logo}
                 // src={
@@ -52,10 +56,17 @@ const JobInfoHeader = ({
                 <p className={styles.project__title}>{job.title}</p>
                 <p className={styles.project__type}>{job.work_format}</p>
               </div>
-
+              </div>
               {project.author_id === currentUser.user_id ? (
-                <>
-                  <button
+                <div className={styles.project__settings}>
+                    <Link className={styles.project__settings__item} to={`/edit-job/${jobID}`}>
+                      <AiOutlineEdit size={"6rem"} color="41b1e4"/>
+                    </Link>
+                    <Link className={styles.project__settings__item} onClick={deleteJob}>
+                      <AiOutlineDelete size={"6rem"}  color="d40b4e"/>
+                    </Link>
+                
+                  {/* <button
                     className={`${styles.button} ${styles.button__edit}`}
                     onClick={() => navigate(`/edit-job/${jobID}`)}
                   >
@@ -66,8 +77,8 @@ const JobInfoHeader = ({
                     onClick={deleteJob}
                   >
                     Удалить
-                  </button>
-                </>
+                  </button> */}
+                </div>
               ) : (
                 <button
                   className={`${styles.button} ${styles.button__subscribe}`}
