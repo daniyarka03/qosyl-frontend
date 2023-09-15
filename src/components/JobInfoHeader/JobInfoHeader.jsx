@@ -65,19 +65,6 @@ const JobInfoHeader = ({
                     <Link className={styles.project__settings__item} onClick={deleteJob}>
                       <AiOutlineDelete size={"6rem"}  color="d40b4e"/>
                     </Link>
-                
-                  {/* <button
-                    className={`${styles.button} ${styles.button__edit}`}
-                    onClick={() => navigate(`/edit-job/${jobID}`)}
-                  >
-                    Изменить
-                  </button>
-                  <button
-                    className={`${styles.button} ${styles.button__delete}`}
-                    onClick={deleteJob}
-                  >
-                    Удалить
-                  </button> */}
                 </div>
               ) : (
                 <button

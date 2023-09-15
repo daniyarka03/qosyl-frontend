@@ -15,13 +15,13 @@ const StudentsClubCard = ({ club, onClick }) => {
                     <p className={styles.card__title}>{club.title}</p>
                 </div>
                 <p className={styles.card__subheader}>{club.related_by_uni}</p>
-                <div className={styles.card__additional}>
+                {/* <div className={styles.card__additional}>
                     <img
                         className={styles.card__members__img}
                         src={projectMembers}
                         alt=""
                     />
-                </div>
+                </div> */}
             </div>
         </div>
     );

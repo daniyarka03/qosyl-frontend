@@ -13,8 +13,6 @@
 .project
     &__intro
         display: flex
-        @media screen and (max-width: 1120px)
-            align-self: flex-start
         @media screen and (max-width: 870px)
             flex-direction: column
     &__header
@@ -42,8 +40,7 @@
         height: 10rem
         border-radius: .8rem
         object-fit: cover
-        @media screen and (max-width: 1120px)
-            align-self: flex-start
+
         @media screen and (max-width: 920px)
             align-self: center
     &__title
@@ -56,9 +53,7 @@
         display: flex
         &__item
             margin-left: 2rem
-        @media screen and (max-width: 1120px)
-            align-self: flex-end
-            display: flex
+
         @media screen and (max-width: 870px)
             margin-top: 2rem
     &__type
@@ -81,12 +76,13 @@
     right: 0
     &__subscribe
         margin-left: clamp(20rem, 30%,20rem)
+        @media screen and (max-width: 1120px)
+            margin-left: 0
+            margin-top: 3rem
     &__edit
         margin-left: clamp(5rem, 10%, 20rem)
     &__delete
         margin-left: 5rem
         background-color: #FF3CC8
-    @media screen and (max-width: 1120px)
-        margin-top: 2rem
     @media screen and (max-width: 920px)
         align-self: center
