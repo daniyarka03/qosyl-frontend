@@ -36,6 +36,7 @@ export const login = (email, password) => async (dispatch) => {
 
     localStorage.setItem("userInfo", JSON.stringify(data));
   } catch (error) {
+    console.log(error)
     dispatch({
       type: USER_LOGIN_FAIL,
       payload:
@@ -89,6 +90,7 @@ export const register = (name, email, password) => async (dispatch) => {
     window.location.replace("/profile");
 
   } catch (error) {
+    console.log(error)
     dispatch({
       type: USER_REGISTER_FAIL,
       payload:
