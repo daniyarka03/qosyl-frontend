@@ -1,0 +1,29 @@
+[
+    {
+        "id": "1",
+        "author_event": "John",
+        "title_event": "AI Revolution",
+        "date_event": "2023-10-24",
+        "time_event": "18:00",
+        "description_event": "AI is the future",
+        "place_event": "London"
+    },
+    {
+        "id:": "2",
+        "author_event": "Andrew",
+        "title_event": "ChatGPT in our life",
+        "date_event": "2023-12-02",
+        "time_event": "14:00",
+        "description_event": "ChatGPT is the future",
+        "place_event": "London"
+    },
+    {
+        "id": "3",
+        "author_event": "Alice",
+        "title_event": "Exploring AI Innovations",
+        "date_event": "2023-11-25",
+        "time_event": "10:30",
+        "description_event": "Discover the latest advancements in AI technology",
+        "place_event": "San Francisco"
+    }
+]
