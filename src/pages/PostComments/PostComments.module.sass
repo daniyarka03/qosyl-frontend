@@ -1,0 +1,24 @@
+@import "../../colors"
+@import "../../mixins"
+
+.container
+    padding: 6rem 2rem
+    display: flex
+    flex-direction: column
+    align-items: center
+
+.header
+    @include heading-font($white)
+    font-size: 3.25rem
+    text-align: center
+
+.post__add
+    @include heading-font($white)
+    font-size: 2rem
+    border-radius: 0.4375rem
+    background: #FF3CC8
+    padding: 0.8rem 6.5rem
+    margin-top: 3rem
+    width: clamp(28rem, 100%, 40rem)
+.post__wrapper
+    width: clamp(28rem, 100%, 40rem)

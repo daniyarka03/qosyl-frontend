@@ -1,0 +1,70 @@
+@import "../../colors"
+@import "../../mixins"
+
+.wrapper
+    padding: 2rem
+
+.post
+    width: 100%
+    margin-top: 2.5rem
+    background-color: $white
+    border-radius: 1.2rem
+    &__header
+        display: flex
+        align-items: center
+        justify-content: space-between
+    &__date
+        @include heading-font($black)
+        font-size: 1.3rem
+    &__creator
+        display: flex
+        align-items: center
+        &__avatar
+            width: 5rem
+            height: 5rem
+            border-radius: 1.2rem
+            object-fit: cover
+            cursor: pointer
+        &__name
+            @include heading-font($black)
+            font-size: 1rem
+            margin-left: 1.2rem
+            @media screen and (min-width: 600px)
+            font-size: 1.6rem
+    &__description
+        @include heading-font($black)
+        font-size: 1rem
+        margin-top: 2rem
+        font-weight: normal
+        @media screen and (min-width: 600px)
+            font-size: 1.4rem
+    &__actions
+        display: flex
+        margin-top: 1rem
+    &__action
+        display: flex
+        margin-left: 2rem
+        &:nth-child(1)
+            margin-left: 0
+        &__img
+            cursor: pointer
+        &__count
+            color: #000
+            font-family: "Montserrat", sans-serif
+            font-size: 0.75rem
+            font-style: normal
+            font-weight: 700
+            line-height: 127.7%
+            margin-left: 1rem
+            font-size: 1.5rem
+
+    &__buttons
+        display: grid
+        grid-template-columns: 1fr 1fr
+        column-gap: 2rem
+        margin-top: 1rem
+    &__button
+        @include default-button
+        padding: 1rem 2rem
+    &__delete
+        background-color: #FF3CC8

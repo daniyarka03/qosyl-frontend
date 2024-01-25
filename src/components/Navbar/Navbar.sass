@@ -13,6 +13,7 @@
   transition: width 600ms ease
   overflow: hidden
   z-index: 5
+  left: 0
 
   
   &-nav
@@ -49,6 +50,7 @@
   margin-left: 1rem
   @include heading-font($white)
   font-size: 2rem
+  animation: fadeInOut 0.5s ease, opacity 0.5s ease, transform 0.5s ease 
 
 .nav-link svg
   width: 2rem
@@ -161,3 +163,13 @@
   display: block
 
   
+
+@keyframes fadeInOut 
+  from 
+    opacity: 0
+    transform: translateX(-20px)
+
+  to 
+    opacity: 1
+    transform: translateX(0)
+

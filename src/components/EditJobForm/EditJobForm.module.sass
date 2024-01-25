@@ -1,0 +1,62 @@
+@import "../../mixins"
+@import "../../colors"
+
+.form
+    margin-top: 10rem
+    display: grid
+    grid-template-columns: repeat(6, 1fr)
+    column-gap: 4rem
+    @media screen and (max-width: 1080px)
+        display: flex
+        flex-direction: column
+        margin-top: 0
+
+    &__button
+        @include heading-font($white)
+        margin-top: 5rem
+        font-size: 1.3rem
+        padding: 1.5rem 1.5rem
+        filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25))
+        transition: .3s
+        border-radius: 0.75rem
+        background: #FF3CC8
+        grid-column: span 3
+        border: 0
+
+.select
+    outline: none
+    padding: 3rem 2rem
+    border-radius: 1.2rem
+    @include heading-font($black)
+    font-size: 1.25rem
+    background-image: url("data:image/svg+xml,<svg height='15px' width='15px' viewBox='0 0 16 16' fill='black' xmlns='http://www.w3.org/2000/svg'><path d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/></svg>")
+    background-repeat: no-repeat
+    background-color: #fff
+    background-position: calc(100% - 15px) center
+    cursor: pointer
+    &__wrapper
+        margin-top: 2rem
+
+.form > :nth-child(1),
+.form > :nth-child(2),
+.form > :nth-child(3)
+    grid-column: span 2
+
+.textarea
+    grid-column: span 3
+    @include form-input
+    padding: 3rem 2.5rem
+    min-height: 20rem
+    resize: none
+    margin-top: 4rem
+
+.input__wrapper
+    height: 2.9rem
+    @media screen and (max-width: 1080px)
+        margin-top: 2rem
+        margin-bottom: 4rem
+
+.input__error
+    @include heading-font(#ef7d7d)
+    font-size: 1.2rem
+    margin-top: 1rem

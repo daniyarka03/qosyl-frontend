@@ -4,65 +4,17 @@
 .wrapper
     @media screen and (min-width: 600px)
         margin-left: 10%
+        margin-right: 5%
         max-width: 120rem
+        margin-bottom: 2.5rem
+    @media screen and (max-width: 1120px)
+        max-width: 80rem
+        margin-left: 15%
 
-.header
-    background-color: $white
-    border-bottom-left-radius: 4rem
-    border-bottom-right-radius: 4rem
-    &__wrapper
-        padding: 4rem 2rem 4rem
-
-.project
-    &__header
-        display: flex
-        justify-content: space-between
-    &__info
-        display: flex
-    &__logo
-        width: 4.7rem
-        height: 4.7rem
-    &__title
-        @include heading-font($primary-color)
-        font-size: 4rem
-        margin-left: 1rem
-    &__type
-        @include heading-font($secondary-color)
-        font-size: 1.2rem
-        margin-top: 1rem
-    &__members
-        margin-top: 2rem
-        display: flex
-        align-items: center
-        &__text
-            @include heading-font($primary-color)
-            font-size: 1rem
-            margin-left: 1rem
-
-.button
-    @include default-button
-    &__mark
-        padding: 1rem
-    &__join
-        font-size: 1.2rem
-        padding: 1rem 6rem
-        margin-top: 4.5rem
-
-.description
-    margin-top: 4.5rem
-    background-color: $white
-    border-top-left-radius: 4rem
-    border-top-right-radius: 4rem
-    padding-bottom: 5rem
-    min-height: 55vh
-    @media screen and (min-width: 600px)
-        padding-bottom: 1rem
-
-    &__wrapper
-        padding: 3rem 2rem
-    &__title
-        @include heading-font($primary-color)
-    &__text
-        @include heading-font($secondary-color)
-        font-size: 1rem
-        margin-top: 2rem
+    @media screen and (max-width: 600px)
+        margin: 0 auto
+        max-width: 50rem
+    @media screen and (max-width: 550px)
+        max-width: 40rem
+    @media screen and (max-width: 440px)
+        max-width: 30rem

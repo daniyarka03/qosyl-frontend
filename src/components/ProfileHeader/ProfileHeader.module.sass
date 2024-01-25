@@ -1,0 +1,70 @@
+@import "../../colors"
+@import "../../mixins"
+
+.profile
+    display: grid
+    grid-template-areas: "img text actions" "hobbies hobbies hobbies"
+    align-items: center
+    @media screen and (max-width: 900px)
+        display: flex
+        flex-direction: column
+    &__avatar
+        border-radius: 3.125rem
+        border: 5px solid #181C9C
+        width: 15rem
+        height: 15rem
+        object-fit: cover
+        grid-area: img
+        @media screen and (max-width: 900px)
+            width: 12rem
+            height: 12rem
+    &__info
+        grid-area: text
+        margin-left: 4rem
+        @media screen and (max-width: 900px)
+            margin-top: 2rem
+            margin-left: 0
+    &__text
+        @include heading-font($white)
+        font-size: 2rem
+        align-self: center
+        margin-top: 2rem
+        &:first-child
+            margin-top: 0
+        @media screen and (max-width: 900px)
+            font-size: 1.7rem
+
+    &__actions
+        display: flex
+        align-items: center
+        grid-area: actions
+        @media screen and (max-width: 900px)
+            align-self: flex-end
+        &__img
+            width: 5rem
+            height: 5rem
+            cursor: pointer
+            margin-left: 2rem
+            @media screen and (max-width: 900px)
+                width: 4rem
+                height: 4rem
+                margin-top: 2rem
+                margin-left: 0
+    &__hobbies
+        grid-area: hobbies
+        margin-top: 5rem
+        @media screen and (max-width: 900px)
+            padding: 0 6rem
+        @media screen and (max-width: 600px)
+            padding: 0
+        &__list
+            text-align: start
+            min-width: 25rem
+        &__item
+            display: inline-block
+            margin-left: .5rem
+            padding: .5rem
+            background-color: $white
+            color: $primary-color
+            border-radius: .5rem
+            font-size: 1.2rem
